@@ -9,7 +9,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S02 Dev sandbox city and test car (2026-09-18)
 
 ## Phase 2 — Rendering spike
-- [ ] S03 Route line mesh builder
+- [x] S03 Route line mesh builder (2026-09-18)
 - [ ] S04 [HARD] Route line shader, graphic and Route Line Lab
 - [ ] S05 Route line chunks
 
@@ -90,6 +90,7 @@ Added by the implementing agent when a step passes: anything later steps need to
 
 - S01: `Runtime/AssemblyInfo.cs` and `Editor/AssemblyInfo.cs` had no `using System.Runtime.CompilerServices;` line before this step; it was added along with the `InternalsVisibleTo` attributes.
 - S02: In `Dev.Editor`, `System.Random` must be fully qualified (`new System.Random(...)`) — a bare `Random` is ambiguous with `UnityEngine.Random` once both `using System;` and `using UnityEngine;` are present. `SandboxSceneBuilderTests` uses `EditorSceneManager.NewScene(..., NewSceneMode.Single)`, not `Additive` as in the plan — `Additive` throws `InvalidOperationException` in the Test Runner because the active untitled scene isn't saved. `SandboxSceneBuilder` exposes `RoadObjects` (`IReadOnlyList<GameObject>`) and `ExpectedRoadObjectCount` (const, = 18) for tests/later steps to check road-segment output; no layer named `Road` exists yet so road segments currently sit on layer `Default`.
+- S03: `RouteLineMeshBuilder.Build` groups vertex pairs internally (one pair per "join point": a plain point, or two pairs for a bevel or a dashed-flag change) and emits a quad between every consecutive pair of groups — this is how the plan's separate bevel/dashed-duplicate rules and the "two triangles per quad" rule combine. When coincident points are skipped (closer than 0.0001 m), the kept segment's dashed flag is taken from the last original segment leading into the next kept point (the plan doesn't specify this interaction).
 
 ## Decisions
 
