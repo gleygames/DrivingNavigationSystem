@@ -5,7 +5,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 `[HARD]` = recommended Claude Opus 5, or Claude Sonnet 5 at xhigh effort. The agent stops and asks before starting these.
 
 ## Phase 1 — Foundation
-- [ ] S01 Assemblies and test setup
+- [x] S01 Assemblies and test setup (2026-09-18)
 - [ ] S02 Dev sandbox city and test car
 
 ## Phase 2 — Rendering spike
@@ -88,7 +88,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 
 Added by the implementing agent when a step passes: anything later steps need to know that differs from the plan or isn't obvious from the code. Format: `Sxx: <note>`.
 
-- (none yet)
+- S01: `Runtime/AssemblyInfo.cs` and `Editor/AssemblyInfo.cs` had no `using System.Runtime.CompilerServices;` line before this step; it was added along with the `InternalsVisibleTo` attributes.
 
 ## Decisions
 

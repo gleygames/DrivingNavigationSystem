@@ -1,0 +1,30 @@
+{
+    "name": "Gley.NavigationSystem.Tests.Editor",
+    "rootNamespace": "Gley.NavigationSystem.Tests",
+    "references": [
+        "Gley.NavigationSystem",
+        "Gley.NavigationSystem.Editor",
+        "Gley.NavigationSystem.Tests.Shared",
+        "Gley.NavigationSystem.Dev",
+        "Gley.NavigationSystem.Dev.Editor",
+        "Gley.Common",
+        "UnityEngine.UI",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
