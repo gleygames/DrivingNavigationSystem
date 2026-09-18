@@ -1,0 +1,3 @@
+[submodule "Assets/Gley/About"]
+	path = Assets/Gley/About
+	url = https://github.com/gleygames/About-Package.git
