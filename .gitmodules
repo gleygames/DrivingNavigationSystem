@@ -4,3 +4,6 @@
 [submodule "Assets/Gley/Common"]
 	path = Assets/Gley/Common
 	url = https://github.com/gleygames/Common-Package.git
+[submodule "Assets/Gley/DrivingNavigationSystem"]
+	path = Assets/Gley/DrivingNavigationSystem
+	url = https://github.com/gleygames/DrivingNavigationSystem-Package.git
