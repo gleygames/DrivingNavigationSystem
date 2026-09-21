@@ -32,64 +32,19 @@ MonoBehaviour:
       manualHandles: 0
     - position: {x: 25.591282, y: 0, z: -10.316431}
       inHandle: {x: -2.540607, y: -0, z: 0.058606416}
-      outHandle: {x: 2.5248334, y: 0, z: -0.058242552}
-      manualHandles: 0
-    - position: {x: 33.167778, y: 0, z: -10.333521}
-      inHandle: {x: -2.5249016, y: -0, z: -0.055206943}
-      outHandle: {x: 2.5121834, y: 0, z: 0.054928858}
-      manualHandles: 0
-    - position: {x: 40.69812, y: 0, z: -9.98612}
-      inHandle: {x: -2.5061946, y: -0, z: -0.1818546}
-      outHandle: {x: 2.4991238, y: 0, z: 0.18134154}
-      manualHandles: 0
-    - position: {x: 48.178513, y: 0, z: -9.244311}
-      inHandle: {x: -2.4858398, y: -0, z: -0.31481123}
-      outHandle: {x: 2.4858394, y: 0, z: 0.31481117}
-      manualHandles: 0
-    - position: {x: 55.60767, y: 0, z: -8.097948}
-      inHandle: {x: -2.4654322, y: -0, z: -0.4473789}
-      outHandle: {x: 2.4724054, y: 0, z: 0.44864428}
-      manualHandles: 0
-    - position: {x: 62.986874, y: 0, z: -6.5571766}
-      inHandle: {x: -2.4465644, y: -0, z: -0.5730556}
-      outHandle: {x: 2.4589565, y: 0, z: 0.5759582}
-      manualHandles: 0
-    - position: {x: 70.31993, y: 0, z: -4.651914}
-      inHandle: {x: -2.430609, y: -0, z: -0.68580925}
-      outHandle: {x: 2.4457872, y: 0, z: 0.6900918}
-      manualHandles: 0
-    - position: {x: 77.612915, y: 0, z: -2.4303615}
-      inHandle: {x: -2.4185338, y: -0, z: -0.7802537}
-      outHandle: {x: 2.43346, y: 0, z: 0.7850691}
-      manualHandles: 0
-    - position: {x: 84.87397, y: 0, z: 0.043427944}
-      inHandle: {x: -2.4109042, y: -0, z: -0.8518225}
-      outHandle: {x: 2.422691, y: 0, z: 0.8559871}
-      manualHandles: 0
-    - position: {x: 92.112785, y: 0, z: 2.6927435}
-      inHandle: {x: -2.4078386, y: -0, z: -0.8969166}
-      outHandle: {x: 2.4143202, y: 0, z: 0.89933103}
-      manualHandles: 0
-    - position: {x: 99.34021, y: 0, z: 5.4320827}
-      inHandle: {x: -2.4091415, y: -0, z: -0.91311306}
+      outHandle: {x: 1.2174072, y: 0, z: -0.028082848}
+      manualHandles: 1
+    - position: {x: 29.244423, y: 0, z: -10.367049}
+      inHandle: {x: -1.2178783, y: 0, z: 0.0047254562}
       outHandle: {x: 0, y: 0, z: 0}
-      manualHandles: 0
+      manualHandles: 1
     points:
-    - {x: -5.0266285, y: 0, z: -7.7851205}
-    - {x: 2.6555002, y: 0, z: -8.636287}
+    - {x: -5.0266285, y: 0.2, z: -7.7851205}
+    - {x: 2.6555002, y: 0.2, z: -8.636287}
     - {x: 10.326228, y: 0, z: -9.397432}
     - {x: 17.974726, y: 0, z: -9.983049}
     - {x: 25.591282, y: 0, z: -10.316431}
-    - {x: 33.167778, y: 0, z: -10.333521}
-    - {x: 40.69812, y: 0, z: -9.98612}
-    - {x: 48.178513, y: 0, z: -9.244311}
-    - {x: 55.60767, y: 0, z: -8.097948}
-    - {x: 62.986874, y: 0, z: -6.5571766}
-    - {x: 70.31993, y: 0, z: -4.651914}
-    - {x: 77.612915, y: 0, z: -2.4303615}
-    - {x: 84.87397, y: 0, z: 0.043427944}
-    - {x: 92.112785, y: 0, z: 2.6927435}
-    - {x: 99.34021, y: 0, z: 5.4320827}
+    - {x: 29.244423, y: 0, z: -10.367049}
     groundMissIndices: 
     sourceTag: 
     speedOverride: 0
@@ -97,76 +52,21 @@ MonoBehaviour:
     id: 1
     typeId: 3
     startIntersectionId: 1
-    endIntersectionId: 2
+    endIntersectionId: 19
     oneWay: 1
     modifiedAfterImport: 0
   - keyPoints:
     - position: {x: -5.0266285, y: 0, z: -7.7851205}
       inHandle: {x: 0, y: 0, z: 0}
-      outHandle: {x: 0.6287922, y: 0, z: 3.2303162}
-      manualHandles: 0
-    - position: {x: -3.1402516, y: 0, z: 1.9058281}
-      inHandle: {x: -0.60997605, y: -0, z: -3.2339218}
-      outHandle: {x: 0.608769, y: 0, z: 3.2275224}
-      manualHandles: 0
-    - position: {x: -1.3704553, y: 0, z: 11.598884}
-      inHandle: {x: -0.5533843, y: -0, z: -3.2374785}
-      outHandle: {x: 0.5514786, y: 0, z: 3.2263296}
-      manualHandles: 0
-    - position: {x: 0.17412472, y: 0, z: 21.29601}
-      inHandle: {x: -0.46276313, y: -0, z: -3.2402442}
-      outHandle: {x: 0.46090963, y: 0, z: 3.227266}
-      manualHandles: 0
-    - position: {x: 1.4002023, y: 0, z: 30.99889}
-      inHandle: {x: -0.3443481, y: -0, z: -3.2417755}
-      outHandle: {x: 0.3431444, y: 0, z: 3.2304435}
-      manualHandles: 0
-    - position: {x: 2.2361937, y: 0, z: 40.70882}
-      inHandle: {x: -0.20641083, y: -0, z: -3.242053}
-      outHandle: {x: 0.20599172, y: 0, z: 3.23547}
-      manualHandles: 0
-    - position: {x: 2.6371017, y: 0, z: 50.426617}
-      inHandle: {x: -0.05857972, y: -0, z: -3.2414913}
-      outHandle: {x: 0.05857968, y: 0, z: 3.241489}
-      manualHandles: 0
-    - position: {x: 2.5875776, y: 0, z: 60.152546}
-      inHandle: {x: 0.08895361, y: -0, z: -3.2407978}
-      outHandle: {x: -0.08913469, y: 0, z: 3.2473953}
-      manualHandles: 0
-    - position: {x: 2.10297, y: 0, z: 69.886345}
-      inHandle: {x: 0.22619836, y: -0, z: -3.2407339}
-      outHandle: {x: -0.22699173, y: 0, z: 3.2521005}
-      manualHandles: 0
-    - position: {x: 1.2282767, y: 0, z: 79.62719}
-      inHandle: {x: 0.3440014, y: -0, z: -3.241812}
-      outHandle: {x: -0.3453846, y: 0, z: 3.254847}
-      manualHandles: 0
-    - position: {x: 0.03508091, y: 0, z: 89.37379}
-      inHandle: {x: 0.4345451, y: -0, z: -3.2441473}
-      outHandle: {x: -0.43604723, y: 0, z: 3.2553613}
-      manualHandles: 0
-    - position: {x: -1.3833326, y: 0, z: 99.124466}
-      inHandle: {x: 0.4917554, y: -0, z: -3.2474132}
-      outHandle: {x: -0.49273002, y: 0, z: 3.2538493}
-      manualHandles: 0
-    - position: {x: -2.9183252, y: 0, z: 108.87724}
-      inHandle: {x: 0.5116642, y: -0, z: -3.2509258}
+      outHandle: {x: 0.61937046, y: 0, z: 3.1819124}
+      manualHandles: 1
+    - position: {x: -3.1676967, y: 0, z: 1.7604598}
+      inHandle: {x: -0.60193443, y: 0, z: -3.1852536}
       outHandle: {x: 0, y: 0, z: 0}
-      manualHandles: 0
+      manualHandles: 1
     points:
-    - {x: -5.0266285, y: 0, z: -7.7851205}
-    - {x: -3.1402516, y: 0, z: 1.9058281}
-    - {x: -1.3704553, y: 0, z: 11.598884}
-    - {x: 0.17412472, y: 0, z: 21.29601}
-    - {x: 1.4002023, y: 0, z: 30.99889}
-    - {x: 2.2361937, y: 0, z: 40.70882}
-    - {x: 2.6371017, y: 0, z: 50.426617}
-    - {x: 2.5875776, y: 0, z: 60.152546}
-    - {x: 2.10297, y: 0, z: 69.886345}
-    - {x: 1.2282767, y: 0, z: 79.62719}
-    - {x: 0.03508091, y: 0, z: 89.37379}
-    - {x: -1.3833326, y: 0, z: 99.124466}
-    - {x: -2.9183252, y: 0, z: 108.87724}
+    - {x: -5.0266285, y: 0.2, z: -7.7851205}
+    - {x: -3.1676967, y: 0.2, z: 1.7604598}
     groundMissIndices: 
     sourceTag: 
     speedOverride: 0
@@ -174,7 +74,7 @@ MonoBehaviour:
     id: 2
     typeId: 1
     startIntersectionId: 1
-    endIntersectionId: 4
+    endIntersectionId: 16
     oneWay: 0
     modifiedAfterImport: 0
   - keyPoints:
@@ -469,29 +369,24 @@ MonoBehaviour:
       manualHandles: 0
     - position: {x: -3.1809626, y: 0, z: 191.44858}
       inHandle: {x: 0.06344756, y: -0, z: -3.057782}
-      outHandle: {x: -0.06344981, y: 0, z: 3.0578902}
-      manualHandles: 0
-    - position: {x: -3.383189, y: 0, z: 200.622}
-      inHandle: {x: 0.06947166, y: -0, z: -3.0577593}
-      outHandle: {x: -0.06947332, y: 0, z: 3.0578327}
-      manualHandles: 0
-    - position: {x: -3.5977974, y: 0, z: 209.79535}
-      inHandle: {x: 0.071536146, y: -0, z: -3.057785}
+      outHandle: {x: -0.056257963, y: 0, z: 2.7112885}
+      manualHandles: 1
+    - position: {x: -3.3595805, y: 0, z: 199.58223}
+      inHandle: {x: 0.06149888, y: 0, z: -2.7111664}
       outHandle: {x: 0, y: 0, z: 0}
-      manualHandles: 0
+      manualHandles: 1
     points:
-    - {x: -2.9183247, y: 0, z: 108.87724}
-    - {x: -2.8272567, y: 0, z: 118.05264}
-    - {x: -2.7485707, y: 0, z: 127.22797}
-    - {x: -2.693646, y: 0, z: 136.40312}
-    - {x: -2.6719358, y: 0, z: 145.57806}
-    - {x: -2.6902037, y: 0, z: 154.75273}
-    - {x: -2.7519739, y: 0, z: 163.9271}
-    - {x: -2.8572464, y: 0, z: 173.10118}
-    - {x: -3.0024972, y: 0, z: 182.275}
-    - {x: -3.1809626, y: 0, z: 191.44858}
-    - {x: -3.383189, y: 0, z: 200.622}
-    - {x: -3.5977974, y: 0, z: 209.79535}
+    - {x: -2.9183247, y: 0.2, z: 108.87724}
+    - {x: -2.8272567, y: 0.2, z: 118.05264}
+    - {x: -2.7485707, y: 0.2, z: 127.22797}
+    - {x: -2.693646, y: 0.2, z: 136.40312}
+    - {x: -2.6719358, y: 0.2, z: 145.57806}
+    - {x: -2.6902037, y: 0.2, z: 154.75273}
+    - {x: -2.7519739, y: 0.2, z: 163.9271}
+    - {x: -2.8572464, y: 0.2, z: 173.10118}
+    - {x: -3.0024972, y: 0.2, z: 182.275}
+    - {x: -3.1809626, y: 0.2, z: 191.44858}
+    - {x: -3.3595805, y: 0.2, z: 199.58223}
     groundMissIndices: 
     sourceTag: 
     speedOverride: 0
@@ -499,7 +394,7 @@ MonoBehaviour:
     id: 7
     typeId: 2
     startIntersectionId: 4
-    endIntersectionId: 7
+    endIntersectionId: 13
     oneWay: 1
     modifiedAfterImport: 0
   - keyPoints:
@@ -1635,6 +1530,488 @@ MonoBehaviour:
     endIntersectionId: 9
     oneWay: 0
     modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -134.51099, y: 0.2, z: 200.3198}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 18.786003, y: 0, z: 0.06765747}
+      manualHandles: 0
+    - position: {x: -78.15298, y: 0.2, z: 200.52277}
+      inHandle: {x: 18.784721, y: -0, z: 0.22966065}
+      outHandle: {x: -30.418528, y: 0, z: -0.37189472}
+      manualHandles: 0
+    - position: {x: -169.41321, y: 0.2, z: 199.89308}
+      inHandle: {x: 30.420603, y: -0, z: 0.1095605}
+      outHandle: {x: -6.4665737, y: 0, z: -0.023289513}
+      manualHandles: 0
+    - position: {x: -150.0169, y: 0.2, z: 200.26395}
+      inHandle: {x: -6.4665985, y: -0, z: -0.014702444}
+      outHandle: {x: 17.008547, y: 0, z: 0.038670592}
+      manualHandles: 0
+    - position: {x: -98.99157, y: 0.2, z: 200.05319}
+      inHandle: {x: -17.00839, y: 0.023194736, z: 0.07906122}
+      outHandle: {x: 31.87741, y: -0.043471962, z: -0.14817786}
+      manualHandles: 0
+    - position: {x: -3.3595805, y: 0, z: 199.58223}
+      inHandle: {x: -31.877329, y: 0.06666667, z: 0.1569875}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -134.51099, y: 0.2, z: 200.3198}
+    - {x: -130.57584, y: 0.2, z: 200.33575}
+    - {x: -125.925255, y: 0.2, z: 200.35735}
+    - {x: -120.72429, y: 0.2, z: 200.38333}
+    - {x: -115.1381, y: 0.2, z: 200.41234}
+    - {x: -103.47038, y: 0.2, z: 200.4743}
+    - {x: -97.71909, y: 0.2, z: 200.50462}
+    - {x: -92.24296, y: 0.2, z: 200.53278}
+    - {x: -87.207115, y: 0.2, z: 200.55743}
+    - {x: -82.77666, y: 0.2, z: 200.5773}
+    - {x: -80.84005, y: 0.2, z: 200.58504}
+    - {x: -79.1167, y: 0.2, z: 200.59108}
+    - {x: -77.62724, y: 0.2, z: 200.59528}
+    - {x: -76.392334, y: 0.2, z: 200.59744}
+    - {x: -75.432594, y: 0.2, z: 200.59744}
+    - {x: -74.76867, y: 0.2, z: 200.59512}
+    - {x: -74.4212, y: 0.2, z: 200.59027}
+    - {x: -74.41082, y: 0.2, z: 200.58276}
+    - {x: -74.75817, y: 0.2, z: 200.5724}
+    - {x: -75.483894, y: 0.2, z: 200.55907}
+    - {x: -76.60861, y: 0.2, z: 200.54257}
+    - {x: -78.15298, y: 0.2, z: 200.52277}
+    - {x: -89.560036, y: 0.2, z: 200.39343}
+    - {x: -100.9673, y: 0.2, z: 200.2829}
+    - {x: -112.37474, y: 0.2, z: 200.189}
+    - {x: -123.78231, y: 0.2, z: 200.10956}
+    - {x: -135.18997, y: 0.2, z: 200.0424}
+    - {x: -146.59772, y: 0.2, z: 199.9854}
+    - {x: -158.00546, y: 0.2, z: 199.93634}
+    - {x: -169.41321, y: 0.2, z: 199.89308}
+    - {x: -170.33208, y: 0.2, z: 199.89323}
+    - {x: -170.70161, y: 0.2, z: 199.90173}
+    - {x: -170.57863, y: 0.2, z: 199.9174}
+    - {x: -170.01997, y: 0.2, z: 199.93913}
+    - {x: -169.08246, y: 0.2, z: 199.96582}
+    - {x: -167.8229, y: 0.2, z: 199.9963}
+    - {x: -166.29814, y: 0.2, z: 200.02951}
+    - {x: -164.565, y: 0.2, z: 200.06425}
+    - {x: -156.68503, y: 0.2, z: 200.19652}
+    - {x: -152.9722, y: 0.2, z: 200.24283}
+    - {x: -151.37144, y: 0.2, z: 200.2571}
+    - {x: -150.0169, y: 0.2, z: 200.26395}
+    - {x: -137.26053, y: 0.2, z: 200.25844}
+    - {x: -124.50418, y: 0.2, z: 200.20271}
+    - {x: -111.74786, y: 0.2, z: 200.12491}
+    - {x: -98.99157, y: 0.2, z: 200.05319}
+    - {x: -87.03755, y: 0.2, z: 199.99686}
+    - {x: -75.083534, y: 0.2, z: 199.93916}
+    - {x: -63.12954, y: 0.2, z: 199.88046}
+    - {x: -51.175545, y: 0.2, z: 199.82101}
+    - {x: -39.221554, y: 0.2, z: 199.76117}
+    - {x: -27.267565, y: 0.2, z: 199.7012}
+    - {x: -15.313576, y: 0.2, z: 199.64145}
+    - {x: -3.3595805, y: 0.2, z: 199.58223}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 15
+    typeId: 1
+    startIntersectionId: 11
+    endIntersectionId: 13
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -3.3595805, y: 0, z: 199.58223}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: -0.007861853, y: 0, z: 0.34658813}
+      manualHandles: 1
+    - position: {x: -3.383189, y: 0, z: 200.622}
+      inHandle: {x: 0.007874489, y: 0, z: -0.34658813}
+      outHandle: {x: -0.06947332, y: 0, z: 3.0578327}
+      manualHandles: 1
+    - position: {x: -3.5977974, y: 0, z: 209.79535}
+      inHandle: {x: 0.071536146, y: -0, z: -3.057785}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -3.3595805, y: 0.2, z: 199.58223}
+    - {x: -3.383189, y: 0.2, z: 200.622}
+    - {x: -3.5977974, y: 0.2, z: 209.79535}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 16
+    typeId: 2
+    startIntersectionId: 13
+    endIntersectionId: 7
+    oneWay: 1
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -33.21956, y: 0.2, z: 0.41973877}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 7.1308594, y: -0.047457024, z: 0.31813312}
+      manualHandles: 1
+    - position: {x: -11.826984, y: 0.057628967, z: 1.374138}
+      inHandle: {x: -7.1308575, y: 0.04745701, z: -0.31813312}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 1
+    points:
+    - {x: -33.21956, y: 0.2, z: 0.41973877}
+    - {x: -22.523272, y: 0.2, z: 0.8969383}
+    - {x: -11.826984, y: 0.2, z: 1.374138}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 17
+    typeId: 1
+    startIntersectionId: 14
+    endIntersectionId: 22
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -3.1676967, y: 0, z: 1.7604598}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0.009156704, y: 0, z: 0.048454523}
+      manualHandles: 1
+    - position: {x: -3.1402516, y: 0, z: 1.9058281}
+      inHandle: {x: -0.009140015, y: 0, z: -0.04845774}
+      outHandle: {x: 0.608769, y: 0, z: 3.2275224}
+      manualHandles: 1
+    - position: {x: -1.3704553, y: 0, z: 11.598884}
+      inHandle: {x: -0.5533843, y: -0, z: -3.2374785}
+      outHandle: {x: 0.5514786, y: 0, z: 3.2263296}
+      manualHandles: 0
+    - position: {x: 0.17412472, y: 0, z: 21.29601}
+      inHandle: {x: -0.46276313, y: -0, z: -3.2402442}
+      outHandle: {x: 0.46090963, y: 0, z: 3.227266}
+      manualHandles: 0
+    - position: {x: 1.4002023, y: 0, z: 30.99889}
+      inHandle: {x: -0.3443481, y: -0, z: -3.2417755}
+      outHandle: {x: 0.3431444, y: 0, z: 3.2304435}
+      manualHandles: 0
+    - position: {x: 2.2361937, y: 0, z: 40.70882}
+      inHandle: {x: -0.20641083, y: -0, z: -3.242053}
+      outHandle: {x: 0.20599172, y: 0, z: 3.23547}
+      manualHandles: 0
+    - position: {x: 2.6371017, y: 0, z: 50.426617}
+      inHandle: {x: -0.05857972, y: -0, z: -3.2414913}
+      outHandle: {x: 0.05857968, y: 0, z: 3.241489}
+      manualHandles: 0
+    - position: {x: 2.5875776, y: 0, z: 60.152546}
+      inHandle: {x: 0.08895361, y: -0, z: -3.2407978}
+      outHandle: {x: -0.08913469, y: 0, z: 3.2473953}
+      manualHandles: 0
+    - position: {x: 2.10297, y: 0, z: 69.886345}
+      inHandle: {x: 0.22619836, y: -0, z: -3.2407339}
+      outHandle: {x: -0.22699173, y: 0, z: 3.2521005}
+      manualHandles: 0
+    - position: {x: 1.2282767, y: 0, z: 79.62719}
+      inHandle: {x: 0.3440014, y: -0, z: -3.241812}
+      outHandle: {x: -0.33251977, y: 0, z: 3.133606}
+      manualHandles: 1
+    - position: {x: 0.0835476, y: 0, z: 89.01126}
+      inHandle: {x: 0.41677082, y: 0, z: -3.1235657}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 1
+    points:
+    - {x: -3.1676967, y: 0.2, z: 1.7604598}
+    - {x: -3.1402516, y: 0.2, z: 1.9058281}
+    - {x: -1.3704553, y: 0.2, z: 11.598884}
+    - {x: 0.17412472, y: 0.2, z: 21.29601}
+    - {x: 1.4002023, y: 0.2, z: 30.99889}
+    - {x: 2.2361937, y: 0.2, z: 40.70882}
+    - {x: 2.6371017, y: 1.2371266, z: 50.426617}
+    - {x: 2.5875776, y: 0.2, z: 60.152546}
+    - {x: 2.10297, y: 0.2, z: 69.886345}
+    - {x: 1.2282767, y: 0.2, z: 79.62719}
+    - {x: 0.0835476, y: 0.2, z: 89.01126}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 18
+    typeId: 1
+    startIntersectionId: 16
+    endIntersectionId: 25
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 29.244423, y: 0, z: -10.367049}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: -10.804041, y: 0, z: 4.0425034}
+      manualHandles: 0
+    - position: {x: -3.1676967, y: 0, z: 1.7604598}
+      inHandle: {x: 10.804041, y: -0, z: -4.0425034}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 29.244423, y: 0, z: -10.367049}
+    - {x: 13.0383625, y: 0.2, z: -4.3032947}
+    - {x: -3.1676967, y: 0.2, z: 1.7604598}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 19
+    typeId: 1
+    startIntersectionId: 19
+    endIntersectionId: 16
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 29.244423, y: 0, z: -10.367049}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 1.3079319, y: 0, z: -0.0050754547}
+      manualHandles: 1
+    - position: {x: 33.167778, y: 0, z: -10.333521}
+      inHandle: {x: -1.3074627, y: 0, z: -0.028587341}
+      outHandle: {x: 2.5121834, y: 0, z: 0.054928858}
+      manualHandles: 1
+    - position: {x: 40.69812, y: 0, z: -9.98612}
+      inHandle: {x: -2.5061946, y: -0, z: -0.1818546}
+      outHandle: {x: 2.4991238, y: 0, z: 0.18134154}
+      manualHandles: 0
+    - position: {x: 48.178513, y: 0, z: -9.244311}
+      inHandle: {x: -2.4858398, y: -0, z: -0.31481123}
+      outHandle: {x: 2.4858394, y: 0, z: 0.31481117}
+      manualHandles: 0
+    - position: {x: 55.60767, y: 0, z: -8.097948}
+      inHandle: {x: -2.4654322, y: -0, z: -0.4473789}
+      outHandle: {x: 2.4724054, y: 0, z: 0.44864428}
+      manualHandles: 0
+    - position: {x: 62.986874, y: 0, z: -6.5571766}
+      inHandle: {x: -2.4465644, y: -0, z: -0.5730556}
+      outHandle: {x: 2.4589565, y: 0, z: 0.5759582}
+      manualHandles: 0
+    - position: {x: 70.31993, y: 0, z: -4.651914}
+      inHandle: {x: -2.430609, y: -0, z: -0.68580925}
+      outHandle: {x: 2.4457872, y: 0, z: 0.6900918}
+      manualHandles: 0
+    - position: {x: 77.612915, y: 0, z: -2.4303615}
+      inHandle: {x: -2.4185338, y: -0, z: -0.7802537}
+      outHandle: {x: 2.43346, y: 0, z: 0.7850691}
+      manualHandles: 0
+    - position: {x: 84.87397, y: 0, z: 0.043427944}
+      inHandle: {x: -2.4109042, y: -0, z: -0.8518225}
+      outHandle: {x: 2.422691, y: 0, z: 0.8559871}
+      manualHandles: 0
+    - position: {x: 92.112785, y: 0, z: 2.6927435}
+      inHandle: {x: -2.4078386, y: -0, z: -0.8969166}
+      outHandle: {x: 2.4143202, y: 0, z: 0.89933103}
+      manualHandles: 0
+    - position: {x: 99.34021, y: 0, z: 5.4320827}
+      inHandle: {x: -2.4091415, y: -0, z: -0.91311306}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 29.244423, y: 0, z: -10.367049}
+    - {x: 33.167778, y: 0, z: -10.333521}
+    - {x: 40.69812, y: 0, z: -9.98612}
+    - {x: 48.178513, y: 0, z: -9.244311}
+    - {x: 55.60767, y: 0, z: -8.097948}
+    - {x: 62.986874, y: 0, z: -6.5571766}
+    - {x: 70.31993, y: 0.2, z: -4.651914}
+    - {x: 77.612915, y: 0.2, z: -2.4303615}
+    - {x: 84.87397, y: 0.2, z: 0.043427944}
+    - {x: 92.112785, y: 0.2, z: 2.6927435}
+    - {x: 99.34021, y: 0.2, z: 5.4320827}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 20
+    typeId: 3
+    startIntersectionId: 19
+    endIntersectionId: 2
+    oneWay: 1
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -11.067217, y: 0.2, z: -3.537519}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0.42710397, y: 0, z: 0.5787416}
+      manualHandles: 0
+    - position: {x: -9.785905, y: 0.2, z: -1.8012941}
+      inHandle: {x: -0.046117183, y: -0, z: -0.7177972}
+      outHandle: {x: 0.14226662, y: 0, z: 2.214328}
+      manualHandles: 0
+    - position: {x: -10.530673, y: 0.2, z: 4.813592}
+      inHandle: {x: 1.198919, y: 0.08362797, z: -1.8652316}
+      outHandle: {x: -0.66250575, y: -0.046211634, z: 1.0307006}
+      manualHandles: 0
+    - position: {x: -11.826984, y: 0.057628967, z: 1.374138}
+      inHandle: {x: 0.43210378, y: 0.04745701, z: 1.1464847}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -11.067217, y: 0.2, z: -3.537519}
+    - {x: -10.28369, y: 0.2, z: -2.7215524}
+    - {x: -9.785905, y: 0.2, z: -1.8012941}
+    - {x: -9.655344, y: 0.2, z: 1.6370602}
+    - {x: -9.888503, y: 0.2, z: 3.304511}
+    - {x: -10.530673, y: 0.2, z: 4.813592}
+    - {x: -10.7588625, y: 0.2, z: 5.0087504}
+    - {x: -10.951953, y: 0.2, z: 4.8722286}
+    - {x: -11.265228, y: 0.2, z: 3.9103096}
+    - {x: -11.535307, y: 0.2, z: 2.5401683}
+    - {x: -11.826984, y: 0.2, z: 1.374138}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 21
+    typeId: 1
+    startIntersectionId: 20
+    endIntersectionId: 22
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -11.826984, y: 0.057628967, z: 1.374138}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 2.8864288, y: -0.019209653, z: 0.12877393}
+      manualHandles: 1
+    - position: {x: -3.1676967, y: 0, z: 1.7604598}
+      inHandle: {x: -2.8864295, y: 0.019209657, z: -0.12877393}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 1
+    points:
+    - {x: -11.826984, y: 0.2, z: 1.374138}
+    - {x: -3.1676967, y: 0.2, z: 1.7604598}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 22
+    typeId: 1
+    startIntersectionId: 22
+    endIntersectionId: 16
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 33.214314, y: 0.2, z: -100.162125}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: -9.693421, y: 0, z: 0.0439504}
+      manualHandles: 0
+    - position: {x: 4.1340485, y: 0.2, z: -100.03027}
+      inHandle: {x: 6.3372803, y: -0, z: -7.3350697}
+      outHandle: {x: -8.510001, y: 0, z: 9.84988}
+      manualHandles: 0
+    - position: {x: -0.4091835, y: 0.2, z: -61.24469}
+      inHandle: {x: 0.29847285, y: -0.50199217, z: -13.003814}
+      outHandle: {x: -0.6613344, y: 1.1122776, z: 28.812902}
+      manualHandles: 0
+    - position: {x: 1.2612801, y: 5.031619, z: 25.129997}
+      inHandle: {x: -0.09458018, y: 0.038390182, z: -28.841764}
+      outHandle: {x: 0.070055805, y: -0.028435715, z: 21.363176}
+      manualHandles: 0
+    - position: {x: 0.0835476, y: 0, z: 89.01126}
+      inHandle: {x: 0.39257747, y: 1.6772064, z: -21.293755}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 33.214314, y: 0.2, z: -100.162125}
+    - {x: 29.441626, y: 0.2, z: -100.444695}
+    - {x: 25.47229, y: 0.2, z: -101.15448}
+    - {x: 17.415628, y: 0.2, z: -102.83037}
+    - {x: 13.564281, y: 0.2, z: -103.28382}
+    - {x: 9.988243, y: 0.2, z: -103.139175}
+    - {x: 8.340336, y: 0.2, z: -102.76247}
+    - {x: 6.805502, y: 0.2, z: -102.14011}
+    - {x: 5.39849, y: 0.2, z: -101.24005}
+    - {x: 4.1340485, y: 0.2, z: -100.03027}
+    - {x: 2.6838996, y: 0.2, z: -98.11435}
+    - {x: 1.5077723, y: 0.2, z: -96.06907}
+    - {x: 0.58026695, y: 0.2, z: -93.90764}
+    - {x: -0.124015585, y: 0.2, z: -91.64327}
+    - {x: -0.9645062, y: 0.2, z: -86.858444}
+    - {x: -1.2168907, y: 0.2, z: -81.820206}
+    - {x: -0.7701042, y: 0.2, z: -71.40578}
+    - {x: -0.4773152, y: 0.2, z: -66.240776}
+    - {x: -0.4091835, y: 0.2, z: -61.24469}
+    - {x: -0.5311603, y: 1.2345517, z: -50.443783}
+    - {x: -0.44047436, y: 2.853757, z: -39.64908}
+    - {x: -0.19620198, y: 0.2, z: -28.858042}
+    - {x: 0.14258033, y: 0.2, z: -18.068169}
+    - {x: 0.5167961, y: 3.8130116, z: -7.2769437}
+    - {x: 0.86736894, y: 6.1, z: 3.518148}
+    - {x: 1.1352224, y: 6.1, z: 14.319623}
+    - {x: 1.2612801, y: 5.031619, z: 25.129997}
+    - {x: 1.1620203, y: 2.6316788, z: 41.1296}
+    - {x: 0.8459013, y: 0.23661923, z: 57.096664}
+    - {x: 0.4430385, y: 0.2, z: 73.050705}
+    - {x: 0.0835476, y: 0.2, z: 89.01126}
+    groundMissIndices: 17000000
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 23
+    typeId: 1
+    startIntersectionId: 23
+    endIntersectionId: 25
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0.0835476, y: 0, z: 89.01126}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: -0.016124435, y: 0, z: 0.12084961}
+      manualHandles: 1
+    - position: {x: 0.03508091, y: 0, z: 89.37379}
+      inHandle: {x: 0.01618589, y: 0, z: -0.12083435}
+      outHandle: {x: -0.43604723, y: 0, z: 3.2553613}
+      manualHandles: 1
+    - position: {x: -1.3833326, y: 0, z: 99.124466}
+      inHandle: {x: 0.4917554, y: -0, z: -3.2474132}
+      outHandle: {x: -0.49273002, y: 0, z: 3.2538493}
+      manualHandles: 0
+    - position: {x: -2.9183252, y: 0, z: 108.87724}
+      inHandle: {x: 0.5116642, y: -0, z: -3.2509258}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0.0835476, y: 0.2, z: 89.01126}
+    - {x: 0.03508091, y: 0.2, z: 89.37379}
+    - {x: -1.3833326, y: 0.2, z: 99.124466}
+    - {x: -2.9183252, y: 0.2, z: 108.87724}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 24
+    typeId: 1
+    startIntersectionId: 25
+    endIntersectionId: 4
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -94.64422, y: 0.2, z: -0.03530121}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 11.2046585, y: 0, z: 0.32540512}
+      manualHandles: 0
+    - position: {x: -61.030243, y: 0.2, z: 0.94091415}
+      inHandle: {x: -11.209074, y: -0, z: -0.083037935}
+      outHandle: {x: 9.271601, y: 0, z: 0.068684936}
+      manualHandles: 0
+    - position: {x: -33.21956, y: 0.2, z: 0.41973877}
+      inHandle: {x: -9.270227, y: -0, z: 0.17372513}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -94.64422, y: 0.2, z: -0.03530121}
+    - {x: -77.83888, y: 0.2, z: 0.54369414}
+    - {x: -61.030243, y: 0.2, z: 0.94091415}
+    - {x: -47.12439, y: 0.2, z: 0.7712302}
+    - {x: -33.21956, y: 0.2, z: 0.41973877}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 25
+    typeId: 4
+    startIntersectionId: 26
+    endIntersectionId: 14
+    oneWay: 1
+    modifiedAfterImport: 0
   intersections:
   - position: {x: -5.0266285, y: 0, z: -7.7851205}
     id: 1
@@ -1672,11 +2049,31 @@ MonoBehaviour:
     id: 8
   - position: {x: 195.65459, y: 0, z: 202.30693}
     id: 9
+  - position: {x: -134.51099, y: 0.2, z: 200.3198}
+    id: 11
+  - position: {x: -3.3595805, y: 0, z: 199.58223}
+    id: 13
+  - position: {x: -33.21956, y: 0.2, z: 0.41973877}
+    id: 14
+  - position: {x: -3.1676967, y: 0, z: 1.7604598}
+    id: 16
+  - position: {x: 29.244423, y: 0, z: -10.367049}
+    id: 19
+  - position: {x: -11.067217, y: 0.2, z: -3.537519}
+    id: 20
+  - position: {x: -11.826984, y: 0.057628967, z: 1.374138}
+    id: 22
+  - position: {x: 33.214314, y: 0.2, z: -100.162125}
+    id: 23
+  - position: {x: 0.0835476, y: 0, z: 89.01126}
+    id: 25
+  - position: {x: -94.64422, y: 0.2, z: -0.03530121}
+    id: 26
   runtimeAsset: {fileID: 11400000, guid: b352c22779b201d4aa1dc7634ae295a9, type: 2}
   settings: {fileID: 11400000, guid: 4d88b9a7b40a9b84280151719d824047, type: 2}
   mapAsset: {fileID: 11400000, guid: 324b19f5f03f9504a8357da4732af60c, type: 2}
   gridCellSize: 50
   formatVersion: 1
-  nextRoadId: 15
-  nextIntersectionId: 11
-  version: 2
+  nextRoadId: 26
+  nextIntersectionId: 28
+  version: 24

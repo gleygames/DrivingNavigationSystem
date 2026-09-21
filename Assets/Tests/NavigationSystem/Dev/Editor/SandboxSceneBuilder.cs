@@ -48,7 +48,8 @@ namespace Gley.NavigationSystem.Dev
         public void CreateSandboxScene()
         {
             Scene scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            BuildCityObjects();
+            GameObject root = BuildCityObjects();
+            new SandboxMaterials().Apply(root);
             EnsureSceneFolderExists();
             EditorSceneManager.SaveScene(scene, ScenePath);
         }
