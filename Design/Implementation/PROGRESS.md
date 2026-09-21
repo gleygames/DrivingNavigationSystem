@@ -16,7 +16,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 ## Phase 3 — Core data
 - [x] S06 Navigation Settings asset (2026-09-21)
 - [x] S07 Coordinate conversions and floating origin shift (2026-09-21)
-- [ ] S08 Road network runtime data and builder
+- [x] S08 Road network runtime data and builder (2026-09-21)
 - [ ] S09 Road spatial grid
 - [ ] S10 Map asset and data format versions
 
