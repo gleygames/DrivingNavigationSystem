@@ -10,7 +10,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 
 ## Phase 2 — Rendering spike
 - [x] S03 Route line mesh builder (2026-09-18)
-- [ ] S04 [HARD] Route line shader, graphic and Route Line Lab
+- [x] S04 [HARD] Route line shader, graphic and Route Line Lab (2026-09-21)
 - [ ] S05 Route line chunks
 
 ## Phase 3 — Core data
@@ -91,9 +91,10 @@ Added by the implementing agent when a step passes: anything later steps need to
 - S01: `Runtime/AssemblyInfo.cs` and `Editor/AssemblyInfo.cs` had no `using System.Runtime.CompilerServices;` line before this step; it was added along with the `InternalsVisibleTo` attributes.
 - S02: In `Dev.Editor`, `System.Random` must be fully qualified (`new System.Random(...)`) — a bare `Random` is ambiguous with `UnityEngine.Random` once both `using System;` and `using UnityEngine;` are present. `SandboxSceneBuilderTests` uses `EditorSceneManager.NewScene(..., NewSceneMode.Single)`, not `Additive` as in the plan — `Additive` throws `InvalidOperationException` in the Test Runner because the active untitled scene isn't saved. `SandboxSceneBuilder` exposes `RoadObjects` (`IReadOnlyList<GameObject>`) and `ExpectedRoadObjectCount` (const, = 18) for tests/later steps to check road-segment output; no layer named `Road` exists yet so road segments currently sit on layer `Default`.
 - S03: `RouteLineMeshBuilder.Build` groups vertex pairs internally (one pair per "join point": a plain point, or two pairs for a bevel or a dashed-flag change) and emits a quad between every consecutive pair of groups — this is how the plan's separate bevel/dashed-duplicate rules and the "two triangles per quad" rule combine. When coincident points are skipped (closer than 0.0001 m), the kept segment's dashed flag is taken from the last original segment leading into the next kept point (the plan doesn't specify this interaction).
+- S04: `RouteLineGraphic` must carry `[RequireComponent(typeof(CanvasRenderer))]` — in uGUI 1.0 the base `Graphic` doesn't require it, and without it every rebuild is silently skipped (applies to any future custom `Graphic`). Per the S04 decision, the shader widens in canvas space: hidden property `_CanvasOffsetMatrix` (float4 = 2x2 graphic-to-batch-canvas rotation, times the root/batch canvas scale ratio) is computed by `RouteLineGraphic.UpdateRouteLineVisuals(deltaTime)`, driven by `Canvas.willRenderCanvases`, and set on the materials only when it changes; `_CanvasUnitsPerMeter` is used only for dashes. Internal `CanvasOffsetMatrix` property exposed for tests. The graphic also adds TexCoord1/2 to the root canvas when nested. `raycastTarget` is set false once in `Awake` (hidden serialized `defaultsApplied` flag). The material instance is `HideAndDontSave` and is recreated on enable from the serialized shader. PlayMode tests: a freshly created Overlay canvas rebuilds child graphics once while it settles, so build-count tests use `[UnitySetUp]` with two settle frames, compare against a baseline, and wait with `yield return null` + `Canvas.ForceUpdateCanvases()`.
 
 ## Decisions
 
 Decisions the user makes during implementation (decision points S04, S29, S56, or answers to plan questions), with the date. Format: `YYYY-MM-DD Sxx: <decision>`.
 
-- (none yet)
+- 2026-09-21 S04: Route line shader widens the line in canvas space using a per-graphic `_CanvasOffsetMatrix` updated on `Canvas.willRenderCanvases` (option B), instead of offsetting in graphic-local meters. Same performance as the sub-canvas-only approach and keeps the "one canvas, no sub-canvases" fallback viable. Nested-canvas clipping passed manual check 2, so the fallback is not needed; S05 keeps `useOwnCanvas = true`.
