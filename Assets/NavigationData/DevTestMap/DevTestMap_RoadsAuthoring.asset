@@ -56,7 +56,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 1
-    typeId: 2
+    typeId: 1
     startIntersectionId: 1
     endIntersectionId: 19
     oneWay: 1
@@ -89,7 +89,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 2
-    typeId: 2
+    typeId: 1
     startIntersectionId: 1
     endIntersectionId: 16
     oneWay: 0
@@ -177,7 +177,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 3
-    typeId: 2
+    typeId: 1
     startIntersectionId: 2
     endIntersectionId: 3
     oneWay: 0
@@ -224,7 +224,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 4
-    typeId: 2
+    typeId: 1
     startIntersectionId: 2
     endIntersectionId: 5
     oneWay: 1
@@ -286,7 +286,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 5
-    typeId: 4
+    typeId: 1
     startIntersectionId: 3
     endIntersectionId: 6
     oneWay: 1
@@ -358,7 +358,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 6
-    typeId: 2
+    typeId: 1
     startIntersectionId: 4
     endIntersectionId: 5
     oneWay: 0
@@ -425,7 +425,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 7
-    typeId: 2
+    typeId: 1
     startIntersectionId: 4
     endIntersectionId: 13
     oneWay: 1
@@ -467,7 +467,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 8
-    typeId: 2
+    typeId: 1
     startIntersectionId: 5
     endIntersectionId: 6
     oneWay: 0
@@ -509,7 +509,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 9
-    typeId: 3
+    typeId: 1
     startIntersectionId: 5
     endIntersectionId: 8
     oneWay: 0
@@ -581,7 +581,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 10
-    typeId: 4
+    typeId: 1
     startIntersectionId: 5
     endIntersectionId: 9
     oneWay: 1
@@ -705,7 +705,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 12
-    typeId: 3
+    typeId: 1
     startIntersectionId: 7
     endIntersectionId: 8
     oneWay: 0
@@ -747,7 +747,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 13
-    typeId: 4
+    typeId: 1
     startIntersectionId: 8
     endIntersectionId: 9
     oneWay: 1
@@ -844,7 +844,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 1
-    typeId: 3
+    typeId: 1
     startIntersectionId: 1
     endIntersectionId: 2
     oneWay: 0
@@ -1013,7 +1013,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 3
-    typeId: 2
+    typeId: 1
     startIntersectionId: 2
     endIntersectionId: 3
     oneWay: 1
@@ -1060,7 +1060,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 4
-    typeId: 3
+    typeId: 1
     startIntersectionId: 2
     endIntersectionId: 5
     oneWay: 0
@@ -1122,7 +1122,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 5
-    typeId: 4
+    typeId: 1
     startIntersectionId: 3
     endIntersectionId: 6
     oneWay: 1
@@ -1194,7 +1194,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 6
-    typeId: 2
+    typeId: 1
     startIntersectionId: 4
     endIntersectionId: 5
     oneWay: 1
@@ -1266,7 +1266,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 7
-    typeId: 2
+    typeId: 1
     startIntersectionId: 4
     endIntersectionId: 7
     oneWay: 0
@@ -1308,7 +1308,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 8
-    typeId: 2
+    typeId: 1
     startIntersectionId: 5
     endIntersectionId: 6
     oneWay: 0
@@ -1350,7 +1350,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 9
-    typeId: 3
+    typeId: 1
     startIntersectionId: 5
     endIntersectionId: 8
     oneWay: 1
@@ -1422,7 +1422,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 10
-    typeId: 4
+    typeId: 1
     startIntersectionId: 5
     endIntersectionId: 9
     oneWay: 0
@@ -1546,7 +1546,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 12
-    typeId: 3
+    typeId: 1
     startIntersectionId: 7
     endIntersectionId: 8
     oneWay: 1
@@ -1588,7 +1588,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 13
-    typeId: 4
+    typeId: 1
     startIntersectionId: 8
     endIntersectionId: 9
     oneWay: 0
@@ -1714,7 +1714,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 16
-    typeId: 2
+    typeId: 1
     startIntersectionId: 13
     endIntersectionId: 7
     oneWay: 1
@@ -1737,7 +1737,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 17
-    typeId: 2
+    typeId: 1
     startIntersectionId: 14
     endIntersectionId: 22
     oneWay: 0
@@ -1804,7 +1804,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 18
-    typeId: 2
+    typeId: 1
     startIntersectionId: 16
     endIntersectionId: 25
     oneWay: 0
@@ -1827,7 +1827,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 19
-    typeId: 2
+    typeId: 1
     startIntersectionId: 19
     endIntersectionId: 16
     oneWay: 0
@@ -1899,7 +1899,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 20
-    typeId: 2
+    typeId: 1
     startIntersectionId: 19
     endIntersectionId: 2
     oneWay: 1
@@ -1938,7 +1938,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 21
-    typeId: 2
+    typeId: 1
     startIntersectionId: 20
     endIntersectionId: 22
     oneWay: 0
@@ -1960,7 +1960,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 22
-    typeId: 2
+    typeId: 1
     startIntersectionId: 22
     endIntersectionId: 16
     oneWay: 0
@@ -2023,7 +2023,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 23
-    typeId: 2
+    typeId: 1
     startIntersectionId: 23
     endIntersectionId: 25
     oneWay: 0
@@ -2055,7 +2055,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 24
-    typeId: 2
+    typeId: 1
     startIntersectionId: 25
     endIntersectionId: 4
     oneWay: 0
@@ -2086,7 +2086,7 @@ MonoBehaviour:
     speedOverride: 10
     widthOverride: 4
     id: 25
-    typeId: 2
+    typeId: 1
     startIntersectionId: 26
     endIntersectionId: 14
     oneWay: 1
@@ -2131,7 +2131,7 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 26
-    typeId: 4
+    typeId: 1
     startIntersectionId: 35
     endIntersectionId: 32
     oneWay: 1
@@ -2159,13 +2159,13 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 27
-    typeId: 4
+    typeId: 1
     startIntersectionId: 29
     endIntersectionId: 30
     oneWay: 1
     modifiedAfterImport: 0
   - keyPoints:
-    - position: {x: -245.09526, y: 0.2, z: 199.8745}
+    - position: {x: -245.59238, y: 0.2, z: 196.17053}
       inHandle: {x: 0, y: 0, z: 0}
       outHandle: {x: -7.2711487, y: 0, z: -0.12458801}
       manualHandles: 1
@@ -2174,21 +2174,21 @@ MonoBehaviour:
       outHandle: {x: 0, y: 0, z: 0}
       manualHandles: 1
     points:
-    - {x: -245.09526, y: 0.2, z: 199.8745}
-    - {x: -247.71515, y: 0.2, z: 199.8413}
-    - {x: -250.12263, y: 0.2, z: 199.83083}
-    - {x: -252.31944, y: 0.2, z: 199.83672}
-    - {x: -254.30731, y: 0.2, z: 199.85252}
-    - {x: -256.08798, y: 0.2, z: 199.87192}
-    - {x: -257.66315, y: 0.2, z: 199.88844}
-    - {x: -259.03458, y: 0.2, z: 199.89572}
+    - {x: -245.59238, y: 0.2, z: 196.17053}
+    - {x: -248.19092, y: 0.2, z: 196.2965}
+    - {x: -250.54208, y: 0.2, z: 196.70561}
+    - {x: -252.65929, y: 0.2, z: 197.3047}
+    - {x: -254.55586, y: 0.2, z: 198.00053}
+    - {x: -256.24527, y: 0.2, z: 198.69995}
+    - {x: -257.7408, y: 0.2, z: 199.3097}
+    - {x: -259.05594, y: 0.2, z: 199.73657}
     - {x: -260.204, y: 0.2, z: 199.88737}
     groundMissIndices: 
     sourceTag: 
     speedOverride: 0
     widthOverride: 0
     id: 28
-    typeId: 4
+    typeId: 1
     startIntersectionId: 33
     endIntersectionId: 29
     oneWay: 1
@@ -2213,9 +2213,63 @@ MonoBehaviour:
     speedOverride: 0
     widthOverride: 0
     id: 29
-    typeId: 4
+    typeId: 1
     startIntersectionId: 34
     endIntersectionId: 35
+    oneWay: 1
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -13.193818, y: 0, z: 293.345}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: -26.96425, y: 0.06666667, z: 2.5307212}
+      manualHandles: 0
+    - position: {x: -94.08656, y: 0.2, z: 300.93716}
+      inHandle: {x: 26.96425, y: -0.06666667, z: -2.5307212}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -13.193818, y: 0, z: 293.345}
+    - {x: -23.305412, y: 0.2, z: 294.294}
+    - {x: -33.417007, y: 0.2, z: 295.24304}
+    - {x: -43.5286, y: 0.2, z: 296.19205}
+    - {x: -53.64019, y: 0.2, z: 297.14108}
+    - {x: -63.751785, y: 0.2, z: 298.0901}
+    - {x: -73.86337, y: 0.2, z: 299.03912}
+    - {x: -83.974976, y: 0.2, z: 299.98813}
+    - {x: -94.08656, y: 0.2, z: 300.93716}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 30
+    typeId: 1
+    startIntersectionId: 36
+    endIntersectionId: 37
+    oneWay: 1
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 82.038414, y: 0.2, z: 299.69534}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: -22.01185, y: 0, z: 0.0031127927}
+      manualHandles: 0
+    - position: {x: 16.002863, y: 0.2, z: 299.70468}
+      inHandle: {x: 22.01185, y: -0, z: -0.0031127927}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 82.038414, y: 0.2, z: 299.69534}
+    - {x: 65.529526, y: 0.2, z: 299.6977}
+    - {x: 49.020638, y: 0.2, z: 299.7}
+    - {x: 32.51175, y: 0.2, z: 299.70233}
+    - {x: 16.002863, y: 0.2, z: 299.70468}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 31
+    typeId: 1
+    startIntersectionId: 38
+    endIntersectionId: 39
     oneWay: 1
     modifiedAfterImport: 0
   intersections:
@@ -2279,17 +2333,25 @@ MonoBehaviour:
     id: 30
   - position: {x: -245.22716, y: 0.2, z: 199.68523}
     id: 32
-  - position: {x: -245.09526, y: 0.2, z: 199.8745}
+  - position: {x: -245.59238, y: 0.2, z: 196.17053}
     id: 33
   - position: {x: -199.92639, y: 0.2, z: 130.87537}
     id: 34
   - position: {x: -199.71323, y: 0.2, z: 178.62491}
     id: 35
+  - position: {x: -13.193818, y: 0, z: 293.345}
+    id: 36
+  - position: {x: -94.08656, y: 0.2, z: 300.93716}
+    id: 37
+  - position: {x: 82.038414, y: 0.2, z: 299.69534}
+    id: 38
+  - position: {x: 16.002863, y: 0.2, z: 299.70468}
+    id: 39
   runtimeAsset: {fileID: 11400000, guid: b352c22779b201d4aa1dc7634ae295a9, type: 2}
   settings: {fileID: 11400000, guid: 4d88b9a7b40a9b84280151719d824047, type: 2}
   mapAsset: {fileID: 11400000, guid: 324b19f5f03f9504a8357da4732af60c, type: 2}
   gridCellSize: 60
   formatVersion: 1
-  nextRoadId: 30
-  nextIntersectionId: 36
-  version: 923
+  nextRoadId: 32
+  nextIntersectionId: 40
+  version: 979
