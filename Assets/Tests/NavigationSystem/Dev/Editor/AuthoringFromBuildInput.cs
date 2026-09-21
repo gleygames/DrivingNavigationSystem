@@ -8,6 +8,12 @@ namespace Gley.NavigationSystem.Dev
         public RoadNetworkAuthoring Convert(RoadNetworkBuildInput input)
         {
             RoadNetworkAuthoring authoring = ScriptableObject.CreateInstance<RoadNetworkAuthoring>();
+            Fill(authoring, input);
+            return authoring;
+        }
+
+        public void Fill(RoadNetworkAuthoring authoring, RoadNetworkBuildInput input)
+        {
             RoadCurve curve = new RoadCurve();
 
             int maxIntersectionId = 0;
@@ -51,8 +57,6 @@ namespace Gley.NavigationSystem.Dev
 
             AdvanceIntersectionIdPast(authoring, maxIntersectionId);
             AdvanceRoadIdPast(authoring, maxRoadId);
-
-            return authoring;
         }
 
         private void AdvanceIntersectionIdPast(RoadNetworkAuthoring authoring, int maxId)
