@@ -119,7 +119,37 @@ namespace Gley.NavigationSystem.Dev
             serializedFollow.ApplyModifiedPropertiesWithoutUndo();
 
             minimapObject.AddComponent<DevMinimapCarMarker>();
+
+            GameObject fullMapObject = CreateFullMap(canvasObject, manager);
+
+            MinimapTapToOpen tapToOpen = minimapObject.AddComponent<MinimapTapToOpen>();
+            SerializedObject serializedTapToOpen = new SerializedObject(tapToOpen);
+            serializedTapToOpen.FindProperty("fullMap").objectReferenceValue = fullMapObject.GetComponent<MapViewInteractive>();
+            serializedTapToOpen.ApplyModifiedPropertiesWithoutUndo();
+
             return followCar;
+        }
+
+        private GameObject CreateFullMap(GameObject canvasObject, NavigationManager manager)
+        {
+            GameObject fullMapObject = new GameObject("FullMap", typeof(RectTransform));
+            fullMapObject.transform.SetParent(canvasObject.transform, false);
+            RectTransform fullMapRect = fullMapObject.GetComponent<RectTransform>();
+            fullMapRect.anchorMin = Vector2.zero;
+            fullMapRect.anchorMax = Vector2.one;
+            fullMapRect.offsetMin = Vector2.zero;
+            fullMapRect.offsetMax = Vector2.zero;
+
+            MapView fullMapView = fullMapObject.AddComponent<MapView>();
+            SerializedObject serializedFullMapView = new SerializedObject(fullMapView);
+            serializedFullMapView.FindProperty("manager").objectReferenceValue = manager;
+            serializedFullMapView.ApplyModifiedPropertiesWithoutUndo();
+
+            fullMapObject.AddComponent<MapViewInteractive>();
+            fullMapObject.AddComponent<PointerInputAdapter>();
+            fullMapObject.SetActive(false);
+
+            return fullMapObject;
         }
     }
 }

@@ -2045,6 +2045,6 @@ MonoBehaviour:
   mapAsset: {fileID: 11400000, guid: 324b19f5f03f9504a8357da4732af60c, type: 2}
   gridCellSize: 50
   formatVersion: 1
-  nextRoadId: 90
-  nextIntersectionId: 54
-  version: 3
+  nextRoadId: 92
+  nextIntersectionId: 56
+  version: 5
