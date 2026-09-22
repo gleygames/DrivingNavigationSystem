@@ -69,14 +69,14 @@ All view MonoBehaviours use `[DefaultExecutionOrder(100)]` (after the Manager) a
 2. `Runtime/UI/MapViewFollowCar.cs` (MonoBehaviour, requires `MapView`)
    - Serialized (design defaults): `rotationMode` (`HeadingUp`/`NorthUp`), `carOffsetFromBottom` (0.3), `rotationSmoothing` (0.25 s), `speedZoom` (bool true), speed zoom values, `round` (bool, true for the round minimap).
    - Each frame (unscaled time for smoothing):
-     - Target rotation: heading-up → minus the car's **nose** map angle (design: nose, not movement); north-up → 0. Smoothly damped.
+     - Target rotation: heading-up → the **matched road's direction** (`NavigationManager.RoadHeading`, oriented toward the nose) while `HasRoadHeading`; otherwise the car's **nose** map angle with a dead zone (`noseDeadZoneDegrees`, default 3°). Never the movement direction. North-up → 0. Smoothly damped: `rotationSmoothing` (0.25 s) normally, `turnSmoothing` (0.8 s) from a target jump > `turnAngleThreshold` (20°, e.g. a road change) until within 2° of the target. (Changed 2026-09-22, user request: see Decisions.)
      - Zoom: speed zoom (using the Manager's speed) smoothed, capped by `MaxZoomToFitMap`.
      - Desired center: the car's map position shifted so the car sits at 30% from the bottom (heading-up); centered in north-up.
      - Clamp the center (`ClampCenter`). The player marker is **not** clamped: it's drawn at its true map position, so it slides away from its spot at the edges automatically.
      - **Car outside the map:** the player marker is pinned to the view edge (S47 draws markers; this behavior sets a flag the marker layer uses).
    - `SetRotationMode`, `ToggleRotationMode` (public).
 
-**Tests:** `EditMode/MinimapMathTests.cs`: `SpeedZoom_Slow_150`, `SpeedZoom_Fast_500`, `SpeedZoom_Between_Linear`, `MaxZoomToFitMap_RoundUsesDiameter`, `ClampCenter_Round_InsideMap_Unchanged`, `ClampCenter_Round_NearEdge_Clamped`, `ClampCenter_Rect_Rotated45_UsesDiagonalExtents`, `SmoothAngle_WrapsAround180`. `PlayMode/MapViewFollowCarTests.cs`: `HeadingUp_RotationFollowsNose_NotMovement` (reverse the car: rotation unchanged), `NorthUp_RotationZero`, `NearMapEdge_CenterClamped`.
+**Tests:** `EditMode/MinimapMathTests.cs`: `SpeedZoom_Slow_150`, `SpeedZoom_Fast_500`, `SpeedZoom_Between_Linear`, `MaxZoomToFitMap_RoundUsesDiameter`, `ClampCenter_Round_InsideMap_Unchanged`, `ClampCenter_Round_NearEdge_Clamped`, `ClampCenter_Rect_Rotated45_UsesDiagonalExtents`, `SmoothAngle_WrapsAround180`. `PlayMode/MapViewFollowCarTests.cs`: `HeadingUp_Reversing_RotationUnchanged`, `HeadingUp_WeavingOnRoad_RotationFollowsRoad`, `HeadingUp_OffRoad_FollowsNose`, `HeadingUp_OffRoad_SmallNoseChange_IgnoredByDeadZone`, `HeadingUp_LargeHeadingChange_UsesTurnSmoothing`, `NorthUp_RotationZero`, `NearMapEdge_CenterClamped`.
 
 **Manual checks:** drive to the city edge: the minimap stops moving and the car marker slides toward the edge; reversing doesn't spin the map.
 

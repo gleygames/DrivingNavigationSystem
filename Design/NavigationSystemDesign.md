@@ -272,6 +272,8 @@ Status: first design pass + four review passes complete (2026-09-18). Decisions 
 
 - **North** = the map's "up" (the rectangle's forward direction), so the full map and a north-up minimap always match. Games needing world north keep the rectangle at 0°.
 - **Rotation**: heading-up (default) or north-up, switchable at runtime (e.g. tap the compass). Compass shown. Smooth, damped rotation.
+  - **Heading-up follows the road, not the car**: while the car is matched to a road, "up" is the matched road's direction at the car's point (like Google Maps), so weaving inside the lane doesn't rotate the map; curves still rotate it smoothly. Of the road's two directions, the one closer to the car's nose is used (reversing never spins the map; a real U-turn flips it, with hysteresis so driving across a road doesn't flicker).
+  - **Off road / lost / no road data**: falls back to the car's nose heading with a dead zone (default 3°): smaller nose changes are ignored.
 - **Car position**: offset setting (default ~30% from the bottom) in heading-up. North-up always centers.
 - **Map edge clamp**: the view never shows outside the map. When the view cannot move further, the player marker slides from its usual spot toward the edge, and returns smoothly when the car drives away. Round minimap clamps by radius (rotation-independent); rectangular heading-up minimap clamps by its rotated corners (recomputed each frame).
 - **Car outside the map area**: the player marker is pinned at the view edge (still showing the car's direction) and an "outside map" event fires. Tracking, routing and rerouting keep working normally.
@@ -478,6 +480,9 @@ Starting points; tune after live tests.
 | Minimap car position | 30% from bottom |
 | Minimap speed zoom | 150 m across at ≤ 20 km/h → 500 m at ≥ 100 km/h (capped to fit inside the map) |
 | Minimap rotation smoothing | 0.25 s |
+| Minimap heading-up source | Matched road direction; nose heading off road |
+| Minimap off-road heading dead zone | 3° |
+| Minimap road-change turn smoothing | 0.8 s (target jumps > 20°, e.g. turning onto another road) |
 | Minimap shape | Round |
 | Minimap route line width | 6 canvas units |
 | Full map zoom-out | Fit |

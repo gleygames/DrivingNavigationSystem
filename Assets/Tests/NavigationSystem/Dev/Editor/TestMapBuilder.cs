@@ -38,17 +38,23 @@ namespace Gley.NavigationSystem.Dev
 
             assets.MapAsset.SetRectangleSize(new Vector2(DefaultRectangleSizeMeters, DefaultRectangleSizeMeters));
 
-            GameObject mapObject = new GameObject("NavigationMap");
-            NavigationMap map = mapObject.AddComponent<NavigationMap>();
-            AssignMapData(map, assets.MapAsset);
-
-            float unitsPerMeter = locator.FindOrCreateSettings().UnitsPerMeter;
-            new MapRectangleSync().SnapObjectToAsset(mapObject.transform, assets.MapAsset, unitsPerMeter);
+            NavigationMap map = CreateMapObject(assets.MapAsset);
 
             EditorUtility.SetDirty(assets.MapAsset);
             AssetDatabase.SaveAssets();
 
-            Selection.activeGameObject = mapObject;
+            Selection.activeGameObject = map.gameObject;
+            return map;
+        }
+
+        public NavigationMap CreateMapObject(MapData data)
+        {
+            GameObject mapObject = new GameObject("NavigationMap");
+            NavigationMap map = mapObject.AddComponent<NavigationMap>();
+            AssignMapData(map, data);
+
+            float unitsPerMeter = new NavigationAssetLocator().FindOrCreateSettings().UnitsPerMeter;
+            new MapRectangleSync().SnapObjectToAsset(mapObject.transform, data, unitsPerMeter);
             return map;
         }
 
