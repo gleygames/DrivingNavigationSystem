@@ -59,7 +59,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S38 [HARD] Navigation Manager: API, preview flow, events and command queue (2026-09-22)
 - [x] S39 Formatter and text adapters (2026-09-22)
 - [x] S40 Navigation Events component (2026-09-22)
-- [ ] S41 Floating origin misconfiguration warning
+- [x] S41 Floating origin misconfiguration warning (2026-09-22)
 
 ## Phase 9 — Map views
 - [ ] S42 Map View core

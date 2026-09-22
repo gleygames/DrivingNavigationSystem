@@ -1288,6 +1288,7 @@ GameObject:
   - component: {fileID: 437392945}
   - component: {fileID: 437392944}
   - component: {fileID: 437392943}
+  - component: {fileID: 437392946}
   m_Layer: 0
   m_Name: NavigationMap
   m_TagString: Untagged
@@ -1308,6 +1309,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 4d88b9a7b40a9b84280151719d824047, type: 2}
+  formatter: {fileID: 0}
   explicitMap: {fileID: 0}
   car: {fileID: 1610346928}
   shiftSource: 0
@@ -1355,6 +1357,73 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &437392946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437392942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3d7a5cabcda9e9408f4a7100e7e9b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  onMapChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onCarChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onPreviewReady:
+    m_PersistentCalls:
+      m_Calls: []
+  onPreviewFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  onPreviewCanceled:
+    m_PersistentCalls:
+      m_Calls: []
+  onNavigationStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  onRerouted:
+    m_PersistentCalls:
+      m_Calls: []
+  onRouteFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  onArrived:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2047718159}
+        m_TargetAssemblyTypeName: Test, Assembly-CSharp
+        m_MethodName: Arrived
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onNavigationStopped:
+    m_PersistentCalls:
+      m_Calls: []
+  onOffRoad:
+    m_PersistentCalls:
+      m_Calls: []
+  onBackOnRoad:
+    m_PersistentCalls:
+      m_Calls: []
+  onOutsideMap:
+    m_PersistentCalls:
+      m_Calls: []
+  onBackInsideMap:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &463132259
 GameObject:
   m_ObjectHideFlags: 0
@@ -5859,6 +5928,65 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2029422639}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2047718157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2047718160}
+  - component: {fileID: 2047718159}
+  - component: {fileID: 2047718158}
+  m_Layer: 0
+  m_Name: Test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2047718158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047718157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 008e9a9fd31ccd74190905bca9575c84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 437392943}
+  destination: {fileID: 2047718160}
+--- !u!114 &2047718159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047718157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0255767969761b148b2fb15a94eb4eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2047718160
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2047718157}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 99.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2058155843
 GameObject:
   m_ObjectHideFlags: 0
@@ -6403,3 +6531,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 873981135}
   - {fileID: 437392945}
+  - {fileID: 2047718160}
