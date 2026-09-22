@@ -147,6 +147,27 @@ namespace Gley.NavigationSystem.Tests
             Assert.AreEqual(6, outIndices.Count);
         }
 
+        [Test]
+        public void Build_VerticalLine_VerticesHaveNonZeroWidthBounds()
+        {
+            List<Vector2> points = new List<Vector2> { new Vector2(300f, 312f), new Vector2(300f, 399.2f) };
+            List<float> distances = new List<float> { 0f, 87.2f };
+            List<bool> dashed = new List<bool> { false };
+
+            builder.Build(points, distances, dashed, outVertices, outIndices);
+
+            float minX = float.MaxValue;
+            float maxX = float.MinValue;
+            for (int i = 0; i < outVertices.Count; i++)
+            {
+                minX = Mathf.Min(minX, outVertices[i].position.x);
+                maxX = Mathf.Max(maxX, outVertices[i].position.x);
+            }
+
+            Assert.Greater(maxX - minX, 0f);
+            Assert.AreEqual(300f, (minX + maxX) * 0.5f, 0.001f);
+        }
+
         private void AssertVector2AreEqual(Vector2 expected, Vector2 actual)
         {
             Assert.AreEqual(expected.x, actual.x, 0.001f);

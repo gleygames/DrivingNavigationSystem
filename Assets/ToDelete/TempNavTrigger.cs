@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Gley.NavigationSystem;
 
@@ -6,6 +7,12 @@ public class TempNavTrigger : MonoBehaviour
     public NavigationManager manager;
     public Transform destination;
     private float logTimer;
+
+    private void Start()
+    {
+            GetComponent<MapView>().SetCenter(new Vector2(300f, 300f));
+            GetComponent<MapView>().SetZoomMeters(900f, 900f);
+    }
 
     private void OnEnable()
     {

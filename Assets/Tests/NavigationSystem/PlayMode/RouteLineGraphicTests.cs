@@ -124,10 +124,58 @@ namespace Gley.NavigationSystem.Tests
             Assert.AreEqual(1f, materialMatrix.z, Tolerance);
         }
 
+        [UnityTest]
+        public IEnumerator UpdateRouteLineVisuals_NestedCanvasBelowScaledContainer_OffsetMatrixIsUnitLength()
+        {
+            MoveGraphicUnderNestedCanvas();
+            graphic.SetLine(points, distances, dashed);
+            container.localScale = new Vector3(0.5f, 0.5f, 1f);
+            yield return WaitOneFrameAndUpdateCanvases();
+
+            Vector4 matrix = graphic.CanvasOffsetMatrix;
+            Assert.AreEqual(1f, matrix.x, Tolerance);
+            Assert.AreEqual(0f, matrix.y, Tolerance);
+            Assert.AreEqual(0f, matrix.z, Tolerance);
+            Assert.AreEqual(1f, matrix.w, Tolerance);
+        }
+
+        [UnityTest]
+        public IEnumerator UpdateRouteLineVisuals_NestedCanvasBelowRotatedContainer_OffsetMatrixFollowsRootRotation()
+        {
+            MoveGraphicUnderNestedCanvas();
+            graphic.SetLine(points, distances, dashed);
+            yield return WaitOneFrameAndUpdateCanvases();
+            int buildCountAfterLine = graphic.MeshBuildCount;
+
+            container.localRotation = Quaternion.Euler(0f, 0f, 90f);
+            container.localScale = new Vector3(4f, 4f, 1f);
+            yield return WaitOneFrameAndUpdateCanvases();
+
+            Vector4 matrix = graphic.CanvasOffsetMatrix;
+            Assert.AreEqual(buildCountAfterLine, graphic.MeshBuildCount);
+            Assert.AreEqual(0f, matrix.x, Tolerance);
+            Assert.AreEqual(-1f, matrix.y, Tolerance);
+            Assert.AreEqual(1f, matrix.z, Tolerance);
+            Assert.AreEqual(0f, matrix.w, Tolerance);
+
+            Vector4 materialMatrix = graphic.materialForRendering.GetVector("_CanvasOffsetMatrix");
+            Assert.AreEqual(-1f, materialMatrix.y, Tolerance);
+            Assert.AreEqual(1f, materialMatrix.z, Tolerance);
+        }
+
         private IEnumerator WaitOneFrameAndUpdateCanvases()
         {
             yield return null;
             Canvas.ForceUpdateCanvases();
+        }
+
+        private void MoveGraphicUnderNestedCanvas()
+        {
+            GameObject nestedObject = new GameObject("NestedCanvas", typeof(RectTransform));
+            nestedObject.transform.SetParent(container, false);
+            Canvas nestedCanvas = nestedObject.AddComponent<Canvas>();
+            nestedCanvas.overrideSorting = false;
+            graphic.transform.SetParent(nestedObject.transform, false);
         }
 
         [TearDown]
