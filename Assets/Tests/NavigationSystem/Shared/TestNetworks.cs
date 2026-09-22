@@ -105,6 +105,72 @@ namespace Gley.NavigationSystem.Tests
             return input;
         }
 
+        public RoadNetworkBuildInput Fork(float stemLength, float branchLength, float branchSpread, float width)
+        {
+            RoadNetworkBuildInput input = new RoadNetworkBuildInput();
+
+            Vector3 stemStart = new Vector3(0f, 0f, 0f);
+            Vector3 forkPoint = new Vector3(stemLength, 0f, 0f);
+            Vector3 leftEnd = new Vector3(stemLength + branchLength, 0f, branchSpread);
+            Vector3 rightEnd = new Vector3(stemLength + branchLength, 0f, -branchSpread);
+
+            AddIntersection(input, 1, stemStart);
+            AddIntersection(input, 2, forkPoint);
+            AddIntersection(input, 3, leftEnd);
+            AddIntersection(input, 4, rightEnd);
+
+            AddStraightRoad(input, 1, 1, 2, stemStart, forkPoint, 2, false, width);
+            AddStraightRoad(input, 2, 2, 3, forkPoint, leftEnd, 2, false, width);
+            AddStraightRoad(input, 3, 2, 4, forkPoint, rightEnd, 2, false, width);
+
+            return input;
+        }
+
+        public RoadNetworkBuildInput ParallelRoads(float length, float offset, bool oppositeOneWays, float width)
+        {
+            RoadNetworkBuildInput input = new RoadNetworkBuildInput();
+
+            Vector3 firstStart = new Vector3(0f, 0f, 0f);
+            Vector3 firstEnd = new Vector3(length, 0f, 0f);
+            Vector3 secondStart = new Vector3(0f, 0f, offset);
+            Vector3 secondEnd = new Vector3(length, 0f, offset);
+            if (oppositeOneWays)
+            {
+                secondStart = new Vector3(length, 0f, offset);
+                secondEnd = new Vector3(0f, 0f, offset);
+            }
+
+            AddIntersection(input, 1, firstStart);
+            AddIntersection(input, 2, firstEnd);
+            AddIntersection(input, 3, secondStart);
+            AddIntersection(input, 4, secondEnd);
+
+            AddStraightRoad(input, 1, 1, 2, firstStart, firstEnd, 11, oppositeOneWays, width);
+            AddStraightRoad(input, 2, 3, 4, secondStart, secondEnd, 11, oppositeOneWays, width);
+
+            return input;
+        }
+
+        public RoadNetworkBuildInput Crossing(float halfLength, float bridgeHeight, float width)
+        {
+            RoadNetworkBuildInput input = new RoadNetworkBuildInput();
+
+            Vector3 groundStart = new Vector3(-halfLength, 0f, 0f);
+            Vector3 groundEnd = new Vector3(halfLength, 0f, 0f);
+            Vector3 bridgeStart = new Vector3(0f, bridgeHeight, -halfLength);
+            Vector3 bridgeEnd = new Vector3(0f, bridgeHeight, halfLength);
+
+            AddIntersection(input, 1, groundStart);
+            AddIntersection(input, 2, groundEnd);
+            AddIntersection(input, 3, bridgeStart);
+            AddIntersection(input, 4, bridgeEnd);
+
+            AddStraightRoad(input, 1, 1, 2, groundStart, groundEnd, 2, false, width);
+            AddStraightRoad(input, 2, 3, 4, bridgeStart, bridgeEnd, 2, false, width);
+
+            return input;
+        }
+
         public RoadNetworkData BuildNetwork(RoadNetworkBuildInput input)
         {
             NavigationSettings settings = ScriptableObject.CreateInstance<NavigationSettings>();
@@ -135,6 +201,31 @@ namespace Gley.NavigationSystem.Tests
             input.Roads.Add(road);
 
             return roadId + 1;
+        }
+
+        private void AddIntersection(RoadNetworkBuildInput input, int id, Vector3 position)
+        {
+            BuildIntersection intersection = new BuildIntersection();
+            intersection.Id = id;
+            intersection.Position = position;
+            input.Intersections.Add(intersection);
+        }
+
+        private void AddStraightRoad(RoadNetworkBuildInput input, int id, int startId, int endId, Vector3 start, Vector3 end, int pointCount, bool oneWay, float width)
+        {
+            BuildRoad road = new BuildRoad();
+            road.Id = id;
+            road.TypeId = 1;
+            road.OneWay = oneWay;
+            road.WidthOverride = width;
+            road.StartIntersectionId = startId;
+            road.EndIntersectionId = endId;
+            for (int p = 0; p < pointCount; p++)
+            {
+                float t = (float)p / (pointCount - 1);
+                road.Points.Add(Vector3.Lerp(start, end, t));
+            }
+            input.Roads.Add(road);
         }
     }
 }
