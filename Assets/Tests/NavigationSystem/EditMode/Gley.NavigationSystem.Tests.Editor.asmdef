@@ -4,11 +4,13 @@
     "references": [
         "Gley.NavigationSystem",
         "Gley.NavigationSystem.Editor",
+        "Gley.NavigationSystem.TMP",
         "Gley.NavigationSystem.Tests.Shared",
         "Gley.NavigationSystem.Dev",
         "Gley.NavigationSystem.Dev.Editor",
         "Gley.Common",
         "UnityEngine.UI",
+        "Unity.TextMeshPro",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],

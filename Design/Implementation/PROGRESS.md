@@ -57,7 +57,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S36 Reroute rules (2026-09-22)
 - [x] S37 [HARD] Navigation Manager: core loop (2026-09-22)
 - [x] S38 [HARD] Navigation Manager: API, preview flow, events and command queue (2026-09-22)
-- [ ] S39 Formatter and text adapters
+- [x] S39 Formatter and text adapters (2026-09-22)
 - [ ] S40 Navigation Events component
 - [ ] S41 Floating origin misconfiguration warning
 

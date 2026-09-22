@@ -1277,6 +1277,84 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339116777}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &437392942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 437392945}
+  - component: {fileID: 437392944}
+  - component: {fileID: 437392943}
+  m_Layer: 0
+  m_Name: NavigationMap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &437392943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437392942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56da0a4d08524ec43863c703ee503d7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  settings: {fileID: 11400000, guid: 4d88b9a7b40a9b84280151719d824047, type: 2}
+  explicitMap: {fileID: 0}
+  car: {fileID: 1610346928}
+  shiftSource: 0
+  routeMode: 0
+  uTurnRule: 0
+  carYawOffset: 0
+  avoidMultiplier: 5
+  preferMultiplier: 0.7
+  startSnapDistance: 200
+  destinationSnapDistance: 50
+  arrivalDistance: 10
+  turnedAroundDistance: 30
+  rerouteCooldown: 20
+  minHeadingSpeed: 1
+  stoppedSpeed: 0.1
+  teleportDistance: 50
+  leaveMargin: 3
+  startManually: 0
+--- !u!114 &437392944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437392942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2a82c391820d4147a0811ed19e82886, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapData: {fileID: 11400000, guid: 324b19f5f03f9504a8357da4732af60c, type: 2}
+  manager: {fileID: 0}
+--- !u!4 &437392945
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437392942}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &463132259
 GameObject:
   m_ObjectHideFlags: 0
@@ -2404,10 +2482,10 @@ Transform:
   - {fileID: 1744642719}
   - {fileID: 1167989320}
   - {fileID: 1486219514}
-  - {fileID: 571094107}
   - {fileID: 1862904092}
   - {fileID: 2058155844}
   - {fileID: 617334240}
+  - {fileID: 571094107}
   - {fileID: 607989375}
   - {fileID: 1774158317}
   - {fileID: 1421958923}
@@ -6106,6 +6184,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2134400874}
   - component: {fileID: 2134400875}
+  - component: {fileID: 2134400876}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -6190,6 +6269,29 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!114 &2134400876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134400873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1 &2139775042
 GameObject:
   m_ObjectHideFlags: 0
@@ -6300,3 +6402,4 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 873981135}
+  - {fileID: 437392945}
