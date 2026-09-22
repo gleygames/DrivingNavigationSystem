@@ -37,12 +37,16 @@ namespace Gley.NavigationSystem.Dev
             NavigationMapAssets assets = locator.CreateMapAssets(DefaultFolder, DefaultName);
 
             assets.MapAsset.SetRectangleSize(new Vector2(DefaultRectangleSizeMeters, DefaultRectangleSizeMeters));
-            EditorUtility.SetDirty(assets.MapAsset);
-            AssetDatabase.SaveAssets();
 
             GameObject mapObject = new GameObject("NavigationMap");
             NavigationMap map = mapObject.AddComponent<NavigationMap>();
             AssignMapData(map, assets.MapAsset);
+
+            float unitsPerMeter = locator.FindOrCreateSettings().UnitsPerMeter;
+            new MapRectangleSync().SnapObjectToAsset(mapObject.transform, assets.MapAsset, unitsPerMeter);
+
+            EditorUtility.SetDirty(assets.MapAsset);
+            AssetDatabase.SaveAssets();
 
             Selection.activeGameObject = mapObject;
             return map;
@@ -126,6 +130,9 @@ namespace Gley.NavigationSystem.Dev
             float sizeMeters = SandboxSceneBuilder.GridBlockCount * SandboxSceneBuilder.BlockSizeMeters;
             data.SetRectangleCenter(Vector3.zero);
             data.SetRectangleSize(new Vector2(sizeMeters, sizeMeters));
+
+            float unitsPerMeter = new NavigationAssetLocator().FindOrCreateSettings().UnitsPerMeter;
+            new MapRectangleSync().SnapSceneObjectsToAsset(data, unitsPerMeter, "Resize Map Rectangle");
             EditorUtility.SetDirty(data);
         }
 

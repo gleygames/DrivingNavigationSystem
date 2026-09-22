@@ -125,6 +125,87 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [Test]
+        public void SnapObjectToAsset_WritesEditTimePosition()
+        {
+            mapData.SetRectangleCenter(new Vector3(20f, 0f, 30f));
+            mapData.SetEditTimeWorldPosition(Vector3.zero);
+            gameObject.transform.position = new Vector3(1f, 7f, 1f);
+
+            bool changed = sync.SnapObjectToAsset(gameObject.transform, mapData, 2f);
+
+            Assert.IsTrue(changed);
+            Assert.AreEqual(new Vector3(40f, 7f, 60f), mapData.EditTimeWorldPosition);
+            Assert.AreEqual(gameObject.transform.position, mapData.EditTimeWorldPosition);
+        }
+
+        [Test]
+        public void SnapObjectToAsset_AlreadyInSync_ReturnsFalse()
+        {
+            mapData.SetRectangleCenter(new Vector3(20f, 0f, 30f));
+            gameObject.transform.position = new Vector3(5f, 2f, 5f);
+            sync.SnapObjectToAsset(gameObject.transform, mapData, 1f);
+
+            bool changed = sync.SnapObjectToAsset(gameObject.transform, mapData, 1f);
+
+            Assert.IsFalse(changed);
+        }
+
+        [Test]
+        public void ApplyTransformChange_Locked_WritesEditTimePosition()
+        {
+            mapData.SetRectangleCenter(new Vector3(5f, 0f, 5f));
+            mapData.SetRectangleRotationY(0f);
+            mapData.SetLocked(true);
+
+            gameObject.transform.position = new Vector3(50f, 8f, 60f);
+
+            sync.ApplyTransformChange(gameObject.transform, mapData, 1f);
+
+            Assert.AreEqual(new Vector3(5f, 8f, 5f), mapData.EditTimeWorldPosition);
+            Assert.AreEqual(gameObject.transform.position, mapData.EditTimeWorldPosition);
+        }
+
+        [Test]
+        public void SnapSceneObjectsToAsset_AfterResize_ObjectAtNewCenter_NoShift()
+        {
+            mapData.SetRectangleCenter(Vector3.zero);
+            mapData.SetRectangleSize(new Vector2(100f, 100f));
+            mapData.SetRectangleRotationY(0f);
+            NavigationMap map = gameObject.AddComponent<NavigationMap>();
+            map.SetMapData(mapData);
+            gameObject.transform.position = new Vector3(0f, 4f, 0f);
+            sync.SnapObjectToAsset(gameObject.transform, mapData, 2f);
+
+            sync.ResizeFromCorner(mapData, 2, new Vector2(150f, 150f), false);
+            sync.SnapSceneObjectsToAsset(mapData, 2f, "Resize Map Rectangle");
+
+            Assert.AreEqual(25f, mapData.RectangleCenter.x, 0.01f);
+            Assert.AreEqual(25f, mapData.RectangleCenter.z, 0.01f);
+            Assert.AreEqual(50f, gameObject.transform.position.x, 0.01f);
+            Assert.AreEqual(4f, gameObject.transform.position.y, 0.01f);
+            Assert.AreEqual(50f, gameObject.transform.position.z, 0.01f);
+
+            Vector3 shift = gameObject.transform.position - mapData.EditTimeWorldPosition;
+            Assert.AreEqual(0f, shift.magnitude, 0.001f);
+        }
+
+        [Test]
+        public void SnapSceneObjectsToAsset_OtherMapData_NotMoved()
+        {
+            MapData otherData = ScriptableObject.CreateInstance<MapData>();
+            otherData.SetRectangleCenter(new Vector3(500f, 0f, 500f));
+            NavigationMap map = gameObject.AddComponent<NavigationMap>();
+            map.SetMapData(mapData);
+            gameObject.transform.position = new Vector3(3f, 0f, 3f);
+
+            sync.SnapSceneObjectsToAsset(otherData, 1f, "Resize Map Rectangle");
+
+            Assert.AreEqual(new Vector3(3f, 0f, 3f), gameObject.transform.position);
+            Assert.AreEqual(Vector3.zero, otherData.EditTimeWorldPosition);
+            Object.DestroyImmediate(otherData);
+        }
+
+        [Test]
         public void ResizeFromCorner_KeepRatio_PreservesAspect()
         {
             mapData.SetRectangleCenter(Vector3.zero);

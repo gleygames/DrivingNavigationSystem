@@ -114,6 +114,8 @@ namespace Gley.NavigationSystem.Dev
 
             MapRectangleSync sync = new MapRectangleSync();
             sync.SnapObjectToAsset(mapObject.transform, mapAsset, unitsPerMeter);
+            EditorUtility.SetDirty(mapAsset);
+            AssetDatabase.SaveAssets();
 
             Selection.activeGameObject = mapObject;
         }
