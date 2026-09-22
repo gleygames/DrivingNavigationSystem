@@ -54,7 +54,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S33 Vehicle motion (2026-09-22)
 - [x] S34 [HARD] Road matching (2026-09-22)
 - [x] S35 Navigation session (2026-09-22)
-- [ ] S36 Reroute rules
+- [x] S36 Reroute rules (2026-09-22)
 - [ ] S37 [HARD] Navigation Manager: core loop
 - [ ] S38 [HARD] Navigation Manager: API, preview flow, events and command queue
 - [ ] S39 Formatter and text adapters
@@ -140,4 +140,5 @@ Decisions the user makes during implementation (decision points S04, S29, S56, o
 
 ## Implementation notes (continued)
 
+- S36: `RerouteDecider.Decide` checks `BackOnRoad` (`matcher.EnteredRoad && session.WrongTurn`) **before** the generic `session.WrongTurn → WrongTurn` check, not after as the plan bullet order suggests — a strict top-to-bottom read would make `BackOnRoad` unreachable, since `session.WrongTurn` is already true in the same tick whenever a freshly-entered road isn't on the route (current/look-ahead). Added `NavigationSession.IsRoadOnRoute(roadIndex, movingForward)` (full-route scan, same matching rule as `JumpTo`) for the teleport check specifically, since "on the route" for a teleport must agree with what `JumpTo` can find anywhere on the route (including backward), unlike `BackOnRoad`'s narrower current/look-ahead window (`session.WrongTurn`). `DistanceSinceLastReroute`/`OnRerouted` follow the plan; added `AccumulateDrivenDistance(float)` (name not in the plan) as the method the Manager (S37/S38) should call each tick to feed driven distance in, separately from `Decide`.
 - S35: `NavigationSession.ArrivalDistance` is a settable property (default 10 m, same pattern as `VehicleMotion`/`RoadMatcher`'s settings) — S37 should assign the Manager's serialized `arrivalDistance` onto it after construction. The 30 m look-ahead distance used when advancing across short segments is a private const (`LookAheadDistance`), not exposed as a setting — it isn't in the design's default-value table. `UpdateNavigationSessionLogic` guards on `route == null || route.Segments.Count == 0` (a `Route` with `ArrivedImmediately == true` has zero segments) so the Manager can safely call it even before deciding whether to call `Start` on such a route. `JumpTo` also recomputes `RemainingDistance`/`Eta` (via the same private `UpdateRemainingAndEta` used by the per-tick update), not just `ProgressDistance`/`CurrentSegment`, so callers don't need to call anything else after a jump. Progress within a segment is always clamped to `[0, segment length]` (`Mathf.Abs(DistanceAlong - segment.FromDistance)` clamped), so `RemainingDistance` reaches exactly 0 whenever the car has physically passed the route's last segment — the arrival rule's "passed" and "within distance" branches both fire at that point; they're still functionally distinct because "within distance" also fires *before* the car reaches the end.
