@@ -121,6 +121,8 @@ namespace Gley.NavigationSystem.Dev
             minimapObject.AddComponent<DevMinimapCarMarker>();
 
             GameObject fullMapObject = CreateFullMap(canvasObject, manager);
+            CreatePreviewPanel(fullMapObject, manager);
+            CreateNavigationControls(fullMapObject, manager);
 
             MinimapTapToOpen tapToOpen = minimapObject.AddComponent<MinimapTapToOpen>();
             SerializedObject serializedTapToOpen = new SerializedObject(tapToOpen);
@@ -150,6 +152,125 @@ namespace Gley.NavigationSystem.Dev
             fullMapObject.SetActive(false);
 
             return fullMapObject;
+        }
+
+        private void CreatePreviewPanel(GameObject fullMapObject, NavigationManager manager)
+        {
+            Sprite uiSprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
+
+            GameObject panelObject = new GameObject("PreviewPanel", typeof(RectTransform));
+            panelObject.transform.SetParent(fullMapObject.transform, false);
+            RectTransform panelRect = panelObject.GetComponent<RectTransform>();
+            panelRect.anchorMin = new Vector2(0.5f, 0f);
+            panelRect.anchorMax = new Vector2(0.5f, 0f);
+            panelRect.pivot = new Vector2(0.5f, 0f);
+            panelRect.anchoredPosition = new Vector2(0f, 40f);
+            panelRect.sizeDelta = new Vector2(360f, 130f);
+
+            Image panelImage = panelObject.AddComponent<Image>();
+            panelImage.color = new Color(0f, 0f, 0f, 0.75f);
+
+            Text distanceText = CreateText(panelObject.transform, "DistanceText", "-", new Vector2(0.5f, 1f), new Vector2(0f, -24f), new Vector2(340f, 30f));
+            LegacyTextTarget distanceTarget = CreateTextTarget(distanceText);
+
+            Text etaText = CreateText(panelObject.transform, "EtaText", "-", new Vector2(0.5f, 1f), new Vector2(0f, -54f), new Vector2(340f, 30f));
+            LegacyTextTarget etaTarget = CreateTextTarget(etaText);
+
+            Button confirmButton = CreateButton(panelObject.transform, "ConfirmButton", "Confirm", uiSprite, new Vector2(-85f, 20f), new Vector2(150f, 40f));
+            Button cancelButton = CreateButton(panelObject.transform, "CancelButton", "Cancel", uiSprite, new Vector2(85f, 20f), new Vector2(150f, 40f));
+
+            PreviewPanel panel = fullMapObject.AddComponent<PreviewPanel>();
+            SerializedObject serializedPanel = new SerializedObject(panel);
+            serializedPanel.FindProperty("manager").objectReferenceValue = manager;
+            serializedPanel.FindProperty("panelRoot").objectReferenceValue = panelObject;
+            serializedPanel.FindProperty("distanceText").objectReferenceValue = distanceTarget;
+            serializedPanel.FindProperty("etaText").objectReferenceValue = etaTarget;
+            serializedPanel.FindProperty("confirmButton").objectReferenceValue = confirmButton;
+            serializedPanel.FindProperty("cancelButton").objectReferenceValue = cancelButton;
+            serializedPanel.ApplyModifiedPropertiesWithoutUndo();
+
+            panelObject.SetActive(false);
+        }
+
+        private void CreateNavigationControls(GameObject fullMapObject, NavigationManager manager)
+        {
+            Sprite uiSprite = AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/UISprite.psd");
+            MapViewInteractive interactive = fullMapObject.GetComponent<MapViewInteractive>();
+
+            GameObject controlsObject = new GameObject("NavigationControlsUi", typeof(RectTransform));
+            controlsObject.transform.SetParent(fullMapObject.transform, false);
+            RectTransform controlsRect = controlsObject.GetComponent<RectTransform>();
+            controlsRect.anchorMin = new Vector2(1f, 1f);
+            controlsRect.anchorMax = new Vector2(1f, 1f);
+            controlsRect.pivot = new Vector2(1f, 1f);
+            controlsRect.anchoredPosition = new Vector2(-20f, -20f);
+            controlsRect.sizeDelta = new Vector2(160f, 40f);
+
+            Button stopButton = CreateButton(controlsObject.transform, "StopButton", "Stop", uiSprite, new Vector2(0f, 0f), new Vector2(160f, 40f));
+            Button centerButton = CreateButton(controlsObject.transform, "CenterButton", "Center", uiSprite, new Vector2(0f, -50f), new Vector2(160f, 40f));
+            Button closeButton = CreateButton(controlsObject.transform, "CloseButton", "Close", uiSprite, new Vector2(0f, -100f), new Vector2(160f, 40f));
+
+            NavigationControls controls = fullMapObject.AddComponent<NavigationControls>();
+            SerializedObject serializedControls = new SerializedObject(controls);
+            serializedControls.FindProperty("manager").objectReferenceValue = manager;
+            serializedControls.FindProperty("interactive").objectReferenceValue = interactive;
+            serializedControls.FindProperty("stopButton").objectReferenceValue = stopButton;
+            serializedControls.FindProperty("centerButton").objectReferenceValue = centerButton;
+            serializedControls.FindProperty("closeButton").objectReferenceValue = closeButton;
+            serializedControls.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        private Text CreateText(Transform parent, string name, string content, Vector2 anchor, Vector2 anchoredPosition, Vector2 sizeDelta)
+        {
+            GameObject textObject = new GameObject(name, typeof(RectTransform));
+            textObject.transform.SetParent(parent, false);
+            RectTransform rect = textObject.GetComponent<RectTransform>();
+            rect.anchorMin = anchor;
+            rect.anchorMax = anchor;
+            rect.pivot = anchor;
+            rect.anchoredPosition = anchoredPosition;
+            rect.sizeDelta = sizeDelta;
+
+            Text text = textObject.AddComponent<Text>();
+            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            text.fontSize = 20;
+            text.alignment = TextAnchor.MiddleCenter;
+            text.color = Color.white;
+            text.text = content;
+            return text;
+        }
+
+        private LegacyTextTarget CreateTextTarget(Text text)
+        {
+            LegacyTextTarget target = text.gameObject.AddComponent<LegacyTextTarget>();
+            SerializedObject serializedTarget = new SerializedObject(target);
+            serializedTarget.FindProperty("text").objectReferenceValue = text;
+            serializedTarget.ApplyModifiedPropertiesWithoutUndo();
+            return target;
+        }
+
+        private Button CreateButton(Transform parent, string name, string label, Sprite sprite, Vector2 anchoredPosition, Vector2 sizeDelta)
+        {
+            GameObject buttonObject = new GameObject(name, typeof(RectTransform));
+            buttonObject.transform.SetParent(parent, false);
+            RectTransform rect = buttonObject.GetComponent<RectTransform>();
+            rect.anchorMin = new Vector2(0.5f, 0f);
+            rect.anchorMax = new Vector2(0.5f, 0f);
+            rect.pivot = new Vector2(0.5f, 0f);
+            rect.anchoredPosition = anchoredPosition;
+            rect.sizeDelta = sizeDelta;
+
+            Image image = buttonObject.AddComponent<Image>();
+            image.sprite = sprite;
+            image.type = Image.Type.Sliced;
+            image.color = new Color(1f, 1f, 1f, 0.9f);
+
+            Button button = buttonObject.AddComponent<Button>();
+            button.targetGraphic = image;
+
+            CreateText(buttonObject.transform, "Label", label, new Vector2(0.5f, 0.5f), Vector2.zero, sizeDelta);
+
+            return button;
         }
     }
 }
