@@ -25,6 +25,12 @@ namespace Gley.NavigationSystem.Dev
             new TestMapBuilder().AddTestRoadsToTestMap();
         }
 
+        [MenuItem("Tools/Gley/Navigation Dev/Add Sandbox Roads To Map")]
+        private static void AddSandboxRoadsMenuItem()
+        {
+            new TestMapBuilder().AddSandboxRoadsToTestMap();
+        }
+
         public NavigationMap CreateTestMap()
         {
             NavigationAssetLocator locator = new NavigationAssetLocator();
@@ -65,6 +71,36 @@ namespace Gley.NavigationSystem.Dev
             return authoring;
         }
 
+        public RoadNetworkAuthoring AddSandboxRoadsToTestMap()
+        {
+            string path = DefaultFolder + "/" + DefaultName + "_RoadsAuthoring.asset";
+            RoadNetworkAuthoring authoring = AssetDatabase.LoadAssetAtPath<RoadNetworkAuthoring>(path);
+            if (authoring == null)
+            {
+                CreateTestMap();
+                authoring = AssetDatabase.LoadAssetAtPath<RoadNetworkAuthoring>(path);
+            }
+
+            SandboxRoadNetworkGenerator generator = new SandboxRoadNetworkGenerator();
+            RoadNetworkBuildInput input = generator.Generate();
+
+            authoring.Roads.Clear();
+            authoring.Intersections.Clear();
+
+            AuthoringFromBuildInput converter = new AuthoringFromBuildInput();
+            converter.Fill(authoring, input);
+            authoring.MarkChanged();
+
+            ResizeMapToSandboxGrid(authoring.MapAsset);
+            EnsureSettingsAssigned(authoring);
+
+            EditorUtility.SetDirty(authoring);
+            AssetDatabase.SaveAssets();
+
+            new RoadBaker().Bake(authoring);
+            return authoring;
+        }
+
         private void AssignMapData(NavigationMap map, MapData data)
         {
             SerializedObject serializedObject = new SerializedObject(map);
@@ -78,6 +114,32 @@ namespace Gley.NavigationSystem.Dev
             {
                 authoring.Roads[i].SetOneWay(true);
             }
+        }
+
+        private void ResizeMapToSandboxGrid(MapData data)
+        {
+            if (data == null)
+            {
+                return;
+            }
+
+            float sizeMeters = SandboxSceneBuilder.GridBlockCount * SandboxSceneBuilder.BlockSizeMeters;
+            data.SetRectangleCenter(Vector3.zero);
+            data.SetRectangleSize(new Vector2(sizeMeters, sizeMeters));
+            EditorUtility.SetDirty(data);
+        }
+
+        private void EnsureSettingsAssigned(RoadNetworkAuthoring authoring)
+        {
+            if (authoring.Settings != null)
+            {
+                return;
+            }
+
+            NavigationSettings settings = new NavigationAssetLocator().FindOrCreateSettings();
+            SerializedObject serializedObject = new SerializedObject(authoring);
+            serializedObject.FindProperty("settings").objectReferenceValue = settings;
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
         }
     }
 }

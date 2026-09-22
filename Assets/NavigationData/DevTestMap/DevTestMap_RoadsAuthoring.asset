@@ -12,13 +12,2039 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b92b08ec245442843bc2cde01041ebc9, type: 3}
   m_Name: DevTestMap_RoadsAuthoring
   m_EditorClassIdentifier: 
-  roads: []
-  intersections: []
+  roads:
+  - keyPoints:
+    - position: {x: -300, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: -300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: -300}
+    - {x: -200, y: 0, z: -300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 1
+    typeId: 1
+    startIntersectionId: 1
+    endIntersectionId: 2
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -300, y: 0, z: -200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: -300}
+    - {x: -300, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 2
+    typeId: 1
+    startIntersectionId: 1
+    endIntersectionId: 8
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: -300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: -300}
+    - {x: -100, y: 0, z: -300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 3
+    typeId: 1
+    startIntersectionId: 2
+    endIntersectionId: 3
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: -200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: -300}
+    - {x: -200, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 4
+    typeId: 1
+    startIntersectionId: 2
+    endIntersectionId: 9
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: -300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: -300}
+    - {x: 0, y: 0, z: -300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 5
+    typeId: 1
+    startIntersectionId: 3
+    endIntersectionId: 4
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: -200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: -300}
+    - {x: -100, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 6
+    typeId: 1
+    startIntersectionId: 3
+    endIntersectionId: 10
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: -300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: -300}
+    - {x: 100, y: 0, z: -300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 7
+    typeId: 1
+    startIntersectionId: 4
+    endIntersectionId: 5
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: -200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: -300}
+    - {x: 0, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 8
+    typeId: 1
+    startIntersectionId: 4
+    endIntersectionId: 11
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: -300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: -300}
+    - {x: 200, y: 0, z: -300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 9
+    typeId: 1
+    startIntersectionId: 5
+    endIntersectionId: 6
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: -200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: -300}
+    - {x: 100, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 10
+    typeId: 1
+    startIntersectionId: 5
+    endIntersectionId: 12
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: -300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: -300}
+    - {x: 300, y: 0, z: -300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 11
+    typeId: 1
+    startIntersectionId: 6
+    endIntersectionId: 7
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: -200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: -300}
+    - {x: 200, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 12
+    typeId: 1
+    startIntersectionId: 6
+    endIntersectionId: 13
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 300, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: -200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 300, y: 0, z: -300}
+    - {x: 300, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 13
+    typeId: 1
+    startIntersectionId: 7
+    endIntersectionId: 14
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: -200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: -200}
+    - {x: -200, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 14
+    typeId: 1
+    startIntersectionId: 8
+    endIntersectionId: 9
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -300, y: 0, z: -100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: -200}
+    - {x: -300, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 15
+    typeId: 1
+    startIntersectionId: 8
+    endIntersectionId: 15
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: -200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: -200}
+    - {x: -100, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 16
+    typeId: 1
+    startIntersectionId: 9
+    endIntersectionId: 10
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: -100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: -200}
+    - {x: -200, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 17
+    typeId: 1
+    startIntersectionId: 9
+    endIntersectionId: 16
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: -200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: -200}
+    - {x: 0, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 18
+    typeId: 1
+    startIntersectionId: 10
+    endIntersectionId: 11
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: -100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: -200}
+    - {x: -100, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 19
+    typeId: 1
+    startIntersectionId: 10
+    endIntersectionId: 17
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: -200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: -200}
+    - {x: 100, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 20
+    typeId: 1
+    startIntersectionId: 11
+    endIntersectionId: 12
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: -100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: -200}
+    - {x: 0, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 21
+    typeId: 1
+    startIntersectionId: 11
+    endIntersectionId: 18
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: -200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: -200}
+    - {x: 200, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 22
+    typeId: 1
+    startIntersectionId: 12
+    endIntersectionId: 13
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: -100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: -200}
+    - {x: 100, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 23
+    typeId: 1
+    startIntersectionId: 12
+    endIntersectionId: 19
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: -200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: -200}
+    - {x: 300, y: 0, z: -200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 24
+    typeId: 1
+    startIntersectionId: 13
+    endIntersectionId: 14
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: -100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: -200}
+    - {x: 200, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 25
+    typeId: 1
+    startIntersectionId: 13
+    endIntersectionId: 20
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 300, y: 0, z: -200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: -100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 300, y: 0, z: -200}
+    - {x: 300, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 26
+    typeId: 1
+    startIntersectionId: 14
+    endIntersectionId: 21
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: -100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: -100}
+    - {x: -200, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 27
+    typeId: 1
+    startIntersectionId: 15
+    endIntersectionId: 16
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -300, y: 0, z: 0}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: -100}
+    - {x: -300, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 28
+    typeId: 1
+    startIntersectionId: 15
+    endIntersectionId: 22
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: -100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: -100}
+    - {x: -100, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 29
+    typeId: 1
+    startIntersectionId: 16
+    endIntersectionId: 17
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: 0}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: -100}
+    - {x: -200, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 30
+    typeId: 1
+    startIntersectionId: 16
+    endIntersectionId: 23
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: -100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: -100}
+    - {x: 0, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 31
+    typeId: 1
+    startIntersectionId: 17
+    endIntersectionId: 18
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: 0}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: -100}
+    - {x: -100, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 32
+    typeId: 1
+    startIntersectionId: 17
+    endIntersectionId: 24
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: -100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: -100}
+    - {x: 100, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 33
+    typeId: 1
+    startIntersectionId: 18
+    endIntersectionId: 19
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: 0}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: -100}
+    - {x: 0, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 34
+    typeId: 1
+    startIntersectionId: 18
+    endIntersectionId: 25
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: -100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: -100}
+    - {x: 200, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 35
+    typeId: 1
+    startIntersectionId: 19
+    endIntersectionId: 20
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: 0}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: -100}
+    - {x: 100, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 36
+    typeId: 1
+    startIntersectionId: 19
+    endIntersectionId: 26
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: -100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: -100}
+    - {x: 300, y: 0, z: -100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 37
+    typeId: 1
+    startIntersectionId: 20
+    endIntersectionId: 21
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: 0}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: -100}
+    - {x: 200, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 38
+    typeId: 1
+    startIntersectionId: 20
+    endIntersectionId: 27
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 300, y: 0, z: -100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: 0}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 300, y: 0, z: -100}
+    - {x: 300, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 39
+    typeId: 1
+    startIntersectionId: 21
+    endIntersectionId: 28
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: 0}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: 0}
+    - {x: -200, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 40
+    typeId: 1
+    startIntersectionId: 22
+    endIntersectionId: 23
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -300, y: 0, z: 100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: 0}
+    - {x: -300, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 41
+    typeId: 1
+    startIntersectionId: 22
+    endIntersectionId: 29
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: 0}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: 0}
+    - {x: -100, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 42
+    typeId: 1
+    startIntersectionId: 23
+    endIntersectionId: 24
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: 100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: 0}
+    - {x: -200, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 43
+    typeId: 1
+    startIntersectionId: 23
+    endIntersectionId: 30
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: 0}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: 0}
+    - {x: 0, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 44
+    typeId: 1
+    startIntersectionId: 24
+    endIntersectionId: 25
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: 100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: 0}
+    - {x: -100, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 45
+    typeId: 1
+    startIntersectionId: 24
+    endIntersectionId: 31
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: 0}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: 0}
+    - {x: 100, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 46
+    typeId: 1
+    startIntersectionId: 25
+    endIntersectionId: 26
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: 100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: 0}
+    - {x: 0, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 47
+    typeId: 1
+    startIntersectionId: 25
+    endIntersectionId: 32
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: 0}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: 0}
+    - {x: 200, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 48
+    typeId: 1
+    startIntersectionId: 26
+    endIntersectionId: 27
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: 100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: 0}
+    - {x: 100, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 49
+    typeId: 1
+    startIntersectionId: 26
+    endIntersectionId: 33
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: 0}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: 0}
+    - {x: 300, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 50
+    typeId: 1
+    startIntersectionId: 27
+    endIntersectionId: 28
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: 100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: 0}
+    - {x: 200, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 51
+    typeId: 1
+    startIntersectionId: 27
+    endIntersectionId: 34
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 300, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: 100}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 300, y: 0, z: 0}
+    - {x: 300, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 52
+    typeId: 1
+    startIntersectionId: 28
+    endIntersectionId: 35
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: 100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: 100}
+    - {x: -200, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 53
+    typeId: 1
+    startIntersectionId: 29
+    endIntersectionId: 30
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -300, y: 0, z: 200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: 100}
+    - {x: -300, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 54
+    typeId: 1
+    startIntersectionId: 29
+    endIntersectionId: 36
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: 100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: 100}
+    - {x: -100, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 55
+    typeId: 1
+    startIntersectionId: 30
+    endIntersectionId: 31
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: 200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: 100}
+    - {x: -200, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 56
+    typeId: 1
+    startIntersectionId: 30
+    endIntersectionId: 37
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: 100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: 100}
+    - {x: 0, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 57
+    typeId: 1
+    startIntersectionId: 31
+    endIntersectionId: 32
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: 200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: 100}
+    - {x: -100, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 58
+    typeId: 1
+    startIntersectionId: 31
+    endIntersectionId: 38
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: 100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: 100}
+    - {x: 100, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 59
+    typeId: 1
+    startIntersectionId: 32
+    endIntersectionId: 33
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: 200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: 100}
+    - {x: 0, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 60
+    typeId: 1
+    startIntersectionId: 32
+    endIntersectionId: 39
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: 100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: 100}
+    - {x: 200, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 61
+    typeId: 1
+    startIntersectionId: 33
+    endIntersectionId: 34
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: 200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: 100}
+    - {x: 100, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 62
+    typeId: 1
+    startIntersectionId: 33
+    endIntersectionId: 40
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: 100}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: 100}
+    - {x: 300, y: 0, z: 100}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 63
+    typeId: 1
+    startIntersectionId: 34
+    endIntersectionId: 35
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: 200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: 100}
+    - {x: 200, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 64
+    typeId: 1
+    startIntersectionId: 34
+    endIntersectionId: 41
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 300, y: 0, z: 100}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: 200}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 300, y: 0, z: 100}
+    - {x: 300, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 65
+    typeId: 1
+    startIntersectionId: 35
+    endIntersectionId: 42
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: 200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: 200}
+    - {x: -200, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 66
+    typeId: 1
+    startIntersectionId: 36
+    endIntersectionId: 37
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -300, y: 0, z: 300}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: 200}
+    - {x: -300, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 67
+    typeId: 1
+    startIntersectionId: 36
+    endIntersectionId: 43
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: 200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: 200}
+    - {x: -100, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 68
+    typeId: 1
+    startIntersectionId: 37
+    endIntersectionId: 38
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: 300}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: 200}
+    - {x: -200, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 69
+    typeId: 1
+    startIntersectionId: 37
+    endIntersectionId: 44
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: 200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: 200}
+    - {x: 0, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 70
+    typeId: 1
+    startIntersectionId: 38
+    endIntersectionId: 39
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: 300}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: 200}
+    - {x: -100, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 71
+    typeId: 1
+    startIntersectionId: 38
+    endIntersectionId: 45
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: 200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: 200}
+    - {x: 100, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 72
+    typeId: 1
+    startIntersectionId: 39
+    endIntersectionId: 40
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: 300}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: 200}
+    - {x: 0, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 73
+    typeId: 1
+    startIntersectionId: 39
+    endIntersectionId: 46
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: 200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: 200}
+    - {x: 200, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 74
+    typeId: 1
+    startIntersectionId: 40
+    endIntersectionId: 41
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: 300}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: 200}
+    - {x: 100, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 75
+    typeId: 1
+    startIntersectionId: 40
+    endIntersectionId: 47
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: 200}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: 200}
+    - {x: 300, y: 0, z: 200}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 76
+    typeId: 1
+    startIntersectionId: 41
+    endIntersectionId: 42
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: 300}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: 200}
+    - {x: 200, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 77
+    typeId: 1
+    startIntersectionId: 41
+    endIntersectionId: 48
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 300, y: 0, z: 200}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 0, z: 33.333332}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: 300}
+      inHandle: {x: -0, y: -0, z: -33.333332}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 300, y: 0, z: 200}
+    - {x: 300, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 78
+    typeId: 1
+    startIntersectionId: 42
+    endIntersectionId: 49
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: 300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -200, y: 0, z: 300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: 300}
+    - {x: -200, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 79
+    typeId: 1
+    startIntersectionId: 43
+    endIntersectionId: 44
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -200, y: 0, z: 300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: -100, y: 0, z: 300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -200, y: 0, z: 300}
+    - {x: -100, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 80
+    typeId: 1
+    startIntersectionId: 44
+    endIntersectionId: 45
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -100, y: 0, z: 300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: 300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -100, y: 0, z: 300}
+    - {x: 0, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 81
+    typeId: 1
+    startIntersectionId: 45
+    endIntersectionId: 46
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: 300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 100, y: 0, z: 300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: 300}
+    - {x: 100, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 82
+    typeId: 1
+    startIntersectionId: 46
+    endIntersectionId: 47
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 100, y: 0, z: 300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 200, y: 0, z: 300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 100, y: 0, z: 300}
+    - {x: 200, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 83
+    typeId: 1
+    startIntersectionId: 47
+    endIntersectionId: 48
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 200, y: 0, z: 300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 33.333332, y: 0, z: 0}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: 300}
+      inHandle: {x: -33.333332, y: -0, z: -0}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 200, y: 0, z: 300}
+    - {x: 300, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 84
+    typeId: 1
+    startIntersectionId: 48
+    endIntersectionId: 49
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: -300, y: 0, z: -300}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 100, y: 0, z: 100}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: 0}
+      inHandle: {x: -100, y: -0, z: -100}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: -300, y: 0, z: -300}
+    - {x: 0, y: 0, z: 0}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 85
+    typeId: 1
+    startIntersectionId: 1
+    endIntersectionId: 25
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: 0}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 100, y: 0, z: 100}
+      manualHandles: 0
+    - position: {x: 300, y: 0, z: 300}
+      inHandle: {x: -100, y: -0, z: -100}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: 0}
+    - {x: 300, y: 0, z: 300}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 86
+    typeId: 1
+    startIntersectionId: 25
+    endIntersectionId: 49
+    oneWay: 0
+    modifiedAfterImport: 0
+  - keyPoints:
+    - position: {x: 0, y: 0, z: -58}
+      inHandle: {x: 0, y: 0, z: 0}
+      outHandle: {x: 0, y: 2, z: 13.333333}
+      manualHandles: 0
+    - position: {x: 0, y: 6, z: -18}
+      inHandle: {x: -0, y: -1.0611062, z: -13.440679}
+      outHandle: {x: 0, y: 0.9444299, z: 11.962778}
+      manualHandles: 0
+    - position: {x: 0, y: 6, z: 18}
+      inHandle: {x: -0, y: 0.9444299, z: -11.962778}
+      outHandle: {x: 0, y: -1.0611062, z: 13.440679}
+      manualHandles: 0
+    - position: {x: 0, y: 0, z: 58}
+      inHandle: {x: -0, y: 2, z: -13.333333}
+      outHandle: {x: 0, y: 0, z: 0}
+      manualHandles: 0
+    points:
+    - {x: 0, y: 0, z: -58}
+    - {x: 0, y: 6, z: -18}
+    - {x: 0, y: 6, z: 18}
+    - {x: 0, y: 0, z: 58}
+    groundMissIndices: 
+    sourceTag: 
+    speedOverride: 0
+    widthOverride: 0
+    id: 87
+    typeId: 1
+    startIntersectionId: 50
+    endIntersectionId: 51
+    oneWay: 0
+    modifiedAfterImport: 0
+  intersections:
+  - position: {x: -300, y: 0, z: -300}
+    id: 1
+  - position: {x: -200, y: 0, z: -300}
+    id: 2
+  - position: {x: -100, y: 0, z: -300}
+    id: 3
+  - position: {x: 0, y: 0, z: -300}
+    id: 4
+  - position: {x: 100, y: 0, z: -300}
+    id: 5
+  - position: {x: 200, y: 0, z: -300}
+    id: 6
+  - position: {x: 300, y: 0, z: -300}
+    id: 7
+  - position: {x: -300, y: 0, z: -200}
+    id: 8
+  - position: {x: -200, y: 0, z: -200}
+    id: 9
+  - position: {x: -100, y: 0, z: -200}
+    id: 10
+  - position: {x: 0, y: 0, z: -200}
+    id: 11
+  - position: {x: 100, y: 0, z: -200}
+    id: 12
+  - position: {x: 200, y: 0, z: -200}
+    id: 13
+  - position: {x: 300, y: 0, z: -200}
+    id: 14
+  - position: {x: -300, y: 0, z: -100}
+    id: 15
+  - position: {x: -200, y: 0, z: -100}
+    id: 16
+  - position: {x: -100, y: 0, z: -100}
+    id: 17
+  - position: {x: 0, y: 0, z: -100}
+    id: 18
+  - position: {x: 100, y: 0, z: -100}
+    id: 19
+  - position: {x: 200, y: 0, z: -100}
+    id: 20
+  - position: {x: 300, y: 0, z: -100}
+    id: 21
+  - position: {x: -300, y: 0, z: 0}
+    id: 22
+  - position: {x: -200, y: 0, z: 0}
+    id: 23
+  - position: {x: -100, y: 0, z: 0}
+    id: 24
+  - position: {x: 0, y: 0, z: 0}
+    id: 25
+  - position: {x: 100, y: 0, z: 0}
+    id: 26
+  - position: {x: 200, y: 0, z: 0}
+    id: 27
+  - position: {x: 300, y: 0, z: 0}
+    id: 28
+  - position: {x: -300, y: 0, z: 100}
+    id: 29
+  - position: {x: -200, y: 0, z: 100}
+    id: 30
+  - position: {x: -100, y: 0, z: 100}
+    id: 31
+  - position: {x: 0, y: 0, z: 100}
+    id: 32
+  - position: {x: 100, y: 0, z: 100}
+    id: 33
+  - position: {x: 200, y: 0, z: 100}
+    id: 34
+  - position: {x: 300, y: 0, z: 100}
+    id: 35
+  - position: {x: -300, y: 0, z: 200}
+    id: 36
+  - position: {x: -200, y: 0, z: 200}
+    id: 37
+  - position: {x: -100, y: 0, z: 200}
+    id: 38
+  - position: {x: 0, y: 0, z: 200}
+    id: 39
+  - position: {x: 100, y: 0, z: 200}
+    id: 40
+  - position: {x: 200, y: 0, z: 200}
+    id: 41
+  - position: {x: 300, y: 0, z: 200}
+    id: 42
+  - position: {x: -300, y: 0, z: 300}
+    id: 43
+  - position: {x: -200, y: 0, z: 300}
+    id: 44
+  - position: {x: -100, y: 0, z: 300}
+    id: 45
+  - position: {x: 0, y: 0, z: 300}
+    id: 46
+  - position: {x: 100, y: 0, z: 300}
+    id: 47
+  - position: {x: 200, y: 0, z: 300}
+    id: 48
+  - position: {x: 300, y: 0, z: 300}
+    id: 49
+  - position: {x: 0, y: 0, z: -58}
+    id: 50
+  - position: {x: 0, y: 0, z: 58}
+    id: 51
   runtimeAsset: {fileID: 11400000, guid: b352c22779b201d4aa1dc7634ae295a9, type: 2}
   settings: {fileID: 11400000, guid: 4d88b9a7b40a9b84280151719d824047, type: 2}
   mapAsset: {fileID: 11400000, guid: 324b19f5f03f9504a8357da4732af60c, type: 2}
   gridCellSize: 50
   formatVersion: 1
-  nextRoadId: 1
-  nextIntersectionId: 1
-  version: 0
+  nextRoadId: 88
+  nextIntersectionId: 52
+  version: 1

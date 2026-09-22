@@ -12,22 +12,1448 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d95f57b2ec5f3d847a9c0b20a3cbce4d, type: 3}
   m_Name: DevTestMap_RoadsRuntime
   m_EditorClassIdentifier: 
-  roads: []
-  intersections: []
-  points: []
-  pointDistances: []
-  links: 
+  roads:
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 1
+    typeId: 1
+    startIntersection: 0
+    endIntersection: 1
+    firstPoint: 0
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 2
+    typeId: 1
+    startIntersection: 0
+    endIntersection: 7
+    firstPoint: 2
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 3
+    typeId: 1
+    startIntersection: 1
+    endIntersection: 2
+    firstPoint: 4
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 4
+    typeId: 1
+    startIntersection: 1
+    endIntersection: 8
+    firstPoint: 6
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 5
+    typeId: 1
+    startIntersection: 2
+    endIntersection: 3
+    firstPoint: 8
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 6
+    typeId: 1
+    startIntersection: 2
+    endIntersection: 9
+    firstPoint: 10
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 7
+    typeId: 1
+    startIntersection: 3
+    endIntersection: 4
+    firstPoint: 12
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 8
+    typeId: 1
+    startIntersection: 3
+    endIntersection: 10
+    firstPoint: 14
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 9
+    typeId: 1
+    startIntersection: 4
+    endIntersection: 5
+    firstPoint: 16
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 10
+    typeId: 1
+    startIntersection: 4
+    endIntersection: 11
+    firstPoint: 18
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 11
+    typeId: 1
+    startIntersection: 5
+    endIntersection: 6
+    firstPoint: 20
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 12
+    typeId: 1
+    startIntersection: 5
+    endIntersection: 12
+    firstPoint: 22
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 13
+    typeId: 1
+    startIntersection: 6
+    endIntersection: 13
+    firstPoint: 24
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 14
+    typeId: 1
+    startIntersection: 7
+    endIntersection: 8
+    firstPoint: 26
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 15
+    typeId: 1
+    startIntersection: 7
+    endIntersection: 14
+    firstPoint: 28
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 16
+    typeId: 1
+    startIntersection: 8
+    endIntersection: 9
+    firstPoint: 30
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 17
+    typeId: 1
+    startIntersection: 8
+    endIntersection: 15
+    firstPoint: 32
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 18
+    typeId: 1
+    startIntersection: 9
+    endIntersection: 10
+    firstPoint: 34
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 19
+    typeId: 1
+    startIntersection: 9
+    endIntersection: 16
+    firstPoint: 36
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 20
+    typeId: 1
+    startIntersection: 10
+    endIntersection: 11
+    firstPoint: 38
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 21
+    typeId: 1
+    startIntersection: 10
+    endIntersection: 17
+    firstPoint: 40
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 22
+    typeId: 1
+    startIntersection: 11
+    endIntersection: 12
+    firstPoint: 42
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 23
+    typeId: 1
+    startIntersection: 11
+    endIntersection: 18
+    firstPoint: 44
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 24
+    typeId: 1
+    startIntersection: 12
+    endIntersection: 13
+    firstPoint: 46
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 25
+    typeId: 1
+    startIntersection: 12
+    endIntersection: 19
+    firstPoint: 48
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 26
+    typeId: 1
+    startIntersection: 13
+    endIntersection: 20
+    firstPoint: 50
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 27
+    typeId: 1
+    startIntersection: 14
+    endIntersection: 15
+    firstPoint: 52
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 28
+    typeId: 1
+    startIntersection: 14
+    endIntersection: 21
+    firstPoint: 54
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 29
+    typeId: 1
+    startIntersection: 15
+    endIntersection: 16
+    firstPoint: 56
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 30
+    typeId: 1
+    startIntersection: 15
+    endIntersection: 22
+    firstPoint: 58
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 31
+    typeId: 1
+    startIntersection: 16
+    endIntersection: 17
+    firstPoint: 60
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 32
+    typeId: 1
+    startIntersection: 16
+    endIntersection: 23
+    firstPoint: 62
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 33
+    typeId: 1
+    startIntersection: 17
+    endIntersection: 18
+    firstPoint: 64
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 34
+    typeId: 1
+    startIntersection: 17
+    endIntersection: 24
+    firstPoint: 66
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 35
+    typeId: 1
+    startIntersection: 18
+    endIntersection: 19
+    firstPoint: 68
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 36
+    typeId: 1
+    startIntersection: 18
+    endIntersection: 25
+    firstPoint: 70
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 37
+    typeId: 1
+    startIntersection: 19
+    endIntersection: 20
+    firstPoint: 72
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 38
+    typeId: 1
+    startIntersection: 19
+    endIntersection: 26
+    firstPoint: 74
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 39
+    typeId: 1
+    startIntersection: 20
+    endIntersection: 27
+    firstPoint: 76
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 40
+    typeId: 1
+    startIntersection: 21
+    endIntersection: 22
+    firstPoint: 78
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 41
+    typeId: 1
+    startIntersection: 21
+    endIntersection: 28
+    firstPoint: 80
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 42
+    typeId: 1
+    startIntersection: 22
+    endIntersection: 23
+    firstPoint: 82
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 43
+    typeId: 1
+    startIntersection: 22
+    endIntersection: 29
+    firstPoint: 84
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 44
+    typeId: 1
+    startIntersection: 23
+    endIntersection: 24
+    firstPoint: 86
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 45
+    typeId: 1
+    startIntersection: 23
+    endIntersection: 30
+    firstPoint: 88
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 46
+    typeId: 1
+    startIntersection: 24
+    endIntersection: 25
+    firstPoint: 90
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 47
+    typeId: 1
+    startIntersection: 24
+    endIntersection: 31
+    firstPoint: 92
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 48
+    typeId: 1
+    startIntersection: 25
+    endIntersection: 26
+    firstPoint: 94
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 49
+    typeId: 1
+    startIntersection: 25
+    endIntersection: 32
+    firstPoint: 96
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 50
+    typeId: 1
+    startIntersection: 26
+    endIntersection: 27
+    firstPoint: 98
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 51
+    typeId: 1
+    startIntersection: 26
+    endIntersection: 33
+    firstPoint: 100
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 52
+    typeId: 1
+    startIntersection: 27
+    endIntersection: 34
+    firstPoint: 102
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 53
+    typeId: 1
+    startIntersection: 28
+    endIntersection: 29
+    firstPoint: 104
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 54
+    typeId: 1
+    startIntersection: 28
+    endIntersection: 35
+    firstPoint: 106
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 55
+    typeId: 1
+    startIntersection: 29
+    endIntersection: 30
+    firstPoint: 108
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 56
+    typeId: 1
+    startIntersection: 29
+    endIntersection: 36
+    firstPoint: 110
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 57
+    typeId: 1
+    startIntersection: 30
+    endIntersection: 31
+    firstPoint: 112
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 58
+    typeId: 1
+    startIntersection: 30
+    endIntersection: 37
+    firstPoint: 114
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 59
+    typeId: 1
+    startIntersection: 31
+    endIntersection: 32
+    firstPoint: 116
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 60
+    typeId: 1
+    startIntersection: 31
+    endIntersection: 38
+    firstPoint: 118
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 61
+    typeId: 1
+    startIntersection: 32
+    endIntersection: 33
+    firstPoint: 120
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 62
+    typeId: 1
+    startIntersection: 32
+    endIntersection: 39
+    firstPoint: 122
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 63
+    typeId: 1
+    startIntersection: 33
+    endIntersection: 34
+    firstPoint: 124
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 64
+    typeId: 1
+    startIntersection: 33
+    endIntersection: 40
+    firstPoint: 126
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 65
+    typeId: 1
+    startIntersection: 34
+    endIntersection: 41
+    firstPoint: 128
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 66
+    typeId: 1
+    startIntersection: 35
+    endIntersection: 36
+    firstPoint: 130
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 67
+    typeId: 1
+    startIntersection: 35
+    endIntersection: 42
+    firstPoint: 132
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 68
+    typeId: 1
+    startIntersection: 36
+    endIntersection: 37
+    firstPoint: 134
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 69
+    typeId: 1
+    startIntersection: 36
+    endIntersection: 43
+    firstPoint: 136
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 70
+    typeId: 1
+    startIntersection: 37
+    endIntersection: 38
+    firstPoint: 138
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 71
+    typeId: 1
+    startIntersection: 37
+    endIntersection: 44
+    firstPoint: 140
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 72
+    typeId: 1
+    startIntersection: 38
+    endIntersection: 39
+    firstPoint: 142
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 73
+    typeId: 1
+    startIntersection: 38
+    endIntersection: 45
+    firstPoint: 144
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 74
+    typeId: 1
+    startIntersection: 39
+    endIntersection: 40
+    firstPoint: 146
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 75
+    typeId: 1
+    startIntersection: 39
+    endIntersection: 46
+    firstPoint: 148
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 76
+    typeId: 1
+    startIntersection: 40
+    endIntersection: 41
+    firstPoint: 150
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 77
+    typeId: 1
+    startIntersection: 40
+    endIntersection: 47
+    firstPoint: 152
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 78
+    typeId: 1
+    startIntersection: 41
+    endIntersection: 48
+    firstPoint: 154
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 79
+    typeId: 1
+    startIntersection: 42
+    endIntersection: 43
+    firstPoint: 156
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 80
+    typeId: 1
+    startIntersection: 43
+    endIntersection: 44
+    firstPoint: 158
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 81
+    typeId: 1
+    startIntersection: 44
+    endIntersection: 45
+    firstPoint: 160
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 82
+    typeId: 1
+    startIntersection: 45
+    endIntersection: 46
+    firstPoint: 162
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 83
+    typeId: 1
+    startIntersection: 46
+    endIntersection: 47
+    firstPoint: 164
+    pointCount: 2
+    oneWay: 0
+  - length: 100
+    speed: 30.555557
+    width: 20
+    id: 84
+    typeId: 1
+    startIntersection: 47
+    endIntersection: 48
+    firstPoint: 166
+    pointCount: 2
+    oneWay: 0
+  - length: 424.26407
+    speed: 30.555557
+    width: 20
+    id: 85
+    typeId: 1
+    startIntersection: 0
+    endIntersection: 24
+    firstPoint: 168
+    pointCount: 2
+    oneWay: 0
+  - length: 424.26407
+    speed: 30.555557
+    width: 20
+    id: 86
+    typeId: 1
+    startIntersection: 24
+    endIntersection: 48
+    firstPoint: 170
+    pointCount: 2
+    oneWay: 0
+  - length: 116
+    speed: 30.555557
+    width: 20
+    id: 87
+    typeId: 1
+    startIntersection: 49
+    endIntersection: 50
+    firstPoint: 172
+    pointCount: 4
+    oneWay: 0
+  intersections:
+  - position: {x: -300, y: 0, z: -300}
+    id: 1
+    firstLink: 0
+    linkCount: 3
+  - position: {x: -200, y: 0, z: -300}
+    id: 2
+    firstLink: 3
+    linkCount: 3
+  - position: {x: -100, y: 0, z: -300}
+    id: 3
+    firstLink: 6
+    linkCount: 3
+  - position: {x: 0, y: 0, z: -300}
+    id: 4
+    firstLink: 9
+    linkCount: 3
+  - position: {x: 100, y: 0, z: -300}
+    id: 5
+    firstLink: 12
+    linkCount: 3
+  - position: {x: 200, y: 0, z: -300}
+    id: 6
+    firstLink: 15
+    linkCount: 3
+  - position: {x: 300, y: 0, z: -300}
+    id: 7
+    firstLink: 18
+    linkCount: 2
+  - position: {x: -300, y: 0, z: -200}
+    id: 8
+    firstLink: 20
+    linkCount: 3
+  - position: {x: -200, y: 0, z: -200}
+    id: 9
+    firstLink: 23
+    linkCount: 4
+  - position: {x: -100, y: 0, z: -200}
+    id: 10
+    firstLink: 27
+    linkCount: 4
+  - position: {x: 0, y: 0, z: -200}
+    id: 11
+    firstLink: 31
+    linkCount: 4
+  - position: {x: 100, y: 0, z: -200}
+    id: 12
+    firstLink: 35
+    linkCount: 4
+  - position: {x: 200, y: 0, z: -200}
+    id: 13
+    firstLink: 39
+    linkCount: 4
+  - position: {x: 300, y: 0, z: -200}
+    id: 14
+    firstLink: 43
+    linkCount: 3
+  - position: {x: -300, y: 0, z: -100}
+    id: 15
+    firstLink: 46
+    linkCount: 3
+  - position: {x: -200, y: 0, z: -100}
+    id: 16
+    firstLink: 49
+    linkCount: 4
+  - position: {x: -100, y: 0, z: -100}
+    id: 17
+    firstLink: 53
+    linkCount: 4
+  - position: {x: 0, y: 0, z: -100}
+    id: 18
+    firstLink: 57
+    linkCount: 4
+  - position: {x: 100, y: 0, z: -100}
+    id: 19
+    firstLink: 61
+    linkCount: 4
+  - position: {x: 200, y: 0, z: -100}
+    id: 20
+    firstLink: 65
+    linkCount: 4
+  - position: {x: 300, y: 0, z: -100}
+    id: 21
+    firstLink: 69
+    linkCount: 3
+  - position: {x: -300, y: 0, z: 0}
+    id: 22
+    firstLink: 72
+    linkCount: 3
+  - position: {x: -200, y: 0, z: 0}
+    id: 23
+    firstLink: 75
+    linkCount: 4
+  - position: {x: -100, y: 0, z: 0}
+    id: 24
+    firstLink: 79
+    linkCount: 4
+  - position: {x: 0, y: 0, z: 0}
+    id: 25
+    firstLink: 83
+    linkCount: 6
+  - position: {x: 100, y: 0, z: 0}
+    id: 26
+    firstLink: 89
+    linkCount: 4
+  - position: {x: 200, y: 0, z: 0}
+    id: 27
+    firstLink: 93
+    linkCount: 4
+  - position: {x: 300, y: 0, z: 0}
+    id: 28
+    firstLink: 97
+    linkCount: 3
+  - position: {x: -300, y: 0, z: 100}
+    id: 29
+    firstLink: 100
+    linkCount: 3
+  - position: {x: -200, y: 0, z: 100}
+    id: 30
+    firstLink: 103
+    linkCount: 4
+  - position: {x: -100, y: 0, z: 100}
+    id: 31
+    firstLink: 107
+    linkCount: 4
+  - position: {x: 0, y: 0, z: 100}
+    id: 32
+    firstLink: 111
+    linkCount: 4
+  - position: {x: 100, y: 0, z: 100}
+    id: 33
+    firstLink: 115
+    linkCount: 4
+  - position: {x: 200, y: 0, z: 100}
+    id: 34
+    firstLink: 119
+    linkCount: 4
+  - position: {x: 300, y: 0, z: 100}
+    id: 35
+    firstLink: 123
+    linkCount: 3
+  - position: {x: -300, y: 0, z: 200}
+    id: 36
+    firstLink: 126
+    linkCount: 3
+  - position: {x: -200, y: 0, z: 200}
+    id: 37
+    firstLink: 129
+    linkCount: 4
+  - position: {x: -100, y: 0, z: 200}
+    id: 38
+    firstLink: 133
+    linkCount: 4
+  - position: {x: 0, y: 0, z: 200}
+    id: 39
+    firstLink: 137
+    linkCount: 4
+  - position: {x: 100, y: 0, z: 200}
+    id: 40
+    firstLink: 141
+    linkCount: 4
+  - position: {x: 200, y: 0, z: 200}
+    id: 41
+    firstLink: 145
+    linkCount: 4
+  - position: {x: 300, y: 0, z: 200}
+    id: 42
+    firstLink: 149
+    linkCount: 3
+  - position: {x: -300, y: 0, z: 300}
+    id: 43
+    firstLink: 152
+    linkCount: 2
+  - position: {x: -200, y: 0, z: 300}
+    id: 44
+    firstLink: 154
+    linkCount: 3
+  - position: {x: -100, y: 0, z: 300}
+    id: 45
+    firstLink: 157
+    linkCount: 3
+  - position: {x: 0, y: 0, z: 300}
+    id: 46
+    firstLink: 160
+    linkCount: 3
+  - position: {x: 100, y: 0, z: 300}
+    id: 47
+    firstLink: 163
+    linkCount: 3
+  - position: {x: 200, y: 0, z: 300}
+    id: 48
+    firstLink: 166
+    linkCount: 3
+  - position: {x: 300, y: 0, z: 300}
+    id: 49
+    firstLink: 169
+    linkCount: 3
+  - position: {x: 0, y: 0, z: -58}
+    id: 50
+    firstLink: 172
+    linkCount: 1
+  - position: {x: 0, y: 0, z: 58}
+    id: 51
+    firstLink: 173
+    linkCount: 1
+  points:
+  - {x: -300, y: 0, z: -300}
+  - {x: -200, y: 0, z: -300}
+  - {x: -300, y: 0, z: -300}
+  - {x: -300, y: 0, z: -200}
+  - {x: -200, y: 0, z: -300}
+  - {x: -100, y: 0, z: -300}
+  - {x: -200, y: 0, z: -300}
+  - {x: -200, y: 0, z: -200}
+  - {x: -100, y: 0, z: -300}
+  - {x: 0, y: 0, z: -300}
+  - {x: -100, y: 0, z: -300}
+  - {x: -100, y: 0, z: -200}
+  - {x: 0, y: 0, z: -300}
+  - {x: 100, y: 0, z: -300}
+  - {x: 0, y: 0, z: -300}
+  - {x: 0, y: 0, z: -200}
+  - {x: 100, y: 0, z: -300}
+  - {x: 200, y: 0, z: -300}
+  - {x: 100, y: 0, z: -300}
+  - {x: 100, y: 0, z: -200}
+  - {x: 200, y: 0, z: -300}
+  - {x: 300, y: 0, z: -300}
+  - {x: 200, y: 0, z: -300}
+  - {x: 200, y: 0, z: -200}
+  - {x: 300, y: 0, z: -300}
+  - {x: 300, y: 0, z: -200}
+  - {x: -300, y: 0, z: -200}
+  - {x: -200, y: 0, z: -200}
+  - {x: -300, y: 0, z: -200}
+  - {x: -300, y: 0, z: -100}
+  - {x: -200, y: 0, z: -200}
+  - {x: -100, y: 0, z: -200}
+  - {x: -200, y: 0, z: -200}
+  - {x: -200, y: 0, z: -100}
+  - {x: -100, y: 0, z: -200}
+  - {x: 0, y: 0, z: -200}
+  - {x: -100, y: 0, z: -200}
+  - {x: -100, y: 0, z: -100}
+  - {x: 0, y: 0, z: -200}
+  - {x: 100, y: 0, z: -200}
+  - {x: 0, y: 0, z: -200}
+  - {x: 0, y: 0, z: -100}
+  - {x: 100, y: 0, z: -200}
+  - {x: 200, y: 0, z: -200}
+  - {x: 100, y: 0, z: -200}
+  - {x: 100, y: 0, z: -100}
+  - {x: 200, y: 0, z: -200}
+  - {x: 300, y: 0, z: -200}
+  - {x: 200, y: 0, z: -200}
+  - {x: 200, y: 0, z: -100}
+  - {x: 300, y: 0, z: -200}
+  - {x: 300, y: 0, z: -100}
+  - {x: -300, y: 0, z: -100}
+  - {x: -200, y: 0, z: -100}
+  - {x: -300, y: 0, z: -100}
+  - {x: -300, y: 0, z: 0}
+  - {x: -200, y: 0, z: -100}
+  - {x: -100, y: 0, z: -100}
+  - {x: -200, y: 0, z: -100}
+  - {x: -200, y: 0, z: 0}
+  - {x: -100, y: 0, z: -100}
+  - {x: 0, y: 0, z: -100}
+  - {x: -100, y: 0, z: -100}
+  - {x: -100, y: 0, z: 0}
+  - {x: 0, y: 0, z: -100}
+  - {x: 100, y: 0, z: -100}
+  - {x: 0, y: 0, z: -100}
+  - {x: 0, y: 0, z: 0}
+  - {x: 100, y: 0, z: -100}
+  - {x: 200, y: 0, z: -100}
+  - {x: 100, y: 0, z: -100}
+  - {x: 100, y: 0, z: 0}
+  - {x: 200, y: 0, z: -100}
+  - {x: 300, y: 0, z: -100}
+  - {x: 200, y: 0, z: -100}
+  - {x: 200, y: 0, z: 0}
+  - {x: 300, y: 0, z: -100}
+  - {x: 300, y: 0, z: 0}
+  - {x: -300, y: 0, z: 0}
+  - {x: -200, y: 0, z: 0}
+  - {x: -300, y: 0, z: 0}
+  - {x: -300, y: 0, z: 100}
+  - {x: -200, y: 0, z: 0}
+  - {x: -100, y: 0, z: 0}
+  - {x: -200, y: 0, z: 0}
+  - {x: -200, y: 0, z: 100}
+  - {x: -100, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: -100, y: 0, z: 0}
+  - {x: -100, y: 0, z: 100}
+  - {x: 0, y: 0, z: 0}
+  - {x: 100, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 100}
+  - {x: 100, y: 0, z: 0}
+  - {x: 200, y: 0, z: 0}
+  - {x: 100, y: 0, z: 0}
+  - {x: 100, y: 0, z: 100}
+  - {x: 200, y: 0, z: 0}
+  - {x: 300, y: 0, z: 0}
+  - {x: 200, y: 0, z: 0}
+  - {x: 200, y: 0, z: 100}
+  - {x: 300, y: 0, z: 0}
+  - {x: 300, y: 0, z: 100}
+  - {x: -300, y: 0, z: 100}
+  - {x: -200, y: 0, z: 100}
+  - {x: -300, y: 0, z: 100}
+  - {x: -300, y: 0, z: 200}
+  - {x: -200, y: 0, z: 100}
+  - {x: -100, y: 0, z: 100}
+  - {x: -200, y: 0, z: 100}
+  - {x: -200, y: 0, z: 200}
+  - {x: -100, y: 0, z: 100}
+  - {x: 0, y: 0, z: 100}
+  - {x: -100, y: 0, z: 100}
+  - {x: -100, y: 0, z: 200}
+  - {x: 0, y: 0, z: 100}
+  - {x: 100, y: 0, z: 100}
+  - {x: 0, y: 0, z: 100}
+  - {x: 0, y: 0, z: 200}
+  - {x: 100, y: 0, z: 100}
+  - {x: 200, y: 0, z: 100}
+  - {x: 100, y: 0, z: 100}
+  - {x: 100, y: 0, z: 200}
+  - {x: 200, y: 0, z: 100}
+  - {x: 300, y: 0, z: 100}
+  - {x: 200, y: 0, z: 100}
+  - {x: 200, y: 0, z: 200}
+  - {x: 300, y: 0, z: 100}
+  - {x: 300, y: 0, z: 200}
+  - {x: -300, y: 0, z: 200}
+  - {x: -200, y: 0, z: 200}
+  - {x: -300, y: 0, z: 200}
+  - {x: -300, y: 0, z: 300}
+  - {x: -200, y: 0, z: 200}
+  - {x: -100, y: 0, z: 200}
+  - {x: -200, y: 0, z: 200}
+  - {x: -200, y: 0, z: 300}
+  - {x: -100, y: 0, z: 200}
+  - {x: 0, y: 0, z: 200}
+  - {x: -100, y: 0, z: 200}
+  - {x: -100, y: 0, z: 300}
+  - {x: 0, y: 0, z: 200}
+  - {x: 100, y: 0, z: 200}
+  - {x: 0, y: 0, z: 200}
+  - {x: 0, y: 0, z: 300}
+  - {x: 100, y: 0, z: 200}
+  - {x: 200, y: 0, z: 200}
+  - {x: 100, y: 0, z: 200}
+  - {x: 100, y: 0, z: 300}
+  - {x: 200, y: 0, z: 200}
+  - {x: 300, y: 0, z: 200}
+  - {x: 200, y: 0, z: 200}
+  - {x: 200, y: 0, z: 300}
+  - {x: 300, y: 0, z: 200}
+  - {x: 300, y: 0, z: 300}
+  - {x: -300, y: 0, z: 300}
+  - {x: -200, y: 0, z: 300}
+  - {x: -200, y: 0, z: 300}
+  - {x: -100, y: 0, z: 300}
+  - {x: -100, y: 0, z: 300}
+  - {x: 0, y: 0, z: 300}
+  - {x: 0, y: 0, z: 300}
+  - {x: 100, y: 0, z: 300}
+  - {x: 100, y: 0, z: 300}
+  - {x: 200, y: 0, z: 300}
+  - {x: 200, y: 0, z: 300}
+  - {x: 300, y: 0, z: 300}
+  - {x: -300, y: 0, z: -300}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 300, y: 0, z: 300}
+  - {x: 0, y: 0, z: -58}
+  - {x: 0, y: 6, z: -18}
+  - {x: 0, y: 6, z: 18}
+  - {x: 0, y: 0, z: 58}
+  pointDistances:
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 424.26407
+  - 0
+  - 424.26407
+  - 0
+  - 40
+  - 76
+  - 116
+  links: 000000000100000054000000000000000200000003000000020000000400000005000000040000000600000007000000060000000800000009000000080000000a0000000b0000000a0000000c000000010000000d0000000e000000030000000d0000000f00000010000000050000000f000000110000001200000007000000110000001300000014000000090000001300000015000000160000000b0000001500000017000000180000000c00000017000000190000000e0000001a0000001b000000100000001a0000001c0000001d000000120000001c0000001e0000001f000000140000001e000000200000002100000016000000200000002200000023000000180000002200000024000000250000001900000024000000260000001b00000027000000280000001d00000027000000290000002a0000001f000000290000002b0000002c000000210000002b0000002d0000002e0000005400000055000000230000002d0000002f00000030000000250000002f00000031000000320000002600000031000000330000002800000034000000350000002a0000003400000036000000370000002c0000003600000038000000390000002e000000380000003a0000003b000000300000003a0000003c0000003d000000320000003c0000003e0000003f000000330000003e0000004000000035000000410000004200000037000000410000004300000044000000390000004300000045000000460000003b0000004500000047000000480000003d00000047000000490000004a0000003f000000490000004b0000004c000000400000004b0000004d000000420000004e000000440000004e0000004f000000460000004f000000500000004800000050000000510000004a00000051000000520000004c00000052000000530000004d00000053000000550000005600000056000000
   grid:
-    cellStart: 
-    cellCount: 
-    entries: 
-    entryRoad: 
-    origin: {x: 0, y: 0}
+    cellStart: 000000000300000005000000090000000b0000000f000000110000001500000016000000190000001a0000001d0000001f0000002100000022000000240000002500000027000000280000002a0000002a0000002b0000002b0000002c0000002d0000003100000033000000380000003a0000003f0000004100000046000000470000004b0000004c0000005000000053000000550000005600000058000000590000005b0000005c0000005e0000005e0000005f0000005f000000600000006100000065000000670000006c0000006e00000073000000750000007b0000007c000000800000008100000085000000880000008a0000008b0000008d0000008e00000090000000910000009500000095000000960000009600000097000000980000009c0000009e000000a3000000a5000000aa000000ac000000b4000000b6000000bb000000bd000000c2000000c6000000c7000000c7000000c8000000c8000000c9000000c9000000cc000000cd000000cf000000d0000000d2000000d4000000d7000000d8000000dc000000dd000000e1000000e2000000e7000000e9000000ee000000f0000000f5000000f9000000fa000000fa000000fb000000fb000000fc000000fc000000fe000000ff00000001010000020100000401000006010000090100000a0100000e0100000f0100001301000014010000190100001b0100002001000022010000270100002b0100002d0100002e010000310100003201000035010000360100003a0100003c010000400100004201000046010000
+    cellCount: 030000000200000004000000020000000400000002000000040000000100000003000000010000000300000002000000020000000100000002000000010000000200000001000000020000000000000001000000000000000100000001000000040000000200000005000000020000000500000002000000050000000100000004000000010000000400000003000000020000000100000002000000010000000200000001000000020000000000000001000000000000000100000001000000040000000200000005000000020000000500000002000000060000000100000004000000010000000400000003000000020000000100000002000000010000000200000001000000040000000000000001000000000000000100000001000000040000000200000005000000020000000500000002000000080000000200000005000000020000000500000004000000010000000000000001000000000000000100000000000000030000000100000002000000010000000200000002000000030000000100000004000000010000000400000001000000050000000200000005000000020000000500000004000000010000000000000001000000000000000100000000000000020000000100000002000000010000000200000002000000030000000100000004000000010000000400000001000000050000000200000005000000020000000500000004000000020000000100000003000000010000000300000001000000040000000200000004000000020000000400000003000000
+    entries: 0000000002000000a800000000000000a8000000000000000400000006000000a800000004000000a800000004000000080000000a000000a800000008000000a8000000080000000c0000000e000000a80000000c0000000c000000100000001200000010000000100000001400000016000000140000001800000002000000a8000000a800000006000000a8000000a80000000a000000a8000000a80000000e000000a8000000120000001600000018000000020000001a0000001c000000a80000001a000000a8000000060000001a0000001e00000020000000a80000001e000000a80000000a0000001e0000002200000024000000a800000022000000a80000000e000000220000002600000028000000a80000002600000012000000260000002a0000002c0000002a000000160000002a0000002e00000030000000180000002e000000320000001c000000a8000000a800000020000000a8000000a800000024000000a8000000a800000028000000a80000002c00000030000000320000001c0000003400000036000000a800000034000000a80000002000000034000000380000003a000000a800000038000000a800000024000000380000003c0000003e000000a80000003c000000a8000000280000003c0000004000000042000000a8000000ac000000400000002c000000400000004400000046000000440000003000000044000000480000004a00000032000000480000004c00000036000000a8000000a80000003a000000a8000000a80000003e000000a8000000a800000042000000a8000000ac000000ad000000460000004a0000004c000000360000004e00000050000000a80000004e000000a80000003a0000004e0000005200000054000000a800000052000000a80000003e000000520000005600000058000000a800000056000000a800000042000000560000005a0000005c000000a8000000aa000000ad000000ae0000005a000000aa000000460000005a0000005e00000060000000aa0000005e000000aa0000004a0000005e0000006200000064000000aa0000004c0000006200000066000000aa0000005000000054000000580000005c000000aa000000ae000000aa00000060000000aa000000aa00000064000000aa00000066000000aa00000050000000680000006a0000006800000054000000680000006c0000006e0000006c000000580000006c0000007000000072000000700000005c000000700000007400000076000000aa00000074000000aa0000006000000074000000780000007a000000aa00000078000000aa00000064000000780000007c0000007e000000aa000000660000007c00000080000000aa0000006a0000006e0000007200000076000000aa000000aa0000007a000000aa000000aa0000007e000000aa00000080000000aa0000006a0000008200000084000000820000006e0000008200000086000000880000008600000072000000860000008a0000008c0000008a000000760000008a0000008e00000090000000aa0000008e000000aa0000007a0000008e0000009200000094000000aa00000092000000aa0000007e000000920000009600000098000000aa00000080000000960000009a000000aa000000840000009c0000009c000000880000009c0000009e0000009e0000008c0000009e000000a0000000a000000090000000a0000000a2000000aa000000a2000000aa00000094000000a2000000a4000000aa000000a4000000aa00000098000000a4000000a6000000aa0000009a000000a6000000aa000000
+    entryRoad: 0000000001000000540000000000000054000000000000000200000003000000540000000200000054000000020000000400000005000000540000000400000054000000040000000600000007000000540000000600000006000000080000000900000008000000080000000a0000000b0000000a0000000c0000000100000054000000540000000300000054000000540000000500000054000000540000000700000054000000090000000b0000000c000000010000000d0000000e000000540000000d00000054000000030000000d0000000f00000010000000540000000f00000054000000050000000f000000110000001200000054000000110000005400000007000000110000001300000014000000540000001300000009000000130000001500000016000000150000000b0000001500000017000000180000000c00000017000000190000000e000000540000005400000010000000540000005400000012000000540000005400000014000000540000001600000018000000190000000e0000001a0000001b000000540000001a00000054000000100000001a0000001c0000001d000000540000001c00000054000000120000001c0000001e0000001f000000540000001e00000054000000140000001e00000020000000210000005400000056000000200000001600000020000000220000002300000022000000180000002200000024000000250000001900000024000000260000001b00000054000000540000001d00000054000000540000001f0000005400000054000000210000005400000056000000560000002300000025000000260000001b00000027000000280000005400000027000000540000001d00000027000000290000002a0000005400000029000000540000001f000000290000002b0000002c000000540000002b00000054000000210000002b0000002d0000002e000000540000005500000056000000560000002d00000055000000230000002d0000002f00000030000000550000002f00000055000000250000002f00000031000000320000005500000026000000310000003300000055000000280000002a0000002c0000002e00000055000000560000005500000030000000550000005500000032000000550000003300000055000000280000003400000035000000340000002a000000340000003600000037000000360000002c000000360000003800000039000000380000002e000000380000003a0000003b000000550000003a00000055000000300000003a0000003c0000003d000000550000003c00000055000000320000003c0000003e0000003f00000055000000330000003e00000040000000550000003500000037000000390000003b00000055000000550000003d00000055000000550000003f00000055000000400000005500000035000000410000004200000041000000370000004100000043000000440000004300000039000000430000004500000046000000450000003b0000004500000047000000480000005500000047000000550000003d00000047000000490000004a0000005500000049000000550000003f000000490000004b0000004c00000055000000400000004b0000004d00000055000000420000004e0000004e000000440000004e0000004f0000004f000000460000004f00000050000000500000004800000050000000510000005500000051000000550000004a00000051000000520000005500000052000000550000004c0000005200000053000000550000004d0000005300000055000000
+    origin: {x: -300, y: -300}
     cellSize: 50
-    cellsX: 0
-    cellsZ: 0
-  settings: {fileID: 0}
-  maxSpeed: 0
+    cellsX: 12
+    cellsZ: 12
+  settings: {fileID: 11400000, guid: 4d88b9a7b40a9b84280151719d824047, type: 2}
+  maxSpeed: 30.555557
   formatVersion: 1
-  sourceVersion: 0
+  sourceVersion: 1
   settingsVersion: 0
