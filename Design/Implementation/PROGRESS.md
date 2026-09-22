@@ -53,7 +53,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 ## Phase 8 — Runtime navigation
 - [x] S33 Vehicle motion (2026-09-22)
 - [x] S34 [HARD] Road matching (2026-09-22)
-- [ ] S35 Navigation session
+- [x] S35 Navigation session (2026-09-22)
 - [ ] S36 Reroute rules
 - [ ] S37 [HARD] Navigation Manager: core loop
 - [ ] S38 [HARD] Navigation Manager: API, preview flow, events and command queue
@@ -137,3 +137,7 @@ Decisions the user makes during implementation (decision points S04, S29, S56, o
 - 2026-09-21 S04: Route line shader widens the line in canvas space using a per-graphic `_CanvasOffsetMatrix` updated on `Canvas.willRenderCanvases` (option B), instead of offsetting in graphic-local meters. Same performance as the sub-canvas-only approach and keeps the "one canvas, no sub-canvases" fallback viable. Nested-canvas clipping passed manual check 2, so the fallback is not needed; S05 keeps `useOwnCanvas = true`.
 - 2026-09-21 S29: No chunking for now. On a 5k-road (5176) network: point-only edits (Move Key Point) measured 1.15 ms and Scene view redraw measured 1.78-2.00 ms across zoom levels — both well within budget (≤50 ms, ≤16 ms). Structural edits (Split Road, and by the same `RoadEditOperations.FinishRoads`/`Undo.RecordObject`-on-the-whole-asset path: Merge/Disconnect/Connect/Delete Road) measured 387 ms, ~7.7x over the 50 ms target, with Undo/Redo paying the same cost again. Decided to ship without chunking and revisit with the profiler against real project data once the rest of the system is built, rather than design chunking now against a synthetic stress-test map.
 - 2026-09-22 S34: Road-matching score uses the signed heading dot on one-way roads (`10*(1-dot)`), `|dot|` on two-way roads, so antiparallel one-ways are distinguished by heading.
+
+## Implementation notes (continued)
+
+- S35: `NavigationSession.ArrivalDistance` is a settable property (default 10 m, same pattern as `VehicleMotion`/`RoadMatcher`'s settings) — S37 should assign the Manager's serialized `arrivalDistance` onto it after construction. The 30 m look-ahead distance used when advancing across short segments is a private const (`LookAheadDistance`), not exposed as a setting — it isn't in the design's default-value table. `UpdateNavigationSessionLogic` guards on `route == null || route.Segments.Count == 0` (a `Route` with `ArrivedImmediately == true` has zero segments) so the Manager can safely call it even before deciding whether to call `Start` on such a route. `JumpTo` also recomputes `RemainingDistance`/`Eta` (via the same private `UpdateRemainingAndEta` used by the per-tick update), not just `ProgressDistance`/`CurrentSegment`, so callers don't need to call anything else after a jump. Progress within a segment is always clamped to `[0, segment length]` (`Mathf.Abs(DistanceAlong - segment.FromDistance)` clamped), so `RemainingDistance` reaches exactly 0 whenever the car has physically passed the route's last segment — the arrival rule's "passed" and "within distance" branches both fire at that point; they're still functionally distinct because "within distance" also fires *before* the car reaches the end.
