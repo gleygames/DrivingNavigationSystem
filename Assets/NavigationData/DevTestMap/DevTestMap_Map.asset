@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rectangleCenter: {x: 0, y: 0, z: 0}
   editTimeWorldPosition: {x: 0, y: 0, z: 0}
-  rectangleSize: {x: 600, y: 600}
+  rectangleSize: {x: 621.7264, y: 621.7264}
   outsideMapColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   roadNetwork: {fileID: 11400000, guid: b352c22779b201d4aa1dc7634ae295a9, type: 2}
-  image: {fileID: 0}
-  imageState: 0
+  image: {fileID: 2800000, guid: b9fc35be5a18e9e43890a076dcb8195c, type: 3}
+  imageState: 2
   rectangleRotationY: 0
   formatVersion: 1
   locked: 0
