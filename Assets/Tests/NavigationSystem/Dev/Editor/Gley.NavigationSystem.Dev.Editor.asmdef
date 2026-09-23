@@ -6,7 +6,9 @@
         "Gley.NavigationSystem.Editor",
         "Gley.NavigationSystem.Dev",
         "Gley.NavigationSystem.Tests.Shared",
-        "UnityEngine.UI"
+        "Gley.NavigationSystem.TMP",
+        "UnityEngine.UI",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [
         "Editor"
