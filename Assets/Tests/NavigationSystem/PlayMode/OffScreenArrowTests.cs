@@ -177,6 +177,43 @@ namespace Gley.NavigationSystem.Tests
             Assert.Greater(textTarget.SetTextCallCount, callCountAfterShow);
         }
 
+        [UnityTest]
+        public IEnumerator ChildLabel_MovedToLabelLayer_Upright()
+        {
+            GameObject labelledArrow = new GameObject("LabelledArrowTemplate", typeof(RectTransform));
+            GameObject label = new GameObject("Label", typeof(RectTransform));
+            label.transform.SetParent(labelledArrow.transform, false);
+            label.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -20f);
+            label.AddComponent<FakeTextTarget>();
+            createdObjects.Add(labelledArrow);
+            view.SetArrowPrefab(labelledArrow);
+            yield return WaitFrames(2);
+
+            view.SetCenter(new Vector2(70f, 100f));
+            view.SetZoomMeters(100f, 999999f);
+
+            manager.StartNavigation(new Vector3(280f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            GameObject arrow = view.MarkerLayer.GetActiveArrow(manager.DestinationMarkerIndex);
+            Assert.IsNotNull(arrow);
+            Assert.AreEqual(0, arrow.GetComponentsInChildren<FakeTextTarget>(true).Length);
+
+            Transform labelLayer = view.MarkerLayer.transform.Find("OffScreenArrowLabels");
+            Assert.IsNotNull(labelLayer);
+            Assert.Greater(labelLayer.GetSiblingIndex(), arrow.transform.parent.GetSiblingIndex());
+
+            FakeTextTarget labelInstance = labelLayer.GetComponentInChildren<FakeTextTarget>(true);
+            Assert.IsNotNull(labelInstance);
+            Assert.IsTrue(labelInstance.gameObject.activeSelf);
+            Assert.Greater(labelInstance.SetTextCallCount, 0);
+            Assert.AreEqual(0f, Quaternion.Angle(Quaternion.identity, labelInstance.transform.localRotation), 0.01f);
+
+            Vector2 arrowPosition = ((RectTransform)arrow.transform).anchoredPosition;
+            Vector2 labelPosition = ((RectTransform)labelInstance.transform).anchoredPosition;
+            Assert.AreEqual(20f, Vector2.Distance(arrowPosition, labelPosition), 0.01f);
+        }
+
         private Transform CreateCar(string name, Vector3 position)
         {
             GameObject carObject = new GameObject(name);

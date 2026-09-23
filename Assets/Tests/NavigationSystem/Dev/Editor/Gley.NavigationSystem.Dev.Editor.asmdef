@@ -2,6 +2,7 @@
     "name": "Gley.NavigationSystem.Dev.Editor",
     "rootNamespace": "Gley.NavigationSystem.Dev",
     "references": [
+        "Gley.Common",
         "Gley.NavigationSystem",
         "Gley.NavigationSystem.Editor",
         "Gley.NavigationSystem.Dev",

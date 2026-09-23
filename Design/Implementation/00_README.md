@@ -190,4 +190,4 @@ Notes / questions:
 | `09_MapViews.md` | S42–S45 |
 | `10_Markers.md` | S46–S48 |
 | `11_Interaction.md` | S49–S52 |
-| `12_SetupAndFinish.md` | S53–S56 |
+| `12_SetupAndFinish.md` | S53–S56, S56b |

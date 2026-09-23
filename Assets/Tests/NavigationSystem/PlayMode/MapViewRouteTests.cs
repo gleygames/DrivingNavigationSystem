@@ -164,6 +164,24 @@ namespace Gley.NavigationSystem.Tests
             Assert.IsFalse(graphic.gameObject.activeSelf);
         }
 
+        [UnityTest]
+        public IEnumerator ViewEnabledDuringNavigation_ShowsActiveLine()
+        {
+            manager.StartNavigation(new Vector3(280f, 0f, 0f));
+            yield return WaitAndUpdateCanvases(2);
+
+            GameObject lateViewObject = CreateViewObject("LateMapView");
+            lateViewObject.SetActive(false);
+            MapView lateView = lateViewObject.AddComponent<MapView>();
+            lateViewObject.SetActive(true);
+            yield return WaitAndUpdateCanvases(2);
+
+            RouteLineGraphic graphic = lateView.ActiveRouteRenderer.GetComponentInChildren<RouteLineGraphic>(true);
+
+            Assert.IsNotNull(graphic);
+            Assert.IsTrue(graphic.gameObject.activeSelf);
+        }
+
         private GameObject CreateViewObject(string name)
         {
             GameObject viewGameObject = new GameObject(name, typeof(RectTransform));

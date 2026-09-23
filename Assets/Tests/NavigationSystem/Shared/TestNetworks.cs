@@ -171,6 +171,48 @@ namespace Gley.NavigationSystem.Tests
             return input;
         }
 
+        public RoadNetworkBuildInput TJunction(float length, float width)
+        {
+            RoadNetworkBuildInput input = new RoadNetworkBuildInput();
+
+            Vector3 west = new Vector3(0f, 0f, 0f);
+            Vector3 center = new Vector3(length, 0f, 0f);
+            Vector3 east = new Vector3(length * 2f, 0f, 0f);
+            Vector3 north = new Vector3(length, 0f, length);
+
+            AddIntersection(input, 1, west);
+            AddIntersection(input, 2, center);
+            AddIntersection(input, 3, east);
+            AddIntersection(input, 4, north);
+
+            AddStraightRoad(input, 1, 1, 2, west, center, 2, false, width);
+            AddStraightRoad(input, 2, 2, 3, center, east, 2, false, width);
+            AddStraightRoad(input, 3, 2, 4, center, north, 2, false, width);
+
+            return input;
+        }
+
+        public RoadNetworkBuildInput Star(float length, float width, params float[] exitAnglesDegrees)
+        {
+            RoadNetworkBuildInput input = new RoadNetworkBuildInput();
+
+            Vector3 center = Vector3.zero;
+            Vector3 west = new Vector3(-length, 0f, 0f);
+            AddIntersection(input, 1, center);
+            AddIntersection(input, 2, west);
+            AddStraightRoad(input, 1, 2, 1, west, center, 2, false, width);
+
+            for (int i = 0; i < exitAnglesDegrees.Length; i++)
+            {
+                float radians = exitAnglesDegrees[i] * Mathf.Deg2Rad;
+                Vector3 end = new Vector3(Mathf.Cos(radians), 0f, Mathf.Sin(radians)) * length;
+                AddIntersection(input, 3 + i, end);
+                AddStraightRoad(input, 2 + i, 1, 3 + i, center, end, 2, false, width);
+            }
+
+            return input;
+        }
+
         public RoadNetworkData BuildNetwork(RoadNetworkBuildInput input)
         {
             NavigationSettings settings = ScriptableObject.CreateInstance<NavigationSettings>();

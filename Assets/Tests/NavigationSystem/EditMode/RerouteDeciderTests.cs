@@ -121,6 +121,48 @@ namespace Gley.NavigationSystem.Tests
             Assert.AreEqual(RerouteReason.None, reason);
         }
 
+        [Test]
+        public void WrongTurn_WhileInFork_Waits()
+        {
+            BuildTJunctionTurn();
+            decider.AccumulateDrivenDistance(decider.RerouteCooldown);
+
+            Assert.IsTrue(matcher.IsInFork);
+            Assert.IsTrue(session.WrongTurn);
+            RerouteReason reason = decider.Decide(session, matcher, false);
+
+            Assert.AreEqual(RerouteReason.None, reason);
+        }
+
+        [Test]
+        public void ForkResolvesToRouteRoad_NoReroute()
+        {
+            BuildTJunctionTurn();
+            decider.AccumulateDrivenDistance(decider.RerouteCooldown);
+
+            DriveStep(new Vector3(100f, 0f, 5f), Vector3.forward);
+            RerouteReason reason = decider.Decide(session, matcher, false);
+
+            Assert.IsFalse(matcher.IsInFork);
+            Assert.AreEqual(2, matcher.RoadIndex);
+            Assert.IsFalse(session.WrongTurn);
+            Assert.AreEqual(RerouteReason.None, reason);
+        }
+
+        [Test]
+        public void ForkResolvesToOtherRoad_WrongTurn()
+        {
+            BuildTJunctionTurn();
+            decider.AccumulateDrivenDistance(decider.RerouteCooldown);
+
+            DriveStep(new Vector3(110f, 0f, 0f), Vector3.right);
+            RerouteReason reason = decider.Decide(session, matcher, false);
+
+            Assert.IsFalse(matcher.IsInFork);
+            Assert.AreEqual(1, matcher.RoadIndex);
+            Assert.AreEqual(RerouteReason.WrongTurn, reason);
+        }
+
         private void BuildWrongTurnRoute()
         {
             Pathfinder pathfinder = CreatePathfinder(testNetworks.Line(2, 100f));
@@ -166,6 +208,26 @@ namespace Gley.NavigationSystem.Tests
             matcher.UpdateRoadMatchingLogic(reEntryPosition, Vector3.right, false, false);
             session.UpdateNavigationSessionLogic(matcher, 0f);
             Assert.IsTrue(matcher.EnteredRoad);
+        }
+
+        private void BuildTJunctionTurn()
+        {
+            Pathfinder pathfinder = CreatePathfinder(testNetworks.TJunction(100f, 8f));
+            pathfinder.FindRouteBetweenIntersections(0, 3, preferences, route);
+            session.Start(route);
+            matcher = new RoadMatcher(data);
+
+            for (int x = 10; x <= 100; x += 10)
+            {
+                DriveStep(new Vector3(x, 0f, 0f), Vector3.right);
+            }
+            DriveStep(new Vector3(100.5f, 0f, 0f), Vector3.right);
+        }
+
+        private void DriveStep(Vector3 position, Vector3 heading)
+        {
+            matcher.UpdateRoadMatchingLogic(position, heading, false, false);
+            session.UpdateNavigationSessionLogic(matcher, 10f);
         }
 
         private void BuildTeleportRoute()

@@ -189,6 +189,23 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [Test]
+        public void FourExitIntersection_WorstScoredExitKept_TurnFound()
+        {
+            CreateMatcher(testNetworks.Star(100f, 8f, 10f, -15f, 30f, 60f));
+            Place(new Vector3(-50f, 0f, 0f), Vector3.right);
+            DriveTo(new Vector3(0.5f, 0f, 0f), 1f);
+            Assert.IsTrue(matcher.IsInFork);
+            Assert.AreEqual(4, matcher.ForkCandidateCount);
+
+            float radians = 60f * Mathf.Deg2Rad;
+            Vector3 turnDirection = new Vector3(Mathf.Cos(radians), 0f, Mathf.Sin(radians));
+            DriveTo(turnDirection * 6f, 0.5f);
+
+            Assert.IsTrue(matcher.IsOnRoad);
+            Assert.AreEqual(FindRoad(Vector3.zero, turnDirection * 100f), matcher.RoadIndex);
+        }
+
+        [Test]
         public void BridgeCrossing_StaysOnBridgeRoad()
         {
             CreateMatcher(testNetworks.Crossing(100f, 10f, 8f));

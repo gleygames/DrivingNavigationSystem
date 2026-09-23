@@ -46,6 +46,21 @@ namespace Gley.NavigationSystem.Dev
             return assets.AuthoringAsset;
         }
 
+        public NavigationMap CreateMapObject(MapData mapAsset, float unitsPerMeter)
+        {
+            GameObject mapObject = new GameObject(DefaultName);
+            NavigationMap map = mapObject.AddComponent<NavigationMap>();
+            AssignMapData(map, mapAsset);
+
+            MapRectangleSync sync = new MapRectangleSync();
+            sync.SnapObjectToAsset(mapObject.transform, mapAsset, unitsPerMeter);
+            EditorUtility.SetDirty(mapAsset);
+            AssetDatabase.SaveAssets();
+
+            Selection.activeGameObject = mapObject;
+            return map;
+        }
+
         private void AssignSettings(RoadNetworkAuthoring authoring, NavigationSettings settings)
         {
             SerializedObject serializedObject = new SerializedObject(authoring);
@@ -104,20 +119,6 @@ namespace Gley.NavigationSystem.Dev
                     }
                 }
             }
-        }
-
-        private void CreateMapObject(MapData mapAsset, float unitsPerMeter)
-        {
-            GameObject mapObject = new GameObject(DefaultName);
-            NavigationMap map = mapObject.AddComponent<NavigationMap>();
-            AssignMapData(map, mapAsset);
-
-            MapRectangleSync sync = new MapRectangleSync();
-            sync.SnapObjectToAsset(mapObject.transform, mapAsset, unitsPerMeter);
-            EditorUtility.SetDirty(mapAsset);
-            AssetDatabase.SaveAssets();
-
-            Selection.activeGameObject = mapObject;
         }
 
         private void AssignMapData(NavigationMap map, MapData data)

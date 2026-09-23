@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dev5k_Map
   m_EditorClassIdentifier: 
   rectangleCenter: {x: 2449.531, y: 0, z: 2451.367}
-  editTimeWorldPosition: {x: 0, y: 0, z: 0}
+  editTimeWorldPosition: {x: 2449.531, y: 0, z: 2451.367}
   rectangleSize: {x: 5024.8677, y: 5028.4204}
   outsideMapColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   roadNetwork: {fileID: 11400000, guid: 6547b76c62271e44d8526afbe5a1fd60, type: 2}

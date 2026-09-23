@@ -114,3 +114,28 @@ Design references: section 14 "Setup window", "Cross-cutting" (default art, text
 | Route request (from S14) | ≤ 5 ms (phone) | |
 
 The dev PC is much faster than a low-end phone; report the numbers as measured. **Do not optimize anything in this step** — list what exceeds its goal and ask the user how to proceed.
+
+---
+
+## S56b — Performance fixes from the S56 measurements
+
+**Goal:** fix what the S56 perf-scene runs found (decision 2026-09-23). Added after S56; not in the original plan.
+
+**Depends on:** S56.
+
+**Changes:**
+- **b. False WrongTurn reroutes at intersections.** Crossing an intersection where the route turns, the movement heading still points along the old road, so `RoadMatcher.ChooseAtIntersection` picks the straight-on road as best fork candidate for a frame; the session sets `WrongTurn` and the reroute fired immediately. `RerouteDecider.Decide` now returns `None` for `WrongTurn` while `matcher.IsInFork`; it reroutes once the fork resolves to an off-route road.
+  - Second cause found in the S56b perf run: `RoadMatcher` kept at most 3 fork candidates, so at a 5-road intersection (4 exits) the exit scoring worst on arrival (the route road, since the heading still points along the old road) was dropped and the fork resolved to a wrong road. The fork buffer is now sized to the network's largest intersection link count (minimum 3).
+- **c.** `MarkerLayer` no longer calls `GetComponent<MapViewFollowCar>()` every frame (failed every frame on the full map, allocating in the Editor). `MapViewFollowCar` registers itself on its `MapView` (`SetFollowCar` in `OnEnable`, cleared in `OnDisable`); `MarkerLayer` reads `view.FollowCar`.
+- **d.** `RouteLineRenderer`/`RouteLineGraphic.SetTrimDistance`/`SetCanvasUnitsPerMeter` return early when the value is unchanged and set only their own material property (not all 11). `RouteLineRenderer.SetLine` pushes the current trim/scale to every chunk it (re)activates.
+- **e.** Checked, no code change: the ~5 KB on the first reroute is `scratchRoute`'s segment list growing once (active/scratch routes swap); later reroutes do not allocate there.
+- **f.** Off-screen arrows broke UI batching (image and TMP label interleaved, overlapping at the edge: ~1 draw call per arrow). `MarkerLayer` now puts arrow instances under an `OffScreenArrows` container and moves each arrow's child `NavigationTextTarget` object into a later `OffScreenArrowLabels` container, positioned every frame at the arrow position plus its original offset rotated with the arrow (the label stays upright). A text target on the arrow root is left in place.
+- **Extra bug fix:** `MapView.OnEnable` cleared the route lines and never drew the already-active route/preview, so opening the full map during navigation showed no route until the next reroute. It now rebuilds them (`ShowCurrentRoutes`).
+
+**Tests:**
+- `EditMode/RerouteDeciderTests`: `WrongTurn_WhileInFork_Waits`, `ForkResolvesToRouteRoad_NoReroute`, `ForkResolvesToOtherRoad_WrongTurn` (new `TestNetworks.TJunction`).
+- `EditMode/RoadMatcherTests.FourExitIntersection_WorstScoredExitKept_TurnFound` (new `TestNetworks.Star`).
+- `PlayMode/MapViewRouteTests.ViewEnabledDuringNavigation_ShowsActiveLine`.
+- `PlayMode/OffScreenArrowTests.ChildLabel_MovedToLabelLayer_Upright`.
+
+**Manual checks:** rebuild the perf scene, run the phase cycle, and compare the CSV with the S56 run (arrow draw calls, no `WrongTurn` reroutes, MarkerLayer/RouteLine.Update CPU).

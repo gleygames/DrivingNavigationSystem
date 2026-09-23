@@ -2,6 +2,7 @@
     "name": "Gley.NavigationSystem.Dev",
     "rootNamespace": "Gley.NavigationSystem.Dev",
     "references": [
+        "Gley.Common",
         "Gley.NavigationSystem",
         "UnityEngine.UI"
     ],
