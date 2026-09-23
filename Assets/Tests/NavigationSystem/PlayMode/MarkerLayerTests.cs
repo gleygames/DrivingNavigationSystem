@@ -241,6 +241,31 @@ namespace Gley.NavigationSystem.Tests
             Assert.AreEqual(0f, rect.anchoredPosition.y, 1f);
         }
 
+        [UnityTest]
+        public IEnumerator ViewportPivotBottomLeft_PlayerAtCarPosition()
+        {
+            viewObject.GetComponent<RectTransform>().pivot = Vector2.zero;
+
+            MapViewFollowCar followCar = viewObject.AddComponent<MapViewFollowCar>();
+            followCar.SetRotationMode(MinimapRotationMode.NorthUp);
+            followCar.SetSpeedZoom(false);
+            followCar.SetFixedZoomMeters(200f);
+            followCar.SetZoomSmoothing(0f);
+
+            car.position = Vector3.zero;
+            yield return WaitFrames(3);
+
+            int playerIndex = manager.Markers.PlayerIndex;
+            Assert.GreaterOrEqual(playerIndex, 0);
+
+            GameObject instance = view.MarkerLayer.GetActiveInstance(playerIndex);
+            Assert.IsNotNull(instance);
+
+            RectTransform rect = instance.GetComponent<RectTransform>();
+            Assert.AreEqual(0f, rect.anchoredPosition.x, 1f);
+            Assert.AreEqual(0f, rect.anchoredPosition.y, 1f);
+        }
+
         private int FindMarkerIndex(MapMarker marker)
         {
             for (int i = 0; i < manager.Markers.EntryCount; i++)
