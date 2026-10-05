@@ -31,6 +31,7 @@ namespace Gley.NavigationSystem.Dev
             RouteStyle minimapStyle = CreateRouteStyle("MinimapRouteStyle", 3f, lineShader);
             RouteStyle fullMapStyle = CreateRouteStyle("FullMapRouteStyle", 4f, lineShader);
             CreateDefaultFormatter();
+            TmpTextWriter textWriter = CreateTextWriter();
 
             CreateMarkerPrefab("PlayerMarker", "PlayerArrow");
             CreateMarkerPrefab("DestinationMarker", "DestinationPin");
@@ -38,8 +39,8 @@ namespace Gley.NavigationSystem.Dev
             CreateMarkerPrefab("DefaultMarker", "DefaultMarker");
             GameObject offScreenArrow = CreateOffScreenArrowPrefab();
 
-            CreateMinimapPrefab(minimapStyle, offScreenArrow);
-            CreateFullMapPrefab(fullMapStyle, offScreenArrow);
+            CreateMinimapPrefab(minimapStyle, offScreenArrow, textWriter);
+            CreateFullMapPrefab(fullMapStyle, offScreenArrow, textWriter);
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -109,6 +110,20 @@ namespace Gley.NavigationSystem.Dev
             AssetDatabase.CreateAsset(formatter, path);
         }
 
+        private TmpTextWriter CreateTextWriter()
+        {
+            string path = DevUiInstaller.PresetFolder + "/TmpTextWriter.asset";
+            TmpTextWriter existing = AssetDatabase.LoadAssetAtPath<TmpTextWriter>(path);
+            if (existing != null)
+            {
+                return existing;
+            }
+
+            TmpTextWriter writer = ScriptableObject.CreateInstance<TmpTextWriter>();
+            AssetDatabase.CreateAsset(writer, path);
+            return writer;
+        }
+
         private GameObject CreateMarkerPrefab(string prefabName, string spriteName)
         {
             GameObject instance = new GameObject(prefabName, typeof(RectTransform));
@@ -146,7 +161,7 @@ namespace Gley.NavigationSystem.Dev
             image.sprite = LoadSprite("OffScreenArrow");
             image.raycastTarget = false;
 
-            CreateTmpTextTarget(instance.transform, "DistanceLabel", new Vector2(0.5f, 0f), new Vector2(0f, -14f), new Vector2(80f, 24f), 14f, Color.white);
+            CreateTmpText(instance.transform, "DistanceLabel", new Vector2(0.5f, 0f), new Vector2(0f, -14f), new Vector2(80f, 24f), 14f, Color.white);
 
             string path = DevUiInstaller.PrefabFolder + "/OffScreenArrow.prefab";
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset(instance, path);
@@ -154,7 +169,7 @@ namespace Gley.NavigationSystem.Dev
             return prefab;
         }
 
-        private TmpTextTarget CreateTmpTextTarget(Transform parent, string name, Vector2 anchor, Vector2 anchoredPosition, Vector2 sizeDelta, float fontSize, Color color)
+        private TextMeshProUGUI CreateTmpText(Transform parent, string name, Vector2 anchor, Vector2 anchoredPosition, Vector2 sizeDelta, float fontSize, Color color)
         {
             GameObject textObject = new GameObject(name, typeof(RectTransform));
             textObject.transform.SetParent(parent, false);
@@ -172,15 +187,10 @@ namespace Gley.NavigationSystem.Dev
             text.color = color;
             text.raycastTarget = false;
 
-            TmpTextTarget target = textObject.AddComponent<TmpTextTarget>();
-            SerializedObject serializedTarget = new SerializedObject(target);
-            serializedTarget.FindProperty("text").objectReferenceValue = text;
-            serializedTarget.ApplyModifiedPropertiesWithoutUndo();
-
-            return target;
+            return text;
         }
 
-        private void CreateMinimapPrefab(RouteStyle routeStyle, GameObject offScreenArrow)
+        private void CreateMinimapPrefab(RouteStyle routeStyle, GameObject offScreenArrow, TmpTextWriter textWriter)
         {
             GameObject root = new GameObject("NavigationMinimap", typeof(RectTransform));
             RectTransform rootRect = root.GetComponent<RectTransform>();
@@ -206,6 +216,7 @@ namespace Gley.NavigationSystem.Dev
             minimap.SetViewport(viewportRect);
             minimap.ViewSettings.SetRouteStyle(routeStyle);
             minimap.ViewSettings.SetArrowPrefab(offScreenArrow);
+            minimap.ViewSettings.SetTextWriter(textWriter);
             minimap.ShapeSettings.SetShapeKind(MinimapShapeKind.Sprite);
             minimap.ShapeSettings.SetSprite(LoadSprite("MinimapMask"));
             minimap.ShapeSettings.SetSpriteOutline(EdgeShape.Circle);
@@ -284,7 +295,7 @@ namespace Gley.NavigationSystem.Dev
             text.raycastTarget = false;
         }
 
-        private void CreateFullMapPrefab(RouteStyle routeStyle, GameObject offScreenArrow)
+        private void CreateFullMapPrefab(RouteStyle routeStyle, GameObject offScreenArrow, TmpTextWriter textWriter)
         {
             GameObject root = new GameObject("NavigationFullMap", typeof(RectTransform));
             RectTransform rootRect = root.GetComponent<RectTransform>();
@@ -305,6 +316,7 @@ namespace Gley.NavigationSystem.Dev
             fullMap.SetViewport(viewportRect);
             fullMap.ViewSettings.SetRouteStyle(routeStyle);
             fullMap.ViewSettings.SetArrowPrefab(offScreenArrow);
+            fullMap.ViewSettings.SetTextWriter(textWriter);
 
             Image crosshairImage = CreateCrosshairImage(viewport.transform);
             fullMap.SetCrosshairImage(crosshairImage);
@@ -356,15 +368,15 @@ namespace Gley.NavigationSystem.Dev
             panelImage.type = Image.Type.Sliced;
             panelImage.color = new Color(0f, 0f, 0f, 0.75f);
 
-            TmpTextTarget distanceTarget = CreateTmpTextTarget(panelObject.transform, "DistanceText", new Vector2(0.5f, 1f), new Vector2(0f, -24f), new Vector2(340f, 30f), 20f, Color.white);
-            TmpTextTarget etaTarget = CreateTmpTextTarget(panelObject.transform, "EtaText", new Vector2(0.5f, 1f), new Vector2(0f, -54f), new Vector2(340f, 30f), 20f, Color.white);
+            TextMeshProUGUI distanceTmp = CreateTmpText(panelObject.transform, "DistanceText", new Vector2(0.5f, 1f), new Vector2(0f, -24f), new Vector2(340f, 30f), 20f, Color.white);
+            TextMeshProUGUI etaTmp = CreateTmpText(panelObject.transform, "EtaText", new Vector2(0.5f, 1f), new Vector2(0f, -54f), new Vector2(340f, 30f), 20f, Color.white);
 
             Button confirmButton = CreateButton(panelObject.transform, "ConfirmButton", "Confirm", buttonSprite, new Vector2(-85f, 20f), new Vector2(150f, 40f));
             Button cancelButton = CreateButton(panelObject.transform, "CancelButton", "Cancel", buttonSprite, new Vector2(85f, 20f), new Vector2(150f, 40f));
 
             fullMap.PreviewPanelSlots.SetPanelRoot(panelObject);
-            fullMap.PreviewPanelSlots.SetDistanceText(distanceTarget);
-            fullMap.PreviewPanelSlots.SetEtaText(etaTarget);
+            fullMap.PreviewPanelSlots.SetDistanceText(distanceTmp);
+            fullMap.PreviewPanelSlots.SetEtaText(etaTmp);
             fullMap.PreviewPanelSlots.SetConfirmButton(confirmButton);
             fullMap.PreviewPanelSlots.SetCancelButton(cancelButton);
 

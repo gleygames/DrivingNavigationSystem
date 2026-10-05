@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
@@ -22,6 +21,7 @@ namespace Gley.NavigationSystem.Tests
         private Transform car;
         private TestMapViewHost host;
         private MapView view;
+        private FakeTextWriter textWriter;
 
         [SetUp]
         public void SetUp()
@@ -43,7 +43,7 @@ namespace Gley.NavigationSystem.Tests
             markerTemplate = new GameObject("MarkerTemplate", typeof(RectTransform));
 
             arrowTemplate = new GameObject("ArrowTemplate", typeof(RectTransform));
-            arrowTemplate.AddComponent<FakeTextTarget>();
+            arrowTemplate.AddComponent<FakeLabel>();
 
             settings = ScriptableObject.CreateInstance<NavigationSettings>();
             settings.ResetToDefaults();
@@ -56,7 +56,10 @@ namespace Gley.NavigationSystem.Tests
             CreateMap();
             CreateManager();
 
+            textWriter = ScriptableObject.CreateInstance<FakeTextWriter>();
+
             host = viewObject.AddComponent<TestMapViewHost>();
+            host.Settings.SetTextWriter(textWriter);
             host.Settings.SetArrowPrefab(arrowTemplate);
             view = host.View;
         }
@@ -96,6 +99,7 @@ namespace Gley.NavigationSystem.Tests
                 Object.DestroyImmediate(network);
             }
             Object.DestroyImmediate(settings);
+            Object.DestroyImmediate(textWriter);
         }
 
         [UnityTest]
@@ -164,19 +168,19 @@ namespace Gley.NavigationSystem.Tests
             GameObject arrow = view.MarkerLayer.GetActiveArrow(index);
             Assert.IsNotNull(arrow);
 
-            FakeTextTarget textTarget = arrow.GetComponent<FakeTextTarget>();
-            int callCountAfterShow = textTarget.SetTextCallCount;
+            FakeLabel textTarget = arrow.GetComponent<FakeLabel>();
+            int callCountAfterShow = textTarget.WriteCount;
             Assert.Greater(callCountAfterShow, 0);
 
             car.position = new Vector3(24f, 0f, 0f);
             yield return WaitFrames(3);
 
-            Assert.AreEqual(callCountAfterShow, textTarget.SetTextCallCount);
+            Assert.AreEqual(callCountAfterShow, textTarget.WriteCount);
 
             car.position = new Vector3(50f, 0f, 0f);
             yield return WaitFrames(3);
 
-            Assert.Greater(textTarget.SetTextCallCount, callCountAfterShow);
+            Assert.Greater(textTarget.WriteCount, callCountAfterShow);
         }
 
         [UnityTest]
@@ -186,7 +190,7 @@ namespace Gley.NavigationSystem.Tests
             GameObject label = new GameObject("Label", typeof(RectTransform));
             label.transform.SetParent(labelledArrow.transform, false);
             label.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -20f);
-            label.AddComponent<FakeTextTarget>();
+            label.AddComponent<FakeLabel>();
             createdObjects.Add(labelledArrow);
             host.Settings.SetArrowPrefab(labelledArrow);
             yield return WaitFrames(2);
@@ -199,16 +203,16 @@ namespace Gley.NavigationSystem.Tests
 
             GameObject arrow = view.MarkerLayer.GetActiveArrow(manager.DestinationMarkerIndex);
             Assert.IsNotNull(arrow);
-            Assert.AreEqual(0, arrow.GetComponentsInChildren<FakeTextTarget>(true).Length);
+            Assert.AreEqual(0, arrow.GetComponentsInChildren<FakeLabel>(true).Length);
 
             Transform labelLayer = view.MarkerLayer.transform.Find("OffScreenArrowLabels");
             Assert.IsNotNull(labelLayer);
             Assert.Greater(labelLayer.GetSiblingIndex(), arrow.transform.parent.GetSiblingIndex());
 
-            FakeTextTarget labelInstance = labelLayer.GetComponentInChildren<FakeTextTarget>(true);
+            FakeLabel labelInstance = labelLayer.GetComponentInChildren<FakeLabel>(true);
             Assert.IsNotNull(labelInstance);
             Assert.IsTrue(labelInstance.gameObject.activeSelf);
-            Assert.Greater(labelInstance.SetTextCallCount, 0);
+            Assert.Greater(labelInstance.WriteCount, 0);
             Assert.AreEqual(0f, Quaternion.Angle(Quaternion.identity, labelInstance.transform.localRotation), 0.01f);
 
             Vector2 arrowPosition = ((RectTransform)arrow.transform).anchoredPosition;
@@ -264,14 +268,5 @@ namespace Gley.NavigationSystem.Tests
             }
         }
 
-        private class FakeTextTarget : NavigationTextTarget
-        {
-            public int SetTextCallCount { get; private set; }
-
-            public override void SetText(StringBuilder text)
-            {
-                SetTextCallCount++;
-            }
-        }
     }
 }

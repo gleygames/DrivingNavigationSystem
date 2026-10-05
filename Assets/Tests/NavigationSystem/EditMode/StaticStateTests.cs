@@ -17,7 +17,7 @@ namespace Gley.NavigationSystem.Tests
         {
             List<string> offenders = new List<string>();
             CollectOffenders(typeof(WorldConverter).Assembly, offenders);
-            CollectOffenders(typeof(TMP.TmpTextTarget).Assembly, offenders);
+            CollectOffenders(typeof(TMP.TmpTextWriter).Assembly, offenders);
             if (offenders.Count > 0)
             {
                 Assert.Fail(BuildFailureMessage(offenders));

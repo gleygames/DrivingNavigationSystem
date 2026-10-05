@@ -95,7 +95,31 @@ namespace Gley.NavigationSystem.Tests
 
             GameObject arrow = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/OffScreenArrow.prefab");
             Assert.IsNotNull(arrow);
-            Assert.IsNotNull(arrow.GetComponentInChildren<NavigationTextTarget>(true));
+            Assert.IsNotNull(arrow.GetComponentInChildren<TMPro.TMP_Text>(true));
+        }
+
+        [Test]
+        public void FullMapPrefab_HasOneGleyScript()
+        {
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationFullMap.prefab");
+            Assert.IsNotNull(prefab);
+
+            Assert.AreEqual(1, CountGleyScripts(prefab));
+        }
+
+        [Test]
+        public void TextWriterAsset_ExistsAndIsAssigned()
+        {
+            TMP.TmpTextWriter writer = AssetDatabase.LoadAssetAtPath<TMP.TmpTextWriter>(DevUiInstaller.PresetFolder + "/TmpTextWriter.asset");
+            Assert.IsNotNull(writer);
+
+            GameObject minimapPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationMinimap.prefab");
+            SerializedObject serializedMinimap = new SerializedObject(minimapPrefab.GetComponent<NavigationMinimap>());
+            Assert.AreEqual(writer, serializedMinimap.FindProperty("viewSettings.textWriter").objectReferenceValue);
+
+            GameObject fullMapPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationFullMap.prefab");
+            SerializedObject serializedFullMap = new SerializedObject(fullMapPrefab.GetComponent<NavigationFullMap>());
+            Assert.AreEqual(writer, serializedFullMap.FindProperty("viewSettings.textWriter").objectReferenceValue);
         }
 
         [Test]
