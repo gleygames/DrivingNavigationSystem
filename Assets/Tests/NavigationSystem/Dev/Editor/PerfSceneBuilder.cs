@@ -141,7 +141,7 @@ namespace Gley.NavigationSystem.Dev
             serializedManager.FindProperty("car").objectReferenceValue = car;
             serializedManager.FindProperty("explicitMap").objectReferenceValue = map;
             serializedManager.ApplyModifiedPropertiesWithoutUndo();
-            installer.AssignDefaultManagerAssets(manager);
+            installer.AssignDefaultSettingsAssets(settings);
             return manager;
         }
 

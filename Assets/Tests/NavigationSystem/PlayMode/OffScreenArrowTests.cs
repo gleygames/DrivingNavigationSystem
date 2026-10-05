@@ -235,8 +235,8 @@ namespace Gley.NavigationSystem.Tests
             manager = managerObject.AddComponent<NavigationManager>();
             manager.SetSettings(settings);
             manager.SetCarReference(car, 0f);
-            manager.SetPlayerMarkerPrefab(markerTemplate);
-            manager.SetDestinationMarkerPrefab(markerTemplate);
+            settings.Runtime.SetPlayerMarkerPrefab(markerTemplate);
+            settings.Runtime.SetDestinationMarkerPrefab(markerTemplate);
         }
 
         private void CreateMap()

@@ -19,14 +19,24 @@ namespace Gley.NavigationSystem.Dev
             return AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/" + prefabName + ".prefab");
         }
 
-        public void AssignDefaultManagerAssets(NavigationManager manager)
+        public void AssignDefaultSettingsAssets(NavigationSettings settings)
         {
-            SerializedObject serializedManager = new SerializedObject(manager);
-            serializedManager.FindProperty("formatter").objectReferenceValue = AssetDatabase.LoadAssetAtPath<DefaultNavigationFormatter>(PresetFolder + "/DefaultFormatter.asset");
-            serializedManager.FindProperty("playerMarkerPrefab").objectReferenceValue = LoadPrefab("PlayerMarker");
-            serializedManager.FindProperty("destinationMarkerPrefab").objectReferenceValue = LoadPrefab("DestinationMarker");
-            serializedManager.FindProperty("previewPinPrefab").objectReferenceValue = LoadPrefab("PreviewPin");
-            serializedManager.ApplyModifiedPropertiesWithoutUndo();
+            SerializedObject serializedObject = new SerializedObject(settings);
+            AssignAssetIfMissing(serializedObject, "runtime.formatter", AssetDatabase.LoadAssetAtPath<DefaultNavigationFormatter>(PresetFolder + "/DefaultFormatter.asset"));
+            AssignAssetIfMissing(serializedObject, "runtime.playerMarkerPrefab", LoadPrefab("PlayerMarker"));
+            AssignAssetIfMissing(serializedObject, "runtime.destinationMarkerPrefab", LoadPrefab("DestinationMarker"));
+            AssignAssetIfMissing(serializedObject, "runtime.previewPinPrefab", LoadPrefab("PreviewPin"));
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(settings);
+        }
+
+        private void AssignAssetIfMissing(SerializedObject serializedObject, string path, UnityEngine.Object asset)
+        {
+            SerializedProperty property = serializedObject.FindProperty(path);
+            if (property.objectReferenceValue == null)
+            {
+                property.objectReferenceValue = asset;
+            }
         }
 
         public bool InstallDefaultUi(Transform canvas)

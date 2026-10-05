@@ -36,7 +36,7 @@ namespace Gley.NavigationSystem.Dev
 
             NavigationManager manager = sandboxBuilder.CreateManager(settings, car, map);
             DevUiInstaller installer = new DevUiInstaller();
-            installer.AssignDefaultManagerAssets(manager);
+            installer.AssignDefaultSettingsAssets(settings);
             DevNavigationTester tester = manager.gameObject.AddComponent<DevNavigationTester>();
             tester.Configure(manager, null);
             sandboxBuilder.CreateCanvasWithEventSystem();

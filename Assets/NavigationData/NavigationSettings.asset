@@ -42,6 +42,25 @@ MonoBehaviour:
   - Custom 4
   - Custom 5
   - Custom 6
+  runtime:
+    formatter: {fileID: 11400000, guid: c6a2500f98808fb45aaca355c5244fd6, type: 2}
+    playerMarkerPrefab: {fileID: 3694848495662700945, guid: d32d3ddc4b7a401498feda002e7c6ab2,
+      type: 3}
+    destinationMarkerPrefab: {fileID: 1808530812450724499, guid: e1c2e99bc4e33c74f835bb8b0756301b,
+      type: 3}
+    previewPinPrefab: {fileID: 9089465496509332512, guid: 764939b22b903a949ac1c4cef2cc1088,
+      type: 3}
+    avoidMultiplier: 5
+    preferMultiplier: 0.7
+    startSnapDistance: 200
+    destinationSnapDistance: 50
+    arrivalDistance: 10
+    turnedAroundDistance: 30
+    rerouteCooldown: 20
+    minHeadingSpeed: 1
+    stoppedSpeed: 0.1
+    teleportDistance: 50
+    leaveMargin: 3
   unitsPerMeter: 1
   formatVersion: 1
   nextRoadTypeId: 5

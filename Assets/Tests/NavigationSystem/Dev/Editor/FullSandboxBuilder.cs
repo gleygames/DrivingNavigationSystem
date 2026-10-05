@@ -37,7 +37,7 @@ namespace Gley.NavigationSystem.Dev
 
             NavigationManager manager = CreateManager(settings, car, map);
             DevUiInstaller installer = new DevUiInstaller();
-            installer.AssignDefaultManagerAssets(manager);
+            installer.AssignDefaultSettingsAssets(settings);
             GameObject canvasObject = CreateCanvasWithEventSystem();
             installer.InstallDefaultUi(canvasObject.transform);
             NavigationMinimap minimap = null;

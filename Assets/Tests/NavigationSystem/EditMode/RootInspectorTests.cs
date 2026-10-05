@@ -10,20 +10,7 @@ namespace Gley.NavigationSystem.Tests
     {
         private GameObject rootObject;
         private UnityEditor.Editor createdEditor;
-
-        [TearDown]
-        public void TearDown()
-        {
-            if (createdEditor != null)
-            {
-                Object.DestroyImmediate(createdEditor);
-            }
-
-            if (rootObject != null)
-            {
-                Object.DestroyImmediate(rootObject);
-            }
-        }
+        private NavigationSettings settings;
 
         [Test]
         public void MinimapEditor_AllPathsExist()
@@ -57,6 +44,61 @@ namespace Gley.NavigationSystem.Tests
             NavigationFullMapEditor editor = CreateFullMapEditor();
 
             AssertEverySettingIsShown(editor.serializedObject, editor.VisiblePaths, editor.AdvancedPaths);
+        }
+
+        [Test]
+        public void ManagerEditor_AllPathsExist()
+        {
+            NavigationManagerEditor editor = CreateManagerEditor();
+
+            AssertAllPathsExist(editor.serializedObject, editor.VisiblePaths);
+            AssertAllPathsExist(editor.serializedObject, editor.AdvancedPaths);
+            AssertAllPathsExist(new SerializedObject(settings), editor.ProjectPaths);
+        }
+
+        private NavigationManagerEditor CreateManagerEditor()
+        {
+            settings = ScriptableObject.CreateInstance<NavigationSettings>();
+            rootObject = new GameObject("InspectorTestManager");
+            NavigationManager manager = rootObject.AddComponent<NavigationManager>();
+            manager.SetSettings(settings);
+            createdEditor = UnityEditor.Editor.CreateEditor(manager);
+            return (NavigationManagerEditor)createdEditor;
+        }
+
+        [Test]
+        public void ManagerEditor_EverySettingIsShown()
+        {
+            NavigationManagerEditor editor = CreateManagerEditor();
+
+            AssertEverySettingIsShown(editor.serializedObject, editor.VisiblePaths, editor.AdvancedPaths);
+        }
+
+        [Test]
+        public void ManagerEditor_EveryProjectSettingIsShown()
+        {
+            NavigationManagerEditor editor = CreateManagerEditor();
+            Dictionary<string, int> listed = new Dictionary<string, int>();
+            CountPaths(listed, editor.ProjectPaths);
+
+            SerializedObject serializedSettings = new SerializedObject(settings);
+            SerializedProperty iterator = serializedSettings.FindProperty("runtime");
+            SerializedProperty end = iterator.GetEndProperty();
+            int propertyCount = 0;
+            while (iterator.NextVisible(true) && !SerializedProperty.EqualContents(iterator, end))
+            {
+                if (iterator.propertyType == SerializedPropertyType.Generic)
+                {
+                    continue;
+                }
+
+                int count = 0;
+                listed.TryGetValue(iterator.propertyPath, out count);
+                Assert.AreEqual(1, count, iterator.propertyPath);
+                propertyCount++;
+            }
+
+            Assert.AreEqual(editor.ProjectPaths.Length, propertyCount);
         }
 
         private NavigationMinimapEditor CreateMinimapEditor()
@@ -130,6 +172,25 @@ namespace Gley.NavigationSystem.Tests
                 int count = 0;
                 listed.TryGetValue(paths[i], out count);
                 listed[paths[i]] = count + 1;
+            }
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            if (createdEditor != null)
+            {
+                Object.DestroyImmediate(createdEditor);
+            }
+
+            if (rootObject != null)
+            {
+                Object.DestroyImmediate(rootObject);
+            }
+
+            if (settings != null)
+            {
+                Object.DestroyImmediate(settings);
             }
         }
     }
