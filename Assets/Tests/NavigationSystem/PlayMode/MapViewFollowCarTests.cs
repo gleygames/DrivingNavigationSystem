@@ -10,7 +10,6 @@ namespace Gley.NavigationSystem.Tests
         private const float Tolerance = 0.01f;
 
         private GameObject canvasObject;
-        private GameObject viewObject;
         private GameObject managerObject;
         private GameObject carObject;
         private GameObject mapObject;
@@ -18,7 +17,7 @@ namespace Gley.NavigationSystem.Tests
         private RoadNetworkData network;
         private NavigationManager manager;
         private MapView view;
-        private MapViewFollowCar followCar;
+        private MinimapTestRig rig;
         private MapData mapData;
         private Texture2D mapTexture;
 
@@ -29,9 +28,8 @@ namespace Gley.NavigationSystem.Tests
             Canvas canvas = canvasObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-            viewObject = new GameObject("Minimap", typeof(RectTransform));
-            viewObject.transform.SetParent(canvasObject.transform, false);
-            RectTransform viewRect = viewObject.GetComponent<RectTransform>();
+            rig = new MinimapTestRig(canvasObject.transform);
+            RectTransform viewRect = rig.RootRect;
             viewRect.anchorMin = new Vector2(0.5f, 0.5f);
             viewRect.anchorMax = new Vector2(0.5f, 0.5f);
             viewRect.pivot = new Vector2(0.5f, 0.5f);
@@ -71,14 +69,15 @@ namespace Gley.NavigationSystem.Tests
             map.SetMapData(mapData);
             mapObject.SetActive(true);
 
-            view = viewObject.AddComponent<MapView>();
-            followCar = viewObject.AddComponent<MapViewFollowCar>();
-            followCar.SetRotationSmoothing(0f);
-            followCar.SetTurnSmoothing(0f);
-            followCar.SetZoomSmoothing(0f);
-            followCar.SetSpeedZoom(false);
-            followCar.SetFixedZoomMeters(100f);
-            followCar.SetRound(true);
+            MinimapFollowSettings followSettings = rig.Minimap.FollowSettings;
+            followSettings.SetRotationSmoothing(0f);
+            followSettings.SetTurnSmoothing(0f);
+            followSettings.SetZoomSmoothing(0f);
+            followSettings.SetSpeedZoom(false);
+            followSettings.SetFixedZoomMeters(100f);
+
+            rig.Activate();
+            view = rig.View;
 
             yield return null;
             yield return null;
@@ -104,7 +103,7 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator HeadingUp_Reversing_RotationUnchanged()
         {
-            followCar.SetRotationMode(MinimapRotationMode.HeadingUp);
+            rig.Minimap.SetRotationMode(MinimapRotationMode.HeadingUp);
 
             for (int i = 0; i < 5; i++)
             {
@@ -130,7 +129,7 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator HeadingUp_WeavingOnRoad_RotationFollowsRoad()
         {
-            followCar.SetRotationMode(MinimapRotationMode.HeadingUp);
+            rig.Minimap.SetRotationMode(MinimapRotationMode.HeadingUp);
 
             for (int i = 0; i < 10; i++)
             {
@@ -154,7 +153,7 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator HeadingUp_OffRoad_FollowsNose()
         {
-            followCar.SetRotationMode(MinimapRotationMode.HeadingUp);
+            rig.Minimap.SetRotationMode(MinimapRotationMode.HeadingUp);
             carObject.transform.position = new Vector3(20f, 0f, 60f);
             carObject.transform.rotation = Quaternion.Euler(0f, 30f, 0f);
 
@@ -167,8 +166,8 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator HeadingUp_OffRoad_SmallNoseChange_IgnoredByDeadZone()
         {
-            followCar.SetRotationMode(MinimapRotationMode.HeadingUp);
-            followCar.SetNoseDeadZoneDegrees(3f);
+            rig.Minimap.SetRotationMode(MinimapRotationMode.HeadingUp);
+            rig.Minimap.FollowSettings.SetNoseDeadZoneDegrees(3f);
             carObject.transform.position = new Vector3(20f, 0f, 60f);
             carObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             yield return DriveForward(4);
@@ -187,19 +186,19 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator HeadingUp_LargeHeadingChange_UsesTurnSmoothing()
         {
-            followCar.SetRotationMode(MinimapRotationMode.HeadingUp);
+            rig.Minimap.SetRotationMode(MinimapRotationMode.HeadingUp);
             carObject.transform.position = new Vector3(20f, 0f, 60f);
             carObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             yield return DriveForward(4);
             Assert.AreEqual(0f, view.RotationDegrees, Tolerance);
 
-            followCar.SetTurnSmoothing(0.8f);
-            followCar.enabled = false;
+            rig.Minimap.FollowSettings.SetTurnSmoothing(0.8f);
+            rig.Minimap.enabled = false;
             carObject.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
             yield return DriveForward(1);
             Assert.AreEqual(0f, view.RotationDegrees, Tolerance);
 
-            followCar.UpdateFollowCarVisuals(0.1f);
+            rig.Minimap.FollowCar.UpdateFollowCarVisuals(0.1f);
 
             Assert.Greater(view.RotationDegrees, 0.5f);
             Assert.Less(view.RotationDegrees, 89f);
@@ -208,7 +207,7 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator NorthUp_RotationZero()
         {
-            followCar.SetRotationMode(MinimapRotationMode.NorthUp);
+            rig.Minimap.SetRotationMode(MinimapRotationMode.NorthUp);
 
             for (int i = 0; i < 3; i++)
             {
@@ -222,7 +221,7 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator NearMapEdge_CenterClamped()
         {
-            followCar.SetRotationMode(MinimapRotationMode.NorthUp);
+            rig.Minimap.SetRotationMode(MinimapRotationMode.NorthUp);
             carObject.transform.position = new Vector3(-30f, 0f, 0f);
 
             yield return null;

@@ -7,18 +7,18 @@ using UnityEngine.TestTools;
 
 namespace Gley.NavigationSystem.Tests
 {
-    public class MinimapTapToOpenTests
+    public class NavigationMinimapTapTests
     {
         private readonly List<GameObject> createdObjects = new List<GameObject>();
 
-        private MinimapTapToOpen tapToOpen;
+        private MinimapTestRig rig;
 
         [SetUp]
         public void SetUp()
         {
-            GameObject minimapObject = new GameObject("Minimap", typeof(RectTransform));
-            createdObjects.Add(minimapObject);
-            tapToOpen = minimapObject.AddComponent<MinimapTapToOpen>();
+            GameObject parentObject = new GameObject("MinimapParent", typeof(RectTransform));
+            createdObjects.Add(parentObject);
+            rig = new MinimapTestRig(parentObject.transform);
         }
 
         [TearDown]
@@ -40,7 +40,7 @@ namespace Gley.NavigationSystem.Tests
             MapViewInteractive fullMap = CreateInactiveFullMap("FullMap");
             ExpectNoManagerErrorOnOpen();
 
-            tapToOpen.OnPointerClick(new PointerEventData(null));
+            rig.Minimap.OnPointerClick(new PointerEventData(null));
 
             Assert.IsTrue(fullMap.gameObject.activeSelf);
             LogAssert.NoUnexpectedReceived();
@@ -49,9 +49,9 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void Tap_NoFullMapInScene_LogsError()
         {
-            LogAssert.Expect(LogType.Error, new Regex("MinimapTapToOpen on '.*': no full map"));
+            LogAssert.Expect(LogType.Error, new Regex("NavigationMinimap on '.*': no full map"));
 
-            tapToOpen.OnPointerClick(new PointerEventData(null));
+            rig.Minimap.OnPointerClick(new PointerEventData(null));
 
             LogAssert.NoUnexpectedReceived();
         }
@@ -61,13 +61,25 @@ namespace Gley.NavigationSystem.Tests
         {
             MapViewInteractive otherFullMap = CreateInactiveFullMap("OtherFullMap");
             MapViewInteractive assignedFullMap = CreateInactiveFullMap("AssignedFullMap");
-            tapToOpen.SetFullMap(assignedFullMap);
+            rig.Minimap.SetFullMap(assignedFullMap);
             ExpectNoManagerErrorOnOpen();
 
-            tapToOpen.OnPointerClick(new PointerEventData(null));
+            rig.Minimap.OnPointerClick(new PointerEventData(null));
 
             Assert.IsTrue(assignedFullMap.gameObject.activeSelf);
             Assert.IsFalse(otherFullMap.gameObject.activeSelf);
+            LogAssert.NoUnexpectedReceived();
+        }
+
+        [Test]
+        public void Tap_ActionNothing_DoesNothing()
+        {
+            MapViewInteractive fullMap = CreateInactiveFullMap("FullMap");
+            rig.Minimap.SetTapAction(MinimapTapAction.Nothing);
+
+            rig.Minimap.OnPointerClick(new PointerEventData(null));
+
+            Assert.IsFalse(fullMap.gameObject.activeSelf);
             LogAssert.NoUnexpectedReceived();
         }
 

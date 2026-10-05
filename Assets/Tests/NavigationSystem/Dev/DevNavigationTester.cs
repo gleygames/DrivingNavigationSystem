@@ -10,9 +10,9 @@ namespace Gley.NavigationSystem.Dev
         private readonly Rect helpRect = new Rect(10f, 10f, 420f, 170f);
 
         [SerializeField] private NavigationManager manager;
-        [SerializeField] private MapViewFollowCar minimap;
+        [SerializeField] private NavigationMinimap minimap;
 
-        public void Configure(NavigationManager managerValue, MapViewFollowCar minimapValue)
+        public void Configure(NavigationManager managerValue, NavigationMinimap minimapValue)
         {
             manager = managerValue;
             minimap = minimapValue;

@@ -2,6 +2,7 @@ using Gley.NavigationSystem.Dev;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Gley.NavigationSystem.Tests
 {
@@ -21,11 +22,19 @@ namespace Gley.NavigationSystem.Tests
         {
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationMinimap.prefab");
             Assert.IsNotNull(prefab);
-            Assert.IsNotNull(prefab.GetComponentInChildren<MapView>(true));
-            Assert.IsNotNull(prefab.GetComponentInChildren<MapViewFollowCar>(true));
-            Assert.IsNotNull(prefab.GetComponentInChildren<MinimapShape>(true));
-            Assert.IsNotNull(prefab.GetComponentInChildren<CompassButton>(true));
-            Assert.IsNotNull(prefab.GetComponentInChildren<MinimapTapToOpen>(true));
+
+            NavigationMinimap minimap = prefab.GetComponent<NavigationMinimap>();
+            Assert.IsNotNull(minimap);
+
+            SerializedObject serializedMinimap = new SerializedObject(minimap);
+            RectTransform viewport = serializedMinimap.FindProperty("viewport").objectReferenceValue as RectTransform;
+            Assert.IsNotNull(viewport);
+            Assert.IsNotNull(serializedMinimap.FindProperty("compassButton").objectReferenceValue);
+            Assert.IsNotNull(serializedMinimap.FindProperty("shapeSettings.sprite").objectReferenceValue);
+
+            Assert.IsNotNull(viewport.GetComponent<MapView>());
+            Assert.IsNotNull(viewport.GetComponent<Image>());
+            Assert.IsNotNull(viewport.GetComponent<Mask>());
         }
 
         [Test]

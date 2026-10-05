@@ -205,20 +205,21 @@ namespace Gley.NavigationSystem.Dev
             SerializedObject serializedView = new SerializedObject(view);
             serializedView.FindProperty("routeStyle").objectReferenceValue = routeStyle;
             serializedView.ApplyModifiedPropertiesWithoutUndo();
-            view.SetEdgeShape(EdgeShape.Circle);
             view.SetChannelMask(MinimapChannelBit);
             view.SetShowPreview(false);
             view.SetArrowPrefab(offScreenArrow);
 
-            MapViewFollowCar followCar = viewport.AddComponent<MapViewFollowCar>();
-
-            MinimapShape shape = viewport.AddComponent<MinimapShape>();
-            shape.SetSprite(LoadSprite("MinimapMask"));
-
-            viewport.AddComponent<MinimapTapToOpen>();
-
             CreateMinimapFrame(root.transform);
-            CreateCompassButton(root.transform, view, followCar);
+            RectTransform compassIcon;
+            Button compassButton = CreateCompassButton(root.transform, out compassIcon);
+
+            NavigationMinimap minimap = root.AddComponent<NavigationMinimap>();
+            minimap.SetViewport(viewportRect);
+            minimap.ShapeSettings.SetShapeKind(MinimapShapeKind.Sprite);
+            minimap.ShapeSettings.SetSprite(LoadSprite("MinimapMask"));
+            minimap.ShapeSettings.SetSpriteOutline(EdgeShape.Circle);
+            minimap.SetCompass(compassButton, compassIcon);
+            minimap.ApplyShape();
 
             string path = DevUiInstaller.PrefabFolder + "/NavigationMinimap.prefab";
             PrefabUtility.SaveAsPrefabAsset(root, path);
@@ -241,7 +242,7 @@ namespace Gley.NavigationSystem.Dev
             image.raycastTarget = false;
         }
 
-        private void CreateCompassButton(Transform parent, MapView view, MapViewFollowCar followCar)
+        private Button CreateCompassButton(Transform parent, out RectTransform icon)
         {
             GameObject buttonObject = new GameObject("CompassButton", typeof(RectTransform));
             buttonObject.transform.SetParent(parent, false);
@@ -269,12 +270,8 @@ namespace Gley.NavigationSystem.Dev
             Button button = buttonObject.AddComponent<Button>();
             button.targetGraphic = iconImage;
 
-            CompassButton compass = buttonObject.AddComponent<CompassButton>();
-            SerializedObject serializedCompass = new SerializedObject(compass);
-            serializedCompass.FindProperty("mapView").objectReferenceValue = view;
-            serializedCompass.FindProperty("followCar").objectReferenceValue = followCar;
-            serializedCompass.FindProperty("icon").objectReferenceValue = iconRect;
-            serializedCompass.ApplyModifiedPropertiesWithoutUndo();
+            icon = iconRect;
+            return button;
         }
 
         private void CreatePlainText(Transform parent, string name, string content, Vector2 anchor, Vector2 anchoredPosition, Vector2 sizeDelta, float fontSize, Color color)

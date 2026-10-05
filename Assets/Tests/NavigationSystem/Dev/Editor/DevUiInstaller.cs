@@ -42,11 +42,11 @@ namespace Gley.NavigationSystem.Dev
             Minimap = (GameObject)PrefabUtility.InstantiatePrefab(minimapPrefab, canvas);
             FullMap = (GameObject)PrefabUtility.InstantiatePrefab(fullMapPrefab, canvas);
 
-            MinimapTapToOpen tapToOpen = Minimap.GetComponentInChildren<MinimapTapToOpen>(true);
+            NavigationMinimap minimap = Minimap.GetComponent<NavigationMinimap>();
             MapViewInteractive interactive = FullMap.GetComponentInChildren<MapViewInteractive>(true);
-            if (tapToOpen != null && interactive != null)
+            if (minimap != null && interactive != null)
             {
-                tapToOpen.SetFullMap(interactive);
+                minimap.SetFullMap(interactive);
             }
 
             return true;

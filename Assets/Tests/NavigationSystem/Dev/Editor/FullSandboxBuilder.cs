@@ -40,10 +40,10 @@ namespace Gley.NavigationSystem.Dev
             installer.AssignDefaultManagerAssets(manager);
             GameObject canvasObject = CreateCanvasWithEventSystem();
             installer.InstallDefaultUi(canvasObject.transform);
-            MapViewFollowCar minimap = null;
+            NavigationMinimap minimap = null;
             if (installer.Minimap != null)
             {
-                minimap = installer.Minimap.GetComponentInChildren<MapViewFollowCar>(true);
+                minimap = installer.Minimap.GetComponent<NavigationMinimap>();
             }
 
             DevNavigationTester tester = manager.gameObject.AddComponent<DevNavigationTester>();

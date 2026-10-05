@@ -221,11 +221,8 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator PlayerOutsideMap_PinnedToEdge()
         {
-            MapViewFollowCar followCar = viewObject.AddComponent<MapViewFollowCar>();
-            followCar.SetRotationMode(MinimapRotationMode.NorthUp);
-            followCar.SetSpeedZoom(false);
-            followCar.SetFixedZoomMeters(200f);
-            followCar.SetZoomSmoothing(0f);
+            MinimapTestRig rig = CreateMinimapRig();
+            rig.Activate();
 
             car.position = new Vector3(515f, 0f, 0f);
             yield return WaitFrames(3);
@@ -233,7 +230,7 @@ namespace Gley.NavigationSystem.Tests
             int playerIndex = manager.Markers.PlayerIndex;
             Assert.GreaterOrEqual(playerIndex, 0);
 
-            GameObject instance = view.MarkerLayer.GetActiveInstance(playerIndex);
+            GameObject instance = rig.View.MarkerLayer.GetActiveInstance(playerIndex);
             Assert.IsNotNull(instance);
 
             RectTransform rect = instance.GetComponent<RectTransform>();
@@ -244,13 +241,9 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator ViewportPivotBottomLeft_PlayerAtCarPosition()
         {
-            viewObject.GetComponent<RectTransform>().pivot = Vector2.zero;
-
-            MapViewFollowCar followCar = viewObject.AddComponent<MapViewFollowCar>();
-            followCar.SetRotationMode(MinimapRotationMode.NorthUp);
-            followCar.SetSpeedZoom(false);
-            followCar.SetFixedZoomMeters(200f);
-            followCar.SetZoomSmoothing(0f);
+            MinimapTestRig rig = CreateMinimapRig();
+            rig.Viewport.pivot = Vector2.zero;
+            rig.Activate();
 
             car.position = Vector3.zero;
             yield return WaitFrames(3);
@@ -258,12 +251,29 @@ namespace Gley.NavigationSystem.Tests
             int playerIndex = manager.Markers.PlayerIndex;
             Assert.GreaterOrEqual(playerIndex, 0);
 
-            GameObject instance = view.MarkerLayer.GetActiveInstance(playerIndex);
+            GameObject instance = rig.View.MarkerLayer.GetActiveInstance(playerIndex);
             Assert.IsNotNull(instance);
 
             RectTransform rect = instance.GetComponent<RectTransform>();
             Assert.AreEqual(0f, rect.anchoredPosition.x, 1f);
             Assert.AreEqual(0f, rect.anchoredPosition.y, 1f);
+        }
+
+        private MinimapTestRig CreateMinimapRig()
+        {
+            MinimapTestRig rig = new MinimapTestRig(canvasObject.transform);
+            RectTransform rootRect = rig.RootRect;
+            rootRect.anchorMin = new Vector2(0.5f, 0.5f);
+            rootRect.anchorMax = new Vector2(0.5f, 0.5f);
+            rootRect.pivot = new Vector2(0.5f, 0.5f);
+            rootRect.sizeDelta = new Vector2(200f, 200f);
+
+            MinimapFollowSettings followSettings = rig.Minimap.FollowSettings;
+            followSettings.SetRotationMode(MinimapRotationMode.NorthUp);
+            followSettings.SetSpeedZoom(false);
+            followSettings.SetFixedZoomMeters(200f);
+            followSettings.SetZoomSmoothing(0f);
+            return rig;
         }
 
         private int FindMarkerIndex(MapMarker marker)
