@@ -290,7 +290,8 @@ Navigation Manager (scene)
  ├─► Map scene object ──► Map asset ──► Image
  │                                  └─► Road Network runtime asset
  ├─► Car (Transform)
- └─► Formatter (units / text)
+ └─► Navigation Settings (project asset)
+       └─► Runtime: Formatter (units / text), marker prefabs, routing / tracking values
 
 Navigation Minimap (prefab root) ──► Navigation Manager
  └─ runs: Follow Car → Map View → Compass       (plain classes)
@@ -325,6 +326,15 @@ Map Marker (on any object) ──► Navigation Manager
   - **Code access** goes through the root (e.g. `minimap.View.WorldToScreen(...)`). The input adapter targets the full map root.
   - Trade-off accepted: users can't swap a behaviour by swapping components (e.g. their own Follow Car). Settings cover v1; an extension point can be added later if asked.
   - Fixes today's duplicates: shape (`MapView.edgeShape` vs `MinimapShape.shapeKind`) and zoom (`MapView.zoomMeters` is overwritten by Follow Car).
+- **Manager front door** (decision 2026-10-05): each scene that uses navigation still loads one Navigation Manager (in the scene itself, or in a persistent scene for streamed / additive setups). The Manager keeps **only what differs per scene**. Everything that is the same in every scene lives in the project's **Navigation Settings** asset, so a value is changed once, not once per scene, and scenes can't drift apart.
+  - **On the Manager (per scene)**. Visible: Car, Car yaw offset, Car spawned at runtime, Map (the explicit map; empty = found automatically), Route mode, U-turn rule. **Advanced** (collapsed): Shift source, Start manually, Settings (the asset reference, filled automatically).
+  - **In Navigation Settings → Runtime (project-wide)**: formatter; player marker, destination marker and preview pin prefabs; avoid / prefer multipliers; start / destination snap distance; arrival distance; turned-around distance; reroute cooldown; movement-direction min speed; stopped speed; teleport distance; leave margin. Defaults as in "Default values".
+  - **Settings reference filled in the editor, never searched at runtime**: the Manager inspector and the setup window assign the project's Navigation Settings when the Manager's field is empty (same editor search as the tools: one asset per project, several → warning, first used). A Manager created from code without settings uses the built-in defaults and logs the existing warning; without marker prefabs, markers are simply not shown.
+  - **Default prefabs and formatter**: the setup window fills empty Runtime slots of Navigation Settings from `Graphics/` (it used to fill the Manager's slots). A user's own choices are never overwritten.
+  - **Manager inspector** (same style as the prefab roots): per-scene fields visible, Advanced collapsed, and a collapsed **Project-wide (Navigation Settings)** section that edits the asset's Runtime values in place, with a note that changes apply to every scene and the asset path.
+  - Values are read when the Manager initializes (as before); changing them during Play applies from the next Play. `SetFormatter` still swaps the formatter at runtime for that Manager only.
+  - **One Navigation Settings per project** (as in Cross-cutting). Per-scene tuning is not supported in v1; it can be added later if asked.
+  - **No migration**: the package is not released. Old scenes simply drop the removed Manager values (they were the defaults); empty prefab slots are refilled by the setup window.
 
 - **Setup window** (Gley settings-window style), step by step, each step showing done / missing / warnings:
   1. Map area (creates the rectangle object)
@@ -408,7 +418,7 @@ Properties: following car, current zoom (meters). A full map view that gets disa
   - User data never goes inside the package folder (`Assets/Gley/DrivingNavigationSystem`), so Store updates can't overwrite it.
   - One folder per map, chosen in setup step 1 (default `Assets/NavigationData/<SceneName>/`): `<Name>_Map.asset`, `<Name>_RoadsAuthoring.asset`, `<Name>_RoadsRuntime.asset`, `<Name>_MapImage.png`.
   - Captured image = **PNG** (lossless, editable anywhere; Unity compresses it for builds). Recapture overwrites the same file (references kept). Automatic import settings are applied only when the file is first created, so the user's later changes are kept.
-  - Project-wide settings (road types, view channels): one `Assets/NavigationData/NavigationSettings.asset`, created on first use, found by search in the editor; several found → warning, first one used.
+  - Project-wide settings (road types, view channels, units, and the Manager's Runtime values: formatter, marker prefabs, routing / tracking tuning): one `Assets/NavigationData/NavigationSettings.asset`, created on first use, found by search in the editor; several found → warning, first one used.
 - **Data format version**: every asset we create (Map, Roads Authoring, Roads Runtime, Navigation Settings, Route Style) stores a format version (starts at 1). Editor: older assets run migration steps in order (1→2→3…), get saved, one-line log. Runtime road assets just become "Bake outdated" (no conversion code). Newer than the code understands (downgrade) → clear error, asset untouched. Migrations never run in builds.
 - **Bake**: graph, road lengths, base travel times (length ÷ speed) and the grid are baked into the asset by a **manual Bake button** (no automatic rebuilds). Route preferences stay runtime multipliers.
   - Version stamp: each road edit bumps a counter; the bake stores the counter it was built from.
@@ -422,7 +432,7 @@ Properties: following car, current zoom (meters). A full map view that gets disa
 - **One set of default assets** (decision 2026-10-05): prefabs, sprites and presets live only in `Graphics/` (`Graphics/Prefabs`, `Graphics/Textures`, `Graphics/Presets`), the folders the setup window uses. The old duplicate `Prefabs/` + `Art/` folders are removed; the dev `DefaultPrefabBuilder` writes into `Graphics/`.
 - **Safe area**: not handled by the package. Notches and rounded corners belong to the game's own HUD layout, not to a navigation widget. The default prefab roots stretch to fill their parent, so users place them inside their own safe-area container.
 - **Text**: components write text through a small **text writer** (see Prefab front door in section 14); the core runtime has **no TextMeshPro reference** (projects without TMP still compile). The TMP writer (`TmpTextWriter` asset) lives in `Gley.NavigationSystem.TMP`, compiled only when TMP exists (`com.unity.textmeshpro` in 2022.3, or `com.unity.ugui` 2.0+ in Unity 6). The core includes the legacy Text writer. Default prefabs use TextMeshPro; if it's missing, the setup window says so. All text goes through the formatter.
-- **Units**: the API always uses meters and seconds. All UI text goes through a **replaceable formatter**: a ScriptableObject base class assigned in the Manager's Inspector; a shipped **Default Formatter** asset has a metric/imperial setting; users subclass it for localization/custom formats; `SetFormatter` swaps it at runtime. Editor speeds are entered in the chosen unit (km/h or mph) and stored in m/s.
+- **Units**: the API always uses meters and seconds. All UI text goes through a **replaceable formatter**: a ScriptableObject base class assigned in Navigation Settings → Runtime (project-wide); a shipped **Default Formatter** asset has a metric/imperial setting; users subclass it for localization/custom formats; `SetFormatter` swaps it at runtime. Editor speeds are entered in the chosen unit (km/h or mph) and stored in m/s.
 - **Multiple maps**: one active map at a time, switchable at runtime with `SetMap(map)`. Streamed worlds: put the map and manager in the persistent scene, with one rectangle over the whole world. No routing across maps. **Memory**: every map object in a loaded scene loads its image, so use one map object per scene; for multiple maps put each map object in its own small additive scene (load → `SetMap`, unload frees the image).
 - **Mobile performance** is checked in every area.
 - **Enter Play Mode Options (domain reload off) supported**: no mutable static state in runtime code (pools, caches, marker list, queue all live on instances); event subscriptions always removed in `OnDisable` / `OnDestroy`; editor static state reset on entering Play mode; every feature tested with domain reload off and on.
@@ -475,6 +485,8 @@ Goals for a low-end phone with a test city of 5,000 roads. During development th
 Starting points; tune after live tests.
 
 ### Routing and tracking
+
+Route mode and U-turns are per scene (on the Manager); the rest are project-wide (Navigation Settings → Runtime).
 
 | Setting | Default |
 |---|---|

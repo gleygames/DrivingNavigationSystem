@@ -1,6 +1,6 @@
-# Phase 13 — Prefab Front Door (S58–S63)
+# Phase 13 — Prefab Front Door (S58–S64)
 
-Design references: section 14 "Prefab front door" (decision 2026-10-05) and "Cross-cutting" → "One set of default assets", "Text".
+Design references: section 14 "Prefab front door" and "Manager front door" (decisions 2026-10-05) and "Cross-cutting" → "One set of default assets", "Text".
 
 Added after S57; not in the original plan. The package is **not released**, so nothing here needs migration code: old components are deleted, prefabs are rebuilt by the builder.
 
@@ -542,3 +542,79 @@ NavigationFullMap (root, inactive = closed)  [NavigationFullMap]
 2. Select the full map root: Interaction, Gestures, Off-screen arrows, Preview panel, Buttons, Crosshair visible; Advanced closed.
 3. Drag an `Image` into Distance Text: the red error box appears. Drag the TMP text back: the box disappears.
 4. Undo / redo of an inspector change works (Ctrl+Z).
+
+---
+
+## S64 — Manager front door: project-wide values in Navigation Settings
+
+**Goal:** the Navigation Manager keeps only per-scene fields; the formatter, marker prefabs and routing / tracking tuning move to the project's `NavigationSettings` asset (one place for every scene); the Manager gets a root-style inspector with the per-scene fields visible, Advanced collapsed and a collapsed **Project-wide** section that edits the asset in place. Design: section 14 "Manager front door" (decision 2026-10-05). Added after S63; not in the original plan.
+
+**Depends on:** S63.
+
+**Background:** today the Manager has 25 serialized fields. A new user only has to set the Car, and the 15 project-wide values are copied into every scene that has a Manager. The package is not released: no migration code. Old scenes just drop the removed Manager values (Unity ignores unknown serialized fields); they were the defaults anyway.
+
+**Files:**
+
+1. `Runtime/Core/NavigationRuntimeSettings.cs` (new, public, written like the phase 13 settings classes: see "How every settings class is written")
+   - Fields and defaults: `formatter` (`NavigationFormatter`, null), `playerMarkerPrefab`, `destinationMarkerPrefab`, `previewPinPrefab` (`GameObject`, null), `avoidMultiplier` (5), `preferMultiplier` (0.7), `startSnapDistance` (200), `destinationSnapDistance` (50), `arrivalDistance` (10), `turnedAroundDistance` (30), `rerouteCooldown` (20), `minHeadingSpeed` (1), `stoppedSpeed` (0.1), `teleportDistance` (50), `leaveMargin` (3).
+   - Properties (PascalCase) and internal setters (`SetFormatter`, `SetPlayerMarkerPrefab`, `SetArrivalDistance`, ...) as usual.
+   - Each numeric default is a `private const float Default...` used by both the field initializer and `internal void ResetTuningToDefaults()`, which resets the 11 numbers and **keeps** the formatter and the three prefabs.
+2. `Runtime/Core/NavigationSettings.cs` (change)
+   - Add `[SerializeField] private NavigationRuntimeSettings runtime = new NavigationRuntimeSettings();` and `public NavigationRuntimeSettings Runtime { get { return runtime; } }`.
+   - `ResetToDefaults()` also calls `runtime.ResetTuningToDefaults()`.
+   - Do **not** bump `version` (nothing here is baked) and do **not** change `CurrentFormatVersion` (an older asset loads the new fields with their initializer defaults).
+3. `Runtime/Navigation/NavigationManager.cs` (change)
+   - Delete the serialized fields `formatter`, `playerMarkerPrefab`, `destinationMarkerPrefab`, `previewPinPrefab`, `avoidMultiplier`, `preferMultiplier`, `startSnapDistance`, `destinationSnapDistance`, `arrivalDistance`, `turnedAroundDistance`, `rerouteCooldown`, `minHeadingSpeed`, `stoppedSpeed`, `teleportDistance`, `leaveMargin`, and the internal setters `SetPlayerMarkerPrefab`, `SetDestinationMarkerPrefab`, `SetPreviewPinPrefab`.
+   - `formatter` stays as a **plain private field** (not serialized): it is the runtime formatter, changed by `SetFormatter`.
+   - Serialized fields left: `settings`, `explicitMap`, `car`, `carYawOffset`, `carSpawnedAtRuntime`, `shiftSource`, `routeMode`, `uTurnRule`, `startManually`.
+   - Add `private readonly NavigationRuntimeSettings defaultRuntimeSettings = new NavigationRuntimeSettings();`, `internal NavigationSettings Settings { get { return settings; } }` and `internal NavigationRuntimeSettings RuntimeSettings`: `settings.Runtime` when `settings != null`, else `defaultRuntimeSettings` (write it with `if/else`).
+   - Replace every read of a deleted field with `RuntimeSettings.Xxx`: `Initialize` (motion values, preference multipliers, `ApplySnapDistances`), `ActivateMap` (`LeaveMargin`, `ArrivalDistance`, `RerouteCooldown`, `TurnedAroundDistance`), `CheckMisconfigurationWarning` (start snap distance), `UpdateMarkerRegistryLogic` (player prefab), `AddOrMoveDestinationMarker`, `AddOrMovePreviewMarker` (prefabs).
+   - `EnsureFormatter`: if `formatter == null`, take `RuntimeSettings.Formatter`; if that is null too, `AssignDefaultFormatter()` (as today). A `SetFormatter` call made before `Initialize` (start manually) still wins.
+4. `Editor/Inspectors/RootInspectorDrawer.cs` (change): add `internal void DrawProperty(SerializedObject serializedObject, string path, string label)` (same as the existing one, but `EditorGUILayout.PropertyField(property, new GUIContent(label))`; the existing overload stays).
+5. `Editor/Inspectors/NavigationManagerEditor.cs` (new, `[CustomEditor(typeof(NavigationManager))] public class NavigationManagerEditor : UnityEditor.Editor`)
+   - Path arrays as private instance fields, exposed as `internal string[] VisiblePaths`, `AdvancedPaths`, `ProjectPaths` (same idea as the S63 editors).
+   - `OnEnable`: if not `EditorApplication.isPlaying` and the `settings` property is null: `new NavigationAssetLocator().FindOrCreateSettings()`, assign it, `serializedObject.ApplyModifiedProperties()` (normal undo, marks the scene dirty).
+   - Layout (`serializedObject.Update()` first, `ApplyModifiedProperties()` last):
+     - `car`, `carYawOffset`, `carSpawnedAtRuntime`; when it is on: `HelpBox("Call SetCar(car) after spawning the car.", MessageType.Info)`.
+     - `explicitMap` with the label **"Map"**, and a small grey label under it: "Empty = found automatically".
+     - Header **Routing**: `routeMode`, `uTurnRule`.
+     - **Advanced** foldout (closed by default): `shiftSource`, `startManually`, `settings`.
+     - Foldout **"Project-wide (Navigation Settings)"** (closed by default, `EditorGUILayout.Foldout(open, label, true)`):
+       - settings null → `HelpBox("No Navigation Settings assigned. Built-in defaults are used and markers are not shown.", MessageType.Warning)`.
+       - otherwise `HelpBox("Shared by every scene. Stored in " + AssetDatabase.GetAssetPath(settingsAsset) + ".", MessageType.Info)`, then draw `ProjectPaths` through a `SerializedObject` of the settings asset: keep it in a field, create it again only when the referenced asset changes; `Update()` before drawing, `ApplyModifiedProperties()` after.
+     - `ProjectPaths`, in this order: `runtime.formatter`, `runtime.playerMarkerPrefab`, `runtime.destinationMarkerPrefab`, `runtime.previewPinPrefab`, `runtime.avoidMultiplier`, `runtime.preferMultiplier`, `runtime.startSnapDistance`, `runtime.destinationSnapDistance`, `runtime.arrivalDistance`, `runtime.turnedAroundDistance`, `runtime.rerouteCooldown`, `runtime.minHeadingSpeed`, `runtime.stoppedSpeed`, `runtime.teleportDistance`, `runtime.leaveMargin`.
+   - `VisiblePaths` = `car`, `carYawOffset`, `carSpawnedAtRuntime`, `explicitMap`, `routeMode`, `uTurnRule`. `AdvancedPaths` = `shiftSource`, `startManually`, `settings`.
+6. `Editor/Setup/NavigationSetupWindow.cs` (change)
+   - `EnsureMarkerPrefabs` → `EnsureSettingsDefaults()`, called from `RefreshState()` as today but **not** gated on `managerInScene`: on a `SerializedObject` of `settings`, fill **only empty** slots: `runtime.playerMarkerPrefab`, `runtime.destinationMarkerPrefab`, `runtime.previewPinPrefab` (same prefab paths as today) and `runtime.formatter` (the asset at `defaultFormatterPath`). When the formatter is assigned this way, also call `formatter.SetSettings(settings)` (what `EnsureManager` did). If anything changed: `ApplyModifiedPropertiesWithoutUndo()` + `EditorUtility.SetDirty(settings)`.
+   - `AssignPrefabIfMissing`: rename the parameter to `serializedObject` (it now edits the settings asset).
+   - In `RefreshState`, when `managerInScene != null` and `managerInScene.Settings == null`: `managerInScene.SetSettings(settings)` + `EditorUtility.SetDirty(managerInScene)`.
+   - `EnsureManager`: delete the formatter block (`LoadAssetAtPath<DefaultNavigationFormatter>`, `SetSettings`, `SetFormatter`); keep `manager.SetSettings(settings)`.
+7. `Assets/Tests/NavigationSystem/Dev/Editor/DevUiInstaller.cs` (change): `AssignDefaultManagerAssets(NavigationManager manager)` → `AssignDefaultSettingsAssets(NavigationSettings settings)`: same four assets, written to `runtime.formatter`, `runtime.playerMarkerPrefab`, `runtime.destinationMarkerPrefab`, `runtime.previewPinPrefab` through a `SerializedObject` on `settings`, **only when the slot is empty** (it is the project's real settings asset); then `ApplyModifiedPropertiesWithoutUndo()` + `EditorUtility.SetDirty(settings)`. Callers pass their `settings` variable: `FullSandboxBuilder.CreateFullSandbox`, `PerfSceneBuilder.CreateManager`, `RuntimeUiSceneBuilder`.
+8. Tests
+   - `PlayMode/MarkerLayerTests.cs`, `PlayMode/OffScreenArrowTests.cs` (change, `CreateManager`): `manager.SetPlayerMarkerPrefab(x)` → `settings.Runtime.SetPlayerMarkerPrefab(x)`; `manager.SetDestinationMarkerPrefab(x)` → `settings.Runtime.SetDestinationMarkerPrefab(x)`. Keep every assertion unchanged.
+   - `EditMode/NavigationRuntimeSettingsTests.cs` (new):
+     - `Defaults_MatchDesign`: the 11 numbers above; formatter and prefabs null.
+     - `ResetTuningToDefaults_ResetsNumbers_KeepsReferences`: set a prefab (a new `GameObject`, destroyed in TearDown) and arrival distance 99; reset; arrival distance is 10, the prefab is still set.
+     - `NavigationSettings_ResetToDefaults_ResetsRuntimeTuning`: `CreateInstance<NavigationSettings>()`, `Runtime.SetLeaveMargin(9)`, `ResetToDefaults()`, leave margin is 3.
+   - `PlayMode/NavigationManagerSettingsTests.cs` (new; set up like `NavigationManagerFormatterTests`: settings via `CreateInstance` + `ResetToDefaults`, `SetStartManually(true)`, `Initialize()` in the test):
+     - `WithSettings_RuntimeSettingsComeFromAsset`: `Assert.AreSame(settings.Runtime, manager.RuntimeSettings)`.
+     - `NoSettings_UsesBuiltInDefaults`: a Manager without `SetSettings`; after `Initialize()`, `RuntimeSettings` is not null and `ArrivalDistance` is 10. (The "no Navigation Settings" message is a warning: it doesn't fail the test.)
+     - `FormatterInSettings_Used`: `settings.Runtime.SetFormatter(custom)` (a `CreateInstance<DefaultNavigationFormatter>()`, destroyed in the test) → `Initialize()` → `Assert.AreSame(custom, manager.Formatter)`.
+     - `SetFormatterBeforeInitialize_WinsOverSettings`: settings formatter A, `manager.SetFormatter(B)`, `Initialize()` → `Formatter` is B.
+   - `PlayMode/NavigationManagerFormatterTests.cs`: no change (no formatter in settings → a default is created).
+   - `EditMode/RootInspectorTests.cs` (change), three new tests. Create the Manager with `SetSettings(CreateInstance<NavigationSettings>())` **before** `Editor.CreateEditor(...)`, so the editor's `OnEnable` never searches for or creates a project asset; destroy the editor, the GameObject and the settings in TearDown.
+     - `ManagerEditor_AllPathsExist`: every `VisiblePaths` / `AdvancedPaths` entry exists on the editor's `serializedObject`; every `ProjectPaths` entry exists on `new SerializedObject(settings)`.
+     - `ManagerEditor_EverySettingIsShown`: like the S63 test: every visible serialized property of the Manager (skip `m_Script` and `Generic` containers) is in exactly one of `VisiblePaths` / `AdvancedPaths`.
+     - `ManagerEditor_EveryProjectSettingIsShown`: iterate the children of `runtime` on `new SerializedObject(settings)` (`FindProperty("runtime")`, `GetEndProperty()`, `NextVisible(true)` until the end property) and check each path is in `ProjectPaths`.
+
+**Tests:**
+- EditMode: `NavigationRuntimeSettingsTests` (3), `RootInspectorTests` (4 existing + 3 new), `StaticStateTests`, everything else green.
+- PlayMode: `NavigationManagerSettingsTests` (4), `MarkerLayerTests`, `OffScreenArrowTests`, `NavigationManagerFormatterTests` (all existing asserts unchanged), everything else green.
+
+**Manual checks:**
+1. Rebuild the dev scenes with their menus (Create Full Sandbox, Create Perf Scene, Create Runtime UI Test Scene). Select the Navigation Manager: visible are Car, Car Yaw Offset, Car Spawned At Runtime, Map, Route Mode, U Turn Rule; Advanced and Project-wide are closed. Open Project-wide: formatter, three marker prefabs, eleven values, and the note with `Assets/NavigationData/NavigationSettings.asset`.
+2. Add an empty GameObject to a scene, Add Component → Navigation Manager: Advanced → Settings is filled at once. Delete the object.
+3. Change Arrival Distance in Project-wide in one scene, open another scene with a Manager: the same value shows. Ctrl+Z in the first scene restores it.
+4. Full Sandbox, Play: the player arrow, the preview pin and the destination pin show; preview, navigation, reroute and arrival work as before.
+5. In Project-wide, clear the Player Marker Prefab slot, then open the Setup window: the slot is filled again. Set a different prefab, reopen the window: your prefab is kept.
+6. Turn Car Spawned At Runtime on: the "Call SetCar" info box appears.

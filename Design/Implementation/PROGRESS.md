@@ -93,6 +93,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S61 [HARD] Map View becomes a plain class (2026-10-05)
 - [x] S62 Text writer instead of text adapter scripts (2026-10-05)
 - [x] S63 Root inspectors (2026-10-05)
+- [ ] S64 Manager front door: project-wide values in Navigation Settings
 
 ## Implementation notes
 
@@ -151,6 +152,7 @@ Decisions the user makes during implementation (decision points S04, S29, S56, o
 - 2026-09-23 S56: Measured in the 5k perf scene (Editor, dev PC, per-frame CSV + Profiler/Frame Debugger exports in `PerfLogs/`). Manager + minimap 0.35 ms, + full map 0.53 ms; steady GC from our code 0 B in builds (only Editor-only allocations); draw calls minimap ~35 / +full map ~54, of which off-screen arrows ~17 / ~29 (minimap core ~9 vs goal 6, full map core +7); cross-city reroute ~6.4 ms; false `WrongTurn` reroutes at intersections. Decision: fix b–f as a new step S56b (fork-aware reroute, no per-frame GetComponent, route line property early-outs, check reroute GC, arrow/label batching). Minimap core draw calls (9 vs 6) not addressed yet.
 - 2026-09-23 Plan complete: all follow-ups from the implementation notes are closed. Minimap draw calls (~9 vs goal 6) accepted as they are; ~6 ms cross-city reroute search accepted; performance on a phone confirmed good. Touch gestures (S50 manual check 4) tested and working. S47/S48 marker manual checks (static placement, Follow Heading rotation, out-of-map pin, off-screen arrows) passed in the final stage. `MarkerLayer` default marker prefab gap (S53 note) fixed.
 - 2026-09-22 S44: Heading-up minimap rotates to the matched road's direction (oriented toward the nose, flip hysteresis at dot < -0.25), not the raw nose, so weaving in the lane doesn't rotate the map (Google Maps style). Off road it falls back to the nose heading with a 3° dead zone. `RoadMatcher.RoadTangent` + `NavigationManager.RoadHeading`/`HasRoadHeading` (internal) added for this. Road-to-road turns use a longer `turnSmoothing` (0.8 s) whenever the heading target jumps by more than 20° in one frame, until the view is within 2° of it.
+- 2026-10-05 S64 (plan change): the Manager keeps only per-scene fields (car, yaw offset, car spawned at runtime, map, route mode, U-turn rule; Advanced: shift source, start manually, settings). Formatter, marker prefabs and routing / tracking tuning move to Navigation Settings → Runtime (one asset per project, no per-scene override in v1). The settings reference is filled in the editor only, never searched at runtime. Design section 14 "Manager front door".
 - 2026-10-05 S57: UI prefabs may be instantiated at runtime. The Manager must exist first: UI enabled without a Manager → error, no retry. UI must not outlive the Manager: a Map View whose Manager is destroyed logs one error and stops, no re-binding. Minimap tap with no full map reference searches the scene once (inactive included), else error. No static registry/event (no static API rule).
 
 ## Implementation notes (continued)
