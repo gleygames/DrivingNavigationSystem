@@ -37,7 +37,7 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void Tap_FullMapUnassigned_FindsInactiveFullMap_Opens()
         {
-            MapViewInteractive fullMap = CreateInactiveFullMap("FullMap");
+            NavigationFullMap fullMap = CreateInactiveFullMap("FullMap");
             ExpectNoManagerErrorOnOpen();
 
             rig.Minimap.OnPointerClick(new PointerEventData(null));
@@ -59,8 +59,8 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void Tap_FullMapAssigned_UsesAssigned()
         {
-            MapViewInteractive otherFullMap = CreateInactiveFullMap("OtherFullMap");
-            MapViewInteractive assignedFullMap = CreateInactiveFullMap("AssignedFullMap");
+            NavigationFullMap otherFullMap = CreateInactiveFullMap("OtherFullMap");
+            NavigationFullMap assignedFullMap = CreateInactiveFullMap("AssignedFullMap");
             rig.Minimap.SetFullMap(assignedFullMap);
             ExpectNoManagerErrorOnOpen();
 
@@ -74,7 +74,7 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void Tap_ActionNothing_DoesNothing()
         {
-            MapViewInteractive fullMap = CreateInactiveFullMap("FullMap");
+            NavigationFullMap fullMap = CreateInactiveFullMap("FullMap");
             rig.Minimap.SetTapAction(MinimapTapAction.Nothing);
 
             rig.Minimap.OnPointerClick(new PointerEventData(null));
@@ -83,17 +83,20 @@ namespace Gley.NavigationSystem.Tests
             LogAssert.NoUnexpectedReceived();
         }
 
-        private MapViewInteractive CreateInactiveFullMap(string name)
+        private NavigationFullMap CreateInactiveFullMap(string name)
         {
-            GameObject fullMapObject = new GameObject(name, typeof(RectTransform));
-            fullMapObject.SetActive(false);
-            createdObjects.Add(fullMapObject);
-            return fullMapObject.AddComponent<MapViewInteractive>();
+            GameObject parentObject = new GameObject(name + "Parent", typeof(RectTransform));
+            createdObjects.Add(parentObject);
+            FullMapTestRig fullMapRig = new FullMapTestRig(parentObject.transform);
+            fullMapRig.Root.name = name;
+            createdObjects.Add(fullMapRig.Root);
+            return fullMapRig.FullMap;
         }
 
         private void ExpectNoManagerErrorOnOpen()
         {
-            LogAssert.Expect(LogType.Error, new Regex("MapView on '.*': no NavigationManager found"));
+            LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"));
+            LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"));
         }
     }
 }

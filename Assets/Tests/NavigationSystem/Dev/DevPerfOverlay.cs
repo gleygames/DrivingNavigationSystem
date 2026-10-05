@@ -68,7 +68,7 @@ namespace Gley.NavigationSystem.Dev
         private ProfilerRecorder gcRecorder;
         private ProfilerRecorder drawCallsRecorder;
         [SerializeField] private NavigationManager manager;
-        [SerializeField] private MapViewInteractive fullMap;
+        [SerializeField] private NavigationFullMap fullMap;
         [SerializeField] private DevPerfPhaseCycler cycler;
         private NavigationManager subscribedManager;
         private RerouteReason pendingReroute;
@@ -95,7 +95,7 @@ namespace Gley.NavigationSystem.Dev
         private bool previousHasRoute;
         private bool previousOffRoad;
 
-        public void Configure(NavigationManager managerValue, MapViewInteractive fullMapValue, DevPerfPhaseCycler cyclerValue)
+        public void Configure(NavigationManager managerValue, NavigationFullMap fullMapValue, DevPerfPhaseCycler cyclerValue)
         {
             manager = managerValue;
             fullMap = fullMapValue;

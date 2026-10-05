@@ -58,7 +58,7 @@ namespace Gley.NavigationSystem.Dev
             driver.Configure(manager, destination);
 
             GameObject minimapRoot;
-            MapViewInteractive fullMap = CreateUi(installer, out minimapRoot);
+            NavigationFullMap fullMap = CreateUi(installer, out minimapRoot);
             GameObject markersRoot = new GameObject("PerfMarkers");
             GameObject staticMarkers = CreateChild(markersRoot, "StaticMarkers");
             GameObject movingMarkers = CreateChild(markersRoot, "MovingMarkers");
@@ -145,7 +145,7 @@ namespace Gley.NavigationSystem.Dev
             return manager;
         }
 
-        private MapViewInteractive CreateUi(DevUiInstaller installer, out GameObject minimapRoot)
+        private NavigationFullMap CreateUi(DevUiInstaller installer, out GameObject minimapRoot)
         {
             minimapRoot = null;
             GameObject canvasObject = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
@@ -164,7 +164,7 @@ namespace Gley.NavigationSystem.Dev
                 return null;
             }
 
-            return installer.FullMap.GetComponentInChildren<MapViewInteractive>(true);
+            return installer.FullMap.GetComponent<NavigationFullMap>();
         }
 
         private GameObject CreateChild(GameObject parent, string childName)

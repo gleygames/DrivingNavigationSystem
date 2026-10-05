@@ -317,16 +317,16 @@ namespace Gley.NavigationSystem.Dev
             view.SetChannelMask(FullMapChannelBit);
             view.SetArrowPrefab(offScreenArrow);
 
-            MapViewInteractive interactive = viewport.AddComponent<MapViewInteractive>();
-            viewport.AddComponent<PointerInputAdapter>();
+            NavigationFullMap fullMap = root.AddComponent<NavigationFullMap>();
+            fullMap.SetViewport(viewportRect);
 
             Image crosshairImage = CreateCrosshairImage(viewport.transform);
-            interactive.SetCrosshairImage(crosshairImage);
+            fullMap.SetCrosshairImage(crosshairImage);
 
-            CreatePreviewPanel(viewport);
-            CreateNavigationControls(viewport, interactive);
+            CreatePreviewPanel(viewport, fullMap);
+            CreateNavigationControls(viewport, fullMap);
 
-            viewport.SetActive(false);
+            root.SetActive(false);
 
             string path = DevUiInstaller.PrefabFolder + "/NavigationFullMap.prefab";
             PrefabUtility.SaveAsPrefabAsset(root, path);
@@ -351,7 +351,7 @@ namespace Gley.NavigationSystem.Dev
             return image;
         }
 
-        private void CreatePreviewPanel(GameObject viewport)
+        private void CreatePreviewPanel(GameObject viewport, NavigationFullMap fullMap)
         {
             Sprite panelSprite = LoadSprite("PanelBackground");
             Sprite buttonSprite = LoadSprite("ButtonBackground");
@@ -376,12 +376,11 @@ namespace Gley.NavigationSystem.Dev
             Button confirmButton = CreateButton(panelObject.transform, "ConfirmButton", "Confirm", buttonSprite, new Vector2(-85f, 20f), new Vector2(150f, 40f));
             Button cancelButton = CreateButton(panelObject.transform, "CancelButton", "Cancel", buttonSprite, new Vector2(85f, 20f), new Vector2(150f, 40f));
 
-            PreviewPanel panel = viewport.AddComponent<PreviewPanel>();
-            panel.SetPanelRoot(panelObject);
-            panel.SetDistanceText(distanceTarget);
-            panel.SetEtaText(etaTarget);
-            panel.SetConfirmButton(confirmButton);
-            panel.SetCancelButton(cancelButton);
+            fullMap.PreviewPanelSlots.SetPanelRoot(panelObject);
+            fullMap.PreviewPanelSlots.SetDistanceText(distanceTarget);
+            fullMap.PreviewPanelSlots.SetEtaText(etaTarget);
+            fullMap.PreviewPanelSlots.SetConfirmButton(confirmButton);
+            fullMap.PreviewPanelSlots.SetCancelButton(cancelButton);
 
             panelObject.SetActive(false);
         }
@@ -410,7 +409,7 @@ namespace Gley.NavigationSystem.Dev
             return button;
         }
 
-        private void CreateNavigationControls(GameObject viewport, MapViewInteractive interactive)
+        private void CreateNavigationControls(GameObject viewport, NavigationFullMap fullMap)
         {
             Sprite buttonSprite = LoadSprite("ButtonBackground");
 
@@ -427,11 +426,9 @@ namespace Gley.NavigationSystem.Dev
             Button centerButton = CreateButton(controlsObject.transform, "CenterButton", "Center", buttonSprite, new Vector2(0f, -50f), new Vector2(160f, 40f));
             Button closeButton = CreateButton(controlsObject.transform, "CloseButton", "Close", buttonSprite, new Vector2(0f, -100f), new Vector2(160f, 40f));
 
-            NavigationControls controls = viewport.AddComponent<NavigationControls>();
-            controls.SetInteractive(interactive);
-            controls.SetStopButton(stopButton);
-            controls.SetCenterButton(centerButton);
-            controls.SetCloseButton(closeButton);
+            fullMap.Buttons.SetStopButton(stopButton);
+            fullMap.Buttons.SetCenterButton(centerButton);
+            fullMap.Buttons.SetCloseButton(closeButton);
         }
     }
 }

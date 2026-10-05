@@ -14,7 +14,7 @@ namespace Gley.NavigationSystem.Tests
         private readonly List<GameObject> createdObjects = new List<GameObject>();
 
         private GameObject canvasObject;
-        private GameObject viewObject;
+        private FullMapTestRig rig;
         private GameObject managerObject;
         private GameObject carObject;
         private GameObject mapObject;
@@ -33,9 +33,8 @@ namespace Gley.NavigationSystem.Tests
             Canvas canvas = canvasObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-            viewObject = new GameObject("FullMap", typeof(RectTransform));
-            viewObject.transform.SetParent(canvasObject.transform, false);
-            RectTransform viewRect = viewObject.GetComponent<RectTransform>();
+            rig = new FullMapTestRig(canvasObject.transform);
+            RectTransform viewRect = rig.RootRect;
             viewRect.anchorMin = new Vector2(0.5f, 0.5f);
             viewRect.anchorMax = new Vector2(0.5f, 0.5f);
             viewRect.pivot = new Vector2(0.5f, 0.5f);
@@ -75,9 +74,10 @@ namespace Gley.NavigationSystem.Tests
             map.SetMapData(mapData);
             mapObject.SetActive(true);
 
-            view = viewObject.AddComponent<MapView>();
-            interactive = viewObject.AddComponent<MapViewInteractive>();
-            interactive.SetOpenZoomMeters(200f);
+            rig.FullMap.InteractionSettings.SetOpenZoomMeters(200f);
+            rig.Activate();
+            view = rig.View;
+            interactive = rig.Interactive;
 
             yield return null;
             yield return null;
@@ -189,7 +189,7 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator ConfirmStepOff_StartsNavigationDirectly()
         {
-            interactive.SetConfirmStep(false);
+            rig.FullMap.InteractionSettings.SetConfirmStep(false);
 
             bool navigationStarted = false;
             manager.NavigationStarted += route => navigationStarted = true;
@@ -205,12 +205,11 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator PreviewPanel_ShowsOnReady_HidesOnCancel()
         {
-            GameObject panelRoot = CreateChild(viewObject, "Panel");
+            GameObject panelRoot = rig.AddChild("Panel");
             panelRoot.SetActive(false);
-            PreviewPanel panel = CreateDisabledComponent<PreviewPanel>(viewObject, "PreviewPanel");
-            panel.SetManager(manager);
-            panel.SetPanelRoot(panelRoot);
-            panel.gameObject.SetActive(true);
+            rig.FullMap.SetManager(manager);
+            rig.FullMap.PreviewPanelSlots.SetPanelRoot(panelRoot);
+            rig.Rebind();
 
             manager.PreviewDestination(new Vector3(60f, 0f, 0f));
             yield return null;
@@ -226,15 +225,14 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator ConfirmButton_StartsNavigation()
         {
-            GameObject panelRoot = CreateChild(viewObject, "Panel");
+            GameObject panelRoot = rig.AddChild("Panel");
             GameObject confirmObject = CreateChild(panelRoot, "Confirm");
             Button confirmButton = confirmObject.AddComponent<Button>();
 
-            PreviewPanel panel = CreateDisabledComponent<PreviewPanel>(viewObject, "PreviewPanel");
-            panel.SetManager(manager);
-            panel.SetPanelRoot(panelRoot);
-            panel.SetConfirmButton(confirmButton);
-            panel.gameObject.SetActive(true);
+            rig.FullMap.SetManager(manager);
+            rig.FullMap.PreviewPanelSlots.SetPanelRoot(panelRoot);
+            rig.FullMap.PreviewPanelSlots.SetConfirmButton(confirmButton);
+            rig.Rebind();
 
             manager.PreviewDestination(new Vector3(60f, 0f, 0f));
             yield return null;
@@ -248,14 +246,12 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator StopButton_VisibleOnlyWithActiveRoute()
         {
-            GameObject stopObject = CreateChild(viewObject, "Stop");
-            Button stopButton = stopObject.AddComponent<Button>();
+            Button stopButton = rig.AddButton("Stop");
+            GameObject stopObject = stopButton.gameObject;
 
-            NavigationControls controls = CreateDisabledComponent<NavigationControls>(viewObject, "Controls");
-            controls.SetManager(manager);
-            controls.SetInteractive(interactive);
-            controls.SetStopButton(stopButton);
-            controls.gameObject.SetActive(true);
+            rig.FullMap.SetManager(manager);
+            rig.FullMap.Buttons.SetStopButton(stopButton);
+            rig.Rebind();
             yield return null;
 
             Assert.IsFalse(stopObject.activeSelf);
@@ -274,14 +270,12 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator CenterButton_VisibleOnlyWhenNotFollowing()
         {
-            GameObject centerObject = CreateChild(viewObject, "Center");
-            Button centerButton = centerObject.AddComponent<Button>();
+            Button centerButton = rig.AddButton("Center");
+            GameObject centerObject = centerButton.gameObject;
 
-            NavigationControls controls = CreateDisabledComponent<NavigationControls>(viewObject, "Controls");
-            controls.SetManager(manager);
-            controls.SetInteractive(interactive);
-            controls.SetCenterButton(centerButton);
-            controls.gameObject.SetActive(true);
+            rig.FullMap.SetManager(manager);
+            rig.FullMap.Buttons.SetCenterButton(centerButton);
+            rig.Rebind();
             yield return null;
 
             Assert.IsFalse(centerObject.activeSelf);
@@ -321,13 +315,6 @@ namespace Gley.NavigationSystem.Tests
             GameObject child = new GameObject(name, typeof(RectTransform));
             child.transform.SetParent(parent.transform, false);
             return child;
-        }
-
-        private T CreateDisabledComponent<T>(GameObject parent, string name) where T : Component
-        {
-            GameObject host = CreateChild(parent, name);
-            host.SetActive(false);
-            return host.AddComponent<T>();
         }
 
         private IEnumerator WaitFrames(int count)

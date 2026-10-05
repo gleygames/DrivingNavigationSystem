@@ -64,7 +64,7 @@ namespace Gley.NavigationSystem.Dev
         };
 
         [SerializeField] private GameObject minimapRoot;
-        [SerializeField] private MapViewInteractive fullMap;
+        [SerializeField] private NavigationFullMap fullMap;
         [SerializeField] private GameObject staticMarkersRoot;
         [SerializeField] private GameObject movingMarkersRoot;
         [SerializeField] private float phaseSeconds = DefaultPhaseSeconds;
@@ -78,7 +78,7 @@ namespace Gley.NavigationSystem.Dev
         public int StepCount { get { return stepNames.Length; } }
         public bool IsFinished { get { return stepIndex == stepNames.Length - 1; } }
 
-        public void Configure(GameObject minimapRootValue, MapViewInteractive fullMapValue, GameObject staticMarkersValue, GameObject movingMarkersValue)
+        public void Configure(GameObject minimapRootValue, NavigationFullMap fullMapValue, GameObject staticMarkersValue, GameObject movingMarkersValue)
         {
             minimapRoot = minimapRootValue;
             fullMap = fullMapValue;
@@ -152,7 +152,7 @@ namespace Gley.NavigationSystem.Dev
             ApplyToView(GetMinimapView(), arrows, routeLine);
             if (fullMap != null)
             {
-                ApplyToView(fullMap.GetComponent<MapView>(), arrows, routeLine);
+                ApplyToView(fullMap.View, arrows, routeLine);
             }
         }
 

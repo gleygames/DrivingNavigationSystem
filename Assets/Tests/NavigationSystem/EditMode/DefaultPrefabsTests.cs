@@ -43,14 +43,21 @@ namespace Gley.NavigationSystem.Tests
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationFullMap.prefab");
             Assert.IsNotNull(prefab);
 
-            MapView view = prefab.GetComponentInChildren<MapView>(true);
-            Assert.IsNotNull(view);
-            Assert.IsFalse(view.gameObject.activeSelf);
+            Assert.IsFalse(prefab.activeSelf);
 
-            Assert.IsNotNull(prefab.GetComponentInChildren<MapViewInteractive>(true));
-            Assert.IsNotNull(prefab.GetComponentInChildren<PointerInputAdapter>(true));
-            Assert.IsNotNull(prefab.GetComponentInChildren<PreviewPanel>(true));
-            Assert.IsNotNull(prefab.GetComponentInChildren<NavigationControls>(true));
+            NavigationFullMap fullMap = prefab.GetComponent<NavigationFullMap>();
+            Assert.IsNotNull(fullMap);
+
+            SerializedObject serializedFullMap = new SerializedObject(fullMap);
+            RectTransform viewport = serializedFullMap.FindProperty("viewport").objectReferenceValue as RectTransform;
+            Assert.IsNotNull(viewport);
+            Assert.IsNotNull(viewport.GetComponent<MapView>());
+            Assert.IsNotNull(serializedFullMap.FindProperty("crosshairImage").objectReferenceValue);
+            Assert.IsNotNull(serializedFullMap.FindProperty("previewPanel.panelRoot").objectReferenceValue);
+            Assert.IsNotNull(serializedFullMap.FindProperty("previewPanel.distanceText").objectReferenceValue);
+            Assert.IsNotNull(serializedFullMap.FindProperty("previewPanel.confirmButton").objectReferenceValue);
+            Assert.IsNotNull(serializedFullMap.FindProperty("buttons.stopButton").objectReferenceValue);
+            Assert.IsNotNull(serializedFullMap.FindProperty("buttons.closeButton").objectReferenceValue);
         }
 
         [Test]

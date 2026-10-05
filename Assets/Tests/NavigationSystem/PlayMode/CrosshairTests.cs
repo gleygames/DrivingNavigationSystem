@@ -13,7 +13,7 @@ namespace Gley.NavigationSystem.Tests
         private readonly List<GameObject> createdObjects = new List<GameObject>();
 
         private GameObject canvasObject;
-        private GameObject viewObject;
+        private FullMapTestRig rig;
         private GameObject managerObject;
         private GameObject carObject;
         private GameObject mapObject;
@@ -32,9 +32,8 @@ namespace Gley.NavigationSystem.Tests
             Canvas canvas = canvasObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
-            viewObject = new GameObject("FullMap", typeof(RectTransform));
-            viewObject.transform.SetParent(canvasObject.transform, false);
-            RectTransform viewRect = viewObject.GetComponent<RectTransform>();
+            rig = new FullMapTestRig(canvasObject.transform);
+            RectTransform viewRect = rig.RootRect;
             viewRect.anchorMin = new Vector2(0.5f, 0.5f);
             viewRect.anchorMax = new Vector2(0.5f, 0.5f);
             viewRect.pivot = new Vector2(0.5f, 0.5f);
@@ -74,9 +73,10 @@ namespace Gley.NavigationSystem.Tests
             map.SetMapData(mapData);
             mapObject.SetActive(true);
 
-            view = viewObject.AddComponent<MapView>();
-            interactive = viewObject.AddComponent<MapViewInteractive>();
-            interactive.SetOpenZoomMeters(200f);
+            rig.FullMap.InteractionSettings.SetOpenZoomMeters(200f);
+            rig.Activate();
+            view = rig.View;
+            interactive = rig.Interactive;
 
             yield return null;
             yield return null;

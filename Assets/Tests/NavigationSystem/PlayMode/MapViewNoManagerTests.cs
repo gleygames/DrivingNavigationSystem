@@ -33,21 +33,13 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [Test]
-        public void NavigationControls_EnabledWithoutManager_LogsError()
+        public void NavigationFullMap_EnabledWithoutManager_LogsError()
         {
-            LogAssert.Expect(LogType.Error, new Regex("NavigationControls on '.*': no NavigationManager found"));
+            FullMapTestRig rig = new FullMapTestRig(testObject.transform);
+            LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"));
+            LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"));
 
-            testObject.AddComponent<NavigationControls>();
-
-            LogAssert.NoUnexpectedReceived();
-        }
-
-        [Test]
-        public void PreviewPanel_EnabledWithoutManager_LogsError()
-        {
-            LogAssert.Expect(LogType.Error, new Regex("PreviewPanel on '.*': no NavigationManager found"));
-
-            testObject.AddComponent<PreviewPanel>();
+            rig.Activate();
 
             LogAssert.NoUnexpectedReceived();
         }
