@@ -192,7 +192,6 @@ namespace Gley.NavigationSystem.Dev
             rootRect.anchorMax = Vector2.one;
             rootRect.offsetMin = Vector2.zero;
             rootRect.offsetMax = Vector2.zero;
-            root.AddComponent<SafeAreaFitter>();
 
             GameObject viewport = new GameObject("Viewport", typeof(RectTransform));
             viewport.transform.SetParent(root.transform, false);
@@ -306,7 +305,6 @@ namespace Gley.NavigationSystem.Dev
             rootRect.anchorMax = Vector2.one;
             rootRect.offsetMin = Vector2.zero;
             rootRect.offsetMax = Vector2.zero;
-            root.AddComponent<SafeAreaFitter>();
 
             GameObject viewport = new GameObject("Viewport", typeof(RectTransform));
             viewport.transform.SetParent(root.transform, false);

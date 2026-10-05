@@ -1,10 +1,10 @@
 # Phase 12 — Setup and Finish (S53–S56)
 
-Design references: section 14 "Setup window", "Cross-cutting" (default art, text, safe area, Enter Play Mode Options, logging, performance targets), "Technical risks" (assemblies).
+Design references: section 14 "Setup window", "Cross-cutting" (default art, text, Enter Play Mode Options, logging, performance targets), "Technical risks" (assemblies).
 
 ---
 
-## S53 — Default prefabs, placeholder art, safe area, default assets
+## S53 — Default prefabs, placeholder art, default assets
 
 **Goal:** ready-to-use UI prefabs and assets, built by scripts (no hand-written prefab YAML).
 
@@ -13,24 +13,22 @@ Design references: section 14 "Setup window", "Cross-cutting" (default art, text
 **Files:**
 
 0. `Assets/Tests/NavigationSystem/Dev/Editor/Gley.NavigationSystem.Dev.Editor.asmdef` (change): add references `Gley.NavigationSystem.TMP` and `Unity.TextMeshPro`.
-1. `Runtime/UI/SafeAreaFitter.cs` (MonoBehaviour): fits its RectTransform anchors to `Screen.safeArea` in `OnEnable` and `OnRectTransformDimensionsChange` (event-based, no per-frame checks). Does nothing on World Space canvases.
-2. `Assets/Tests/NavigationSystem/Dev/Editor/PlaceholderArtGenerator.cs` — menu **Tools > Gley > Navigation Dev > Generate Placeholder Art**. Draws simple white shapes with a dark outline into PNGs (CPU drawing into `Texture2D`) and saves them in `Assets/Gley/DrivingNavigationSystem/Art/` with these **final file names** (final art will replace them with the same names): `PlayerArrow.png`, `DestinationPin.png`, `PreviewPin.png` (hollow), `OffScreenArrow.png`, `MinimapMask.png` (filled circle), `MinimapFrame.png` (ring), `Compass.png` (arrow; the "N" is a TMP text in the prefab), `Crosshair.png`, `ButtonBackground.png` and `PanelBackground.png` (rounded rectangles, 9-slice borders set), `DefaultMarker.png` (circle). Import all as `Sprite (2D and UI)`.
-3. `Assets/Tests/NavigationSystem/Dev/Editor/DefaultPrefabBuilder.cs` — menu **Tools > Gley > Navigation Dev > Build Default Prefabs**. Builds GameObjects in code and saves with `PrefabUtility.SaveAsPrefabAsset` into `Assets/Gley/DrivingNavigationSystem/Prefabs/`:
+1. `Assets/Tests/NavigationSystem/Dev/Editor/PlaceholderArtGenerator.cs` — menu **Tools > Gley > Navigation Dev > Generate Placeholder Art**. Draws simple white shapes with a dark outline into PNGs (CPU drawing into `Texture2D`) and saves them in `Assets/Gley/DrivingNavigationSystem/Art/` with these **final file names** (final art will replace them with the same names): `PlayerArrow.png`, `DestinationPin.png`, `PreviewPin.png` (hollow), `OffScreenArrow.png`, `MinimapMask.png` (filled circle), `MinimapFrame.png` (ring), `Compass.png` (arrow; the "N" is a TMP text in the prefab), `Crosshair.png`, `ButtonBackground.png` and `PanelBackground.png` (rounded rectangles, 9-slice borders set), `DefaultMarker.png` (circle). Import all as `Sprite (2D and UI)`.
+2. `Assets/Tests/NavigationSystem/Dev/Editor/DefaultPrefabBuilder.cs` — menu **Tools > Gley > Navigation Dev > Build Default Prefabs**. Builds GameObjects in code and saves with `PrefabUtility.SaveAsPrefabAsset` into `Assets/Gley/DrivingNavigationSystem/Prefabs/`:
    - Assets: `MinimapRouteStyle.asset`, `FullMapRouteStyle.asset` (design widths 6 / 8 canvas units, `lineShader` = the RouteLine shader), `DefaultFormatter.asset` (unit system ProjectSetting).
    - Marker prefabs: `PlayerMarker`, `DestinationMarker`, `PreviewPin`, `DefaultMarker`, `OffScreenArrow` (with a `TmpTextTarget` distance label).
-   - `NavigationMinimap.prefab`: root with `SafeAreaFitter` (full-screen stretch), a 300×300 round viewport anchored bottom-left with `MapView` (channel Minimap, `showPreview` false, edge Circle), `MapViewFollowCar` (round true), `MinimapShape` (Sprite, `MinimapMask`), `MinimapFrame` image, `CompassButton`, `MinimapTapToOpen`.
-   - `NavigationFullMap.prefab` (inactive by default): root with `SafeAreaFitter`, full-screen viewport with `MapView` (channel Full map, `showPreview` true, edge Rectangle), `MapViewInteractive`, `PointerInputAdapter`, crosshair image, `PreviewPanel` (distance + ETA TMP texts, Confirm, Cancel), `NavigationControls` (Stop, Center on car, Close).
+   - `NavigationMinimap.prefab`: root stretched to fill its parent, a 300×300 round viewport anchored bottom-left with `MapView` (channel Minimap, `showPreview` false, edge Circle), `MapViewFollowCar` (round true), `MinimapShape` (Sprite, `MinimapMask`), `MinimapFrame` image, `CompassButton`, `MinimapTapToOpen`.
+   - `NavigationFullMap.prefab` (inactive by default): root stretched to fill its parent, full-screen viewport with `MapView` (channel Full map, `showPreview` true, edge Rectangle), `MapViewInteractive`, `PointerInputAdapter`, crosshair image, `PreviewPanel` (distance + ETA TMP texts, Confirm, Cancel), `NavigationControls` (Stop, Center on car, Close).
    - All TMP texts use `TmpTextTarget`.
-4. The builder assigns the default prefab slots/styles on the prefabs' components (the Manager's marker prefab slots are assigned by the Setup window in S54).
+3. The builder assigns the default prefab slots/styles on the prefabs' components (the Manager's marker prefab slots are assigned by the Setup window in S54).
 
 **Tests:** `EditMode/DefaultPrefabsTests.cs` (load with `AssetDatabase.LoadAssetAtPath`)
-- `MinimapPrefab_HasRequiredComponents` (MapView, MapViewFollowCar, MinimapShape, CompassButton, MinimapTapToOpen, SafeAreaFitter)
+- `MinimapPrefab_HasRequiredComponents` (MapView, MapViewFollowCar, MinimapShape, CompassButton, MinimapTapToOpen)
 - `FullMapPrefab_HasRequiredComponents_AndIsInactive`
 - `MarkerPrefabs_Exist`
 - `RouteStyles_WidthsMatchDesign`
 - `RouteStyles_ReferenceRouteLineShader`
 - `ArtSprites_ExistWithFinalNames`
-- `PlayMode/SafeAreaFitterTests.cs`: `WorldSpaceCanvas_NotChanged`
 
 **Manual checks:** run both menus; open the prefabs; drop both in the sandbox canvas manually with a Manager: the minimap follows the car; tapping it opens the full map.
 

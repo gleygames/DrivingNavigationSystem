@@ -23,7 +23,6 @@ namespace Gley.NavigationSystem.Tests
         {
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/NavigationMinimap.prefab");
             Assert.IsNotNull(prefab);
-            Assert.IsNotNull(prefab.GetComponent<SafeAreaFitter>());
             Assert.IsNotNull(prefab.GetComponentInChildren<MapView>(true));
             Assert.IsNotNull(prefab.GetComponentInChildren<MapViewFollowCar>(true));
             Assert.IsNotNull(prefab.GetComponentInChildren<MinimapShape>(true));
@@ -36,7 +35,6 @@ namespace Gley.NavigationSystem.Tests
         {
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/NavigationFullMap.prefab");
             Assert.IsNotNull(prefab);
-            Assert.IsNotNull(prefab.GetComponent<SafeAreaFitter>());
 
             MapView view = prefab.GetComponentInChildren<MapView>(true);
             Assert.IsNotNull(view);
