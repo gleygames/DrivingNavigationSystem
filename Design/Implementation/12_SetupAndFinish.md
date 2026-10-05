@@ -49,7 +49,7 @@ Design references: section 14 "Setup window", "Cross-cutting" (default art, text
    - Step 2 Map image: `None` → Missing; `Outdated` → Warning; image import warnings → Warning; else Done.
    - Step 3 Roads: no roads → Missing; bake outdated or validation issues → Warning; else Done.
    - Step 4 UI: minimap + full map in the scene → Done; EventSystem module mismatch or TMP missing → Warning.
-   - Step 5 Car: car assigned → Done.
+   - Step 5 Car: car assigned, or "Car spawned at runtime" toggle on → Done.
    - `ChooseInputModule(bool newInputSystemEnabled, bool inputSystemPackagePresent)` → `InputSystemUI` or `Standalone` (design rule).
    - `IsTrafficSystemPresent(List<string> assemblyNames)` → any name starting with `Gley.TrafficSystem`.
    - `BlurFactor(float viewportWidthCanvas, float minZoomMeters, float metersPerPixel)` = how many canvas units one image pixel covers at max zoom-in: `(viewportWidthCanvas / minZoomMeters) * metersPerPixel`. `IsBlurry(float factor)` = `factor > 2`.
@@ -59,7 +59,7 @@ Design references: section 14 "Setup window", "Cross-cutting" (default art, text
    - **Step 2:** embeds `MapImagePanel` (capture / custom image / guidance / template). Below it, the **blur info** (design: "optional warning when the image gets blurry"): for each `MapView` in the scene (or, before step 4, the default minimap 300 and full map 1920 canvas-unit widths with min zoom 50 m): "At max zoom-in, 1 image pixel = N screen pixels", with a warning icon when `IsBlurry`. This line does not change the step's status.
    - **Step 3:** road count, bake status, validation summary; buttons "Open Road Editor", "Validate", "Bake".
    - **Step 4:** Canvas picker or "Create Canvas" (Screen Space Overlay, scale with screen size 1920×1080, match 0.5); EventSystem: create with the chosen module if none (`InputSystemUIInputModule` added by type name `UnityEngine.InputSystem.UI.InputSystemUIInputModule, Unity.InputSystem` via `System.Type.GetType`; use `#if ENABLE_INPUT_SYSTEM` / `ENABLE_LEGACY_INPUT_MANAGER` to know what is enabled); an existing EventSystem is never modified (warning on mismatch). "Add minimap and full map" → instantiates both prefabs under the canvas, links `MinimapTapToOpen` to the full map. If the Input System package is present, adds `GamepadInputAdapter` to the full map (by type name). TMP missing → message.
-   - **Step 5:** car object field, yaw offset field with quick buttons 0 / 90 / 180 / 270, and an **arrow gizmo** in the Scene view (while the window is open) showing the nose direction that will be used.
+   - **Step 5:** car object field, yaw offset field with quick buttons 0 / 90 / 180 / 270, and an **arrow gizmo** in the Scene view (while the window is open) showing the nose direction that will be used. A **"Car spawned at runtime"** toggle (serialized on the Manager as `carSpawnedAtRuntime`) replaces the car field with a hint to call `SetCar(car.transform, navigationManager.CarYawOffset)` and an optional **preview prefab** field; the arrow and a wire bounds box are drawn for the prefab at the origin. The quick buttons store the yaw offset on the Manager (`CarYawOffset`).
    - Each step shows its status icon + message; everything created is normal components and prefabs.
 
 **Tests:** `EditMode/SetupStatusEvaluatorTests.cs` — one test per status rule, plus `ChooseInputModule_*` (4 combinations), `IsTrafficSystemPresent_*` (present / absent), `BlurFactor_Computes`, `IsBlurry_Above2`.
@@ -139,3 +139,43 @@ The dev PC is much faster than a low-end phone; report the numbers as measured. 
 - `PlayMode/OffScreenArrowTests.ChildLabel_MovedToLabelLayer_Upright`.
 
 **Manual checks:** rebuild the perf scene, run the phase cycle, and compare the CSV with the S56 run (arrow draw calls, no `WrongTurn` reroutes, MarkerLayer/RouteLine.Update CPU).
+
+---
+
+## S57 — UI loaded at runtime
+
+**Goal:** the minimap and full map prefabs work when instantiated after the scene loaded, and fail loudly when the Manager is missing (design section 14, "UI loaded at runtime", decision 2026-10-05). Added after S56b; not in the original plan.
+
+**Depends on:** S56b.
+
+**Files (all changes, no new runtime files):**
+
+1. `Runtime/UI/MapView.cs` (change)
+   - `OnEnable`: when `FindManager()` returns null, `CustomLogger.LogError("MapView on '<object name>': no NavigationManager found. Load the UI after the Navigation Manager.", this)` and return (as today, nothing else runs).
+   - Add `private bool hasManager`: set true when a Manager is bound in `OnEnable`, false in `OnDisable`.
+   - At the start of `UpdateMapViewVisuals`: if `hasManager` and `cachedManager == null` (Unity null = destroyed), then once: `CustomLogger.LogError("MapView on '<object name>': the NavigationManager was destroyed. The UI must not outlive the Manager.", this)`, `ClearActiveLine()`, `ClearPreviewLine()`, `currentFrame = null`, `cachedManager = null`, `hasManager = false`. Do not search for a new Manager. Markers hide by themselves (`MarkerLayer` already releases all instances when `view.Manager` is null); `MapViewFollowCar` and `MapViewInteractive` already stop when `view.Manager` is null.
+   - No allocation in the per-frame check (the error string is built only on the one failing frame).
+2. `Runtime/UI/NavigationControls.cs`, `Runtime/UI/PreviewPanel.cs`, `Runtime/Navigation/NavigationEvents.cs` (change): in `OnEnable`, when no Manager is found, log the same "no NavigationManager found" error with their own class name. Button listeners are still added/removed as today (so `OnDisable` stays symmetric). No per-frame check in these three (the Map View next to them reports a destroyed Manager).
+3. `Runtime/UI/MinimapTapToOpen.cs` (change): in `OnPointerClick` (tap action `OpenFullMap`), when `fullMap == null`: `fullMap = FindAnyObjectByType<MapViewInteractive>(FindObjectsInactive.Include)`. Still null → `CustomLogger.LogError("MinimapTapToOpen on '<object name>': no full map (MapViewInteractive) found in the loaded scenes.", this)` and return. A destroyed cached full map counts as null (Unity null), so a reloaded full map prefab is found again.
+4. Do **not** add any static field, static event or static registry (design: no static API, no mutable static state; `StaticStateTests` must stay green).
+
+**Tests:**
+- `PlayMode/MapViewNoManagerTests.cs` (no Manager in the scene; build objects in code)
+  - `MapView_EnabledWithoutManager_LogsError` (`LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"))`)
+  - `NavigationControls_EnabledWithoutManager_LogsError`
+  - `PreviewPanel_EnabledWithoutManager_LogsError`
+  - `NavigationEvents_EnabledWithoutManager_LogsError`
+- `PlayMode/MapViewManagerLostTests.cs` (Manager + map built as in `MapViewTests.SetUp`)
+  - `ManagerDestroyed_LogsErrorOnce_ManagerNull` (destroy the Manager, wait 2 frames: exactly one error, `view.Manager == null`; `LogAssert.NoUnexpectedReceived()`)
+  - `ManagerDestroyed_DuringNavigation_ActiveLineCleared`
+  - `ViewInstantiatedAfterNavigationStarted_ShowsActiveLine` (Manager navigating first, then create the view object)
+- `PlayMode/MinimapTapToOpenTests.cs`
+  - `Tap_FullMapUnassigned_FindsInactiveFullMap_Opens` (full map object inactive, `fullMap` not set; call `OnPointerClick(new PointerEventData(null))`; full map object becomes active)
+  - `Tap_NoFullMapInScene_LogsError`
+  - `Tap_FullMapAssigned_UsesAssigned` (two full maps in the scene; the assigned one opens, the other stays inactive)
+
+**Manual checks:**
+1. In the sandbox scene, remove the minimap and full map from the canvas. Add a small dev script (or use the Inspector at runtime) that instantiates `NavigationMinimap.prefab` and `NavigationFullMap.prefab` under the canvas 2 s after Play. Both work: minimap follows the car, tapping it opens the full map, tap a destination, confirm, route shows on both.
+2. Start navigation first, then instantiate the prefabs: the route shows immediately on the minimap and when the full map opens.
+3. Instantiate the minimap prefab in a scene with no Navigation Manager: one clear error in the Console, no other exceptions.
+4. With the UI running, destroy the Navigation Manager object from the Hierarchy: one error, the minimap's route and markers disappear, no further errors or exceptions.

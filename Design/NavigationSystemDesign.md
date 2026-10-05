@@ -304,6 +304,11 @@ Map Marker (on any object) ──► Navigation Manager
 - Everything points toward the Manager, never back. The Manager raises events and answers queries. It keeps a **marker list** (data only) that views query.
 - Views and markers read from the Manager (active map, route, car state, events).
 - `SetMap` → Manager fires an event → views swap image and rebuild.
+- **UI loaded at runtime** (decision 2026-10-05): the minimap / full map prefabs may be instantiated after the scene loaded, not only placed on the scene canvas. A prefab can't hold a scene reference, so components with an empty Manager field find it themselves when enabled.
+  - **The Manager must exist before the UI.** A UI without a Manager has no use, so this order is required, not worked around. When a UI component is enabled and no Manager is found, it logs an error and does nothing (no retry, no waiting). Applies to Map View, Navigation Controls, Preview Panel and Navigation Events.
+  - **The UI must not outlive the Manager.** A Map View checks every frame whether its Manager was destroyed (one null check). If so: one error, route lines cleared, markers hidden, the view stops. It does not look for a new Manager; disabling and enabling the UI (or reloading it) binds again.
+  - A view enabled after navigation started shows the current map, active route and preview right away (no event needed).
+  - **Minimap → full map link**: the minimap tap uses its full map reference; if it's empty (the two maps are separate prefabs), the first tap searches the scene for a full map, including inactive ones, and keeps it. None found → error. No per-frame cost.
 
 - **Setup window** (Gley settings-window style), step by step, each step showing done / missing / warnings:
   1. Map area (creates the rectangle object)
