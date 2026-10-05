@@ -8,9 +8,6 @@ namespace Gley.NavigationSystem.Dev
 {
     public class DefaultPrefabBuilder
     {
-
-        private const int MinimapChannelBit = 1 << 0;
-        private const int FullMapChannelBit = 1 << 1;
         private const float MinimapSize = 300f;
         private const float MinimapMargin = 20f;
         private const float CompassSize = 32f;
@@ -201,20 +198,14 @@ namespace Gley.NavigationSystem.Dev
             viewportRect.anchoredPosition = new Vector2(MinimapMargin, MinimapMargin);
             viewportRect.sizeDelta = new Vector2(MinimapSize, MinimapSize);
 
-            MapView view = viewport.AddComponent<MapView>();
-            SerializedObject serializedView = new SerializedObject(view);
-            serializedView.FindProperty("routeStyle").objectReferenceValue = routeStyle;
-            serializedView.ApplyModifiedPropertiesWithoutUndo();
-            view.SetChannelMask(MinimapChannelBit);
-            view.SetShowPreview(false);
-            view.SetArrowPrefab(offScreenArrow);
-
             CreateMinimapFrame(root.transform);
             RectTransform compassIcon;
             Button compassButton = CreateCompassButton(root.transform, out compassIcon);
 
             NavigationMinimap minimap = root.AddComponent<NavigationMinimap>();
             minimap.SetViewport(viewportRect);
+            minimap.ViewSettings.SetRouteStyle(routeStyle);
+            minimap.ViewSettings.SetArrowPrefab(offScreenArrow);
             minimap.ShapeSettings.SetShapeKind(MinimapShapeKind.Sprite);
             minimap.ShapeSettings.SetSprite(LoadSprite("MinimapMask"));
             minimap.ShapeSettings.SetSpriteOutline(EdgeShape.Circle);
@@ -310,15 +301,10 @@ namespace Gley.NavigationSystem.Dev
             viewportRect.offsetMin = Vector2.zero;
             viewportRect.offsetMax = Vector2.zero;
 
-            MapView view = viewport.AddComponent<MapView>();
-            SerializedObject serializedView = new SerializedObject(view);
-            serializedView.FindProperty("routeStyle").objectReferenceValue = routeStyle;
-            serializedView.ApplyModifiedPropertiesWithoutUndo();
-            view.SetChannelMask(FullMapChannelBit);
-            view.SetArrowPrefab(offScreenArrow);
-
             NavigationFullMap fullMap = root.AddComponent<NavigationFullMap>();
             fullMap.SetViewport(viewportRect);
+            fullMap.ViewSettings.SetRouteStyle(routeStyle);
+            fullMap.ViewSettings.SetArrowPrefab(offScreenArrow);
 
             Image crosshairImage = CreateCrosshairImage(viewport.transform);
             fullMap.SetCrosshairImage(crosshairImage);

@@ -24,8 +24,6 @@ namespace Gley.NavigationSystem.Tests
             Viewport = viewportObject.GetComponent<RectTransform>();
             Stretch(Viewport);
 
-            viewportObject.AddComponent<MapView>();
-
             Minimap = Root.AddComponent<NavigationMinimap>();
             Minimap.SetViewport(Viewport);
         }

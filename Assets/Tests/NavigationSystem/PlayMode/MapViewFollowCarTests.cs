@@ -194,14 +194,17 @@ namespace Gley.NavigationSystem.Tests
 
             rig.Minimap.FollowSettings.SetTurnSmoothing(0.8f);
             rig.Minimap.enabled = false;
+            view.Enable(manager);
             carObject.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
             yield return DriveForward(1);
             Assert.AreEqual(0f, view.RotationDegrees, Tolerance);
 
             rig.Minimap.FollowCar.UpdateFollowCarVisuals(0.1f);
+            float rotation = view.RotationDegrees;
+            view.Disable();
 
-            Assert.Greater(view.RotationDegrees, 0.5f);
-            Assert.Less(view.RotationDegrees, 89f);
+            Assert.Greater(rotation, 0.5f);
+            Assert.Less(rotation, 89f);
         }
 
         [UnityTest]

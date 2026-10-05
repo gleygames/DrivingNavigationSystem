@@ -24,8 +24,6 @@ namespace Gley.NavigationSystem.Tests
             Viewport = viewportObject.GetComponent<RectTransform>();
             Stretch(Viewport);
 
-            viewportObject.AddComponent<MapView>();
-
             FullMap = Root.AddComponent<NavigationFullMap>();
             FullMap.SetViewport(Viewport);
         }

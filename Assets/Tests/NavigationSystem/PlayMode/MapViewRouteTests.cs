@@ -70,9 +70,13 @@ namespace Gley.NavigationSystem.Tests
             maps.Add(mapObject);
             mapObject.SetActive(true);
 
-            view = viewObject.AddComponent<MapView>();
-            previewHiddenView = previewHiddenViewObject.AddComponent<MapView>();
-            previewHiddenView.SetShowPreview(false);
+            TestMapViewHost host = viewObject.AddComponent<TestMapViewHost>();
+            view = host.View;
+            previewHiddenViewObject.SetActive(false);
+            TestMapViewHost previewHiddenHost = previewHiddenViewObject.AddComponent<TestMapViewHost>();
+            previewHiddenHost.Settings.SetShowPreview(false);
+            previewHiddenViewObject.SetActive(true);
+            previewHiddenView = previewHiddenHost.View;
 
             yield return null;
             yield return null;
@@ -172,8 +176,9 @@ namespace Gley.NavigationSystem.Tests
 
             GameObject lateViewObject = CreateViewObject("LateMapView");
             lateViewObject.SetActive(false);
-            MapView lateView = lateViewObject.AddComponent<MapView>();
+            TestMapViewHost lateHost = lateViewObject.AddComponent<TestMapViewHost>();
             lateViewObject.SetActive(true);
+            MapView lateView = lateHost.View;
             yield return WaitAndUpdateCanvases(2);
 
             RouteLineGraphic graphic = lateView.ActiveRouteRenderer.GetComponentInChildren<RouteLineGraphic>(true);

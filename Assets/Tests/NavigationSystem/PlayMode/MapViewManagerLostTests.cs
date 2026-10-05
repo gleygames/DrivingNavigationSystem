@@ -68,7 +68,8 @@ namespace Gley.NavigationSystem.Tests
             maps.Add(mapObject);
             mapObject.SetActive(true);
 
-            view = viewObject.AddComponent<MapView>();
+            TestMapViewHost host = viewObject.AddComponent<TestMapViewHost>();
+            view = host.View;
 
             yield return null;
             yield return null;
@@ -142,7 +143,8 @@ namespace Gley.NavigationSystem.Tests
             yield return WaitAndUpdateCanvases(2);
 
             GameObject lateViewObject = CreateViewObject("LateMapView");
-            MapView lateView = lateViewObject.AddComponent<MapView>();
+            TestMapViewHost lateHost = lateViewObject.AddComponent<TestMapViewHost>();
+            MapView lateView = lateHost.View;
             yield return WaitAndUpdateCanvases(2);
 
             RouteLineGraphic graphic = lateView.ActiveRouteRenderer.GetComponentInChildren<RouteLineGraphic>(true);

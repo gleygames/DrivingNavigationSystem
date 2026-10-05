@@ -76,7 +76,8 @@ namespace Gley.NavigationSystem.Tests
             maps.Add(mapObject);
             mapObject.SetActive(true);
 
-            view = viewObject.AddComponent<MapView>();
+            TestMapViewHost host = viewObject.AddComponent<TestMapViewHost>();
+            view = host.View;
 
             yield return null;
             yield return null;

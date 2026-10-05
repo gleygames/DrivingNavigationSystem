@@ -21,6 +21,7 @@ namespace Gley.NavigationSystem.Tests
         private RoadNetworkData network;
         private NavigationManager manager;
         private Transform car;
+        private TestMapViewHost host;
         private MapView view;
 
         [SetUp]
@@ -53,7 +54,8 @@ namespace Gley.NavigationSystem.Tests
             CreateMap();
             CreateManager();
 
-            view = viewObject.AddComponent<MapView>();
+            host = viewObject.AddComponent<TestMapViewHost>();
+            view = host.View;
         }
 
         [TearDown]
@@ -152,7 +154,7 @@ namespace Gley.NavigationSystem.Tests
         {
             view.SetCenter(new Vector2(500f, 500f));
             view.SetZoomMeters(200f, 999999f);
-            view.SetChannelMask(MinimapBit);
+            host.Settings.SetChannelMask(MinimapBit);
 
             MapMarker marker = CreateObjectMarker(new Vector3(50f, 0f, 0f), MarkerRotationMode.Upright, FullMapBit);
             yield return WaitFrames(3);

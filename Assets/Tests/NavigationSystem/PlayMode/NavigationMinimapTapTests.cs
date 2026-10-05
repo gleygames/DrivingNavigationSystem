@@ -96,7 +96,6 @@ namespace Gley.NavigationSystem.Tests
         private void ExpectNoManagerErrorOnOpen()
         {
             LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"));
-            LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"));
         }
     }
 }

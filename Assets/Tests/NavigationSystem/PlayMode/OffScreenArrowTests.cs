@@ -20,6 +20,7 @@ namespace Gley.NavigationSystem.Tests
         private RoadNetworkData network;
         private NavigationManager manager;
         private Transform car;
+        private TestMapViewHost host;
         private MapView view;
 
         [SetUp]
@@ -55,8 +56,9 @@ namespace Gley.NavigationSystem.Tests
             CreateMap();
             CreateManager();
 
-            view = viewObject.AddComponent<MapView>();
-            view.SetArrowPrefab(arrowTemplate);
+            host = viewObject.AddComponent<TestMapViewHost>();
+            host.Settings.SetArrowPrefab(arrowTemplate);
+            view = host.View;
         }
 
         [TearDown]
@@ -135,7 +137,7 @@ namespace Gley.NavigationSystem.Tests
         {
             yield return WaitFrames(2);
 
-            view.SetShowOffScreenArrows(false);
+            host.Settings.SetShowOffScreenArrows(false);
             view.SetCenter(new Vector2(70f, 100f));
             view.SetZoomMeters(100f, 999999f);
 
@@ -186,7 +188,7 @@ namespace Gley.NavigationSystem.Tests
             label.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -20f);
             label.AddComponent<FakeTextTarget>();
             createdObjects.Add(labelledArrow);
-            view.SetArrowPrefab(labelledArrow);
+            host.Settings.SetArrowPrefab(labelledArrow);
             yield return WaitFrames(2);
 
             view.SetCenter(new Vector2(70f, 100f));

@@ -22,13 +22,13 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [Test]
-        public void MapView_EnabledWithoutManager_LogsError()
+        public void NavigationMinimap_EnabledWithoutManager_LogsError()
         {
-            LogAssert.Expect(LogType.Error, new Regex("MapView on '.*': no NavigationManager found"));
+            MinimapTestRig rig = new MinimapTestRig(testObject.transform);
+            LogAssert.Expect(LogType.Error, new Regex("NavigationMinimap on '.*': no NavigationManager found"));
 
-            MapView view = testObject.AddComponent<MapView>();
+            rig.Activate();
 
-            Assert.IsNull(view.Manager);
             LogAssert.NoUnexpectedReceived();
         }
 
@@ -36,8 +36,7 @@ namespace Gley.NavigationSystem.Tests
         public void NavigationFullMap_EnabledWithoutManager_LogsError()
         {
             FullMapTestRig rig = new FullMapTestRig(testObject.transform);
-            LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"));
-            LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"));
+            LogAssert.Expect(LogType.Error, new Regex("NavigationFullMap on '.*': no NavigationManager found"));
 
             rig.Activate();
 

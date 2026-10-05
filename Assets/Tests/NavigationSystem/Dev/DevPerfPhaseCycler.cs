@@ -149,10 +149,14 @@ namespace Gley.NavigationSystem.Dev
 
             bool arrows = phase != PhaseNoArrows;
             bool routeLine = phase != PhaseNoRouteLine;
-            ApplyToView(GetMinimapView(), arrows, routeLine);
+            NavigationMinimap minimap = GetMinimap();
+            if (minimap != null)
+            {
+                ApplyToView(minimap.View, minimap.ViewSettings, arrows, routeLine);
+            }
             if (fullMap != null)
             {
-                ApplyToView(fullMap.View, arrows, routeLine);
+                ApplyToView(fullMap.View, fullMap.ViewSettings, arrows, routeLine);
             }
         }
 
@@ -181,23 +185,23 @@ namespace Gley.NavigationSystem.Dev
             }
         }
 
-        private MapView GetMinimapView()
+        private NavigationMinimap GetMinimap()
         {
             if (minimapRoot == null)
             {
                 return null;
             }
-            return minimapRoot.GetComponentInChildren<MapView>(true);
+            return minimapRoot.GetComponent<NavigationMinimap>();
         }
 
-        private void ApplyToView(MapView view, bool arrows, bool routeLine)
+        private void ApplyToView(MapView view, MapViewSettings viewSettings, bool arrows, bool routeLine)
         {
+            viewSettings.SetShowOffScreenArrows(arrows);
             if (view == null)
             {
                 return;
             }
 
-            view.SetShowOffScreenArrows(arrows);
             SetRendererActive(view.ActiveRouteRenderer, routeLine);
             SetRendererActive(view.PreviewRouteRenderer, routeLine);
         }

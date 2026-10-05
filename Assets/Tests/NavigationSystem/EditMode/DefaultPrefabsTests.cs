@@ -32,9 +32,35 @@ namespace Gley.NavigationSystem.Tests
             Assert.IsNotNull(serializedMinimap.FindProperty("compassButton").objectReferenceValue);
             Assert.IsNotNull(serializedMinimap.FindProperty("shapeSettings.sprite").objectReferenceValue);
 
-            Assert.IsNotNull(viewport.GetComponent<MapView>());
             Assert.IsNotNull(viewport.GetComponent<Image>());
             Assert.IsNotNull(viewport.GetComponent<Mask>());
+        }
+
+        [Test]
+        public void MinimapPrefab_HasOneGleyScript()
+        {
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationMinimap.prefab");
+            Assert.IsNotNull(prefab);
+
+            Assert.AreEqual(1, CountGleyScripts(prefab));
+        }
+
+        [Test]
+        public void MinimapPrefab_ViewSettings_ChannelAndArrowSet()
+        {
+            GameObject minimapPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationMinimap.prefab");
+            Assert.IsNotNull(minimapPrefab);
+            SerializedObject serializedMinimap = new SerializedObject(minimapPrefab.GetComponent<NavigationMinimap>());
+            Assert.AreEqual(1, serializedMinimap.FindProperty("viewSettings.channelMask").intValue);
+            Assert.IsFalse(serializedMinimap.FindProperty("viewSettings.showPreview").boolValue);
+            Assert.IsNotNull(serializedMinimap.FindProperty("viewSettings.arrowPrefab").objectReferenceValue);
+            Assert.IsNotNull(serializedMinimap.FindProperty("viewSettings.routeStyle").objectReferenceValue);
+
+            GameObject fullMapPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationFullMap.prefab");
+            Assert.IsNotNull(fullMapPrefab);
+            SerializedObject serializedFullMap = new SerializedObject(fullMapPrefab.GetComponent<NavigationFullMap>());
+            Assert.AreEqual(2, serializedFullMap.FindProperty("viewSettings.channelMask").intValue);
+            Assert.IsTrue(serializedFullMap.FindProperty("viewSettings.showPreview").boolValue);
         }
 
         [Test]
@@ -51,7 +77,6 @@ namespace Gley.NavigationSystem.Tests
             SerializedObject serializedFullMap = new SerializedObject(fullMap);
             RectTransform viewport = serializedFullMap.FindProperty("viewport").objectReferenceValue as RectTransform;
             Assert.IsNotNull(viewport);
-            Assert.IsNotNull(viewport.GetComponent<MapView>());
             Assert.IsNotNull(serializedFullMap.FindProperty("crosshairImage").objectReferenceValue);
             Assert.IsNotNull(serializedFullMap.FindProperty("previewPanel.panelRoot").objectReferenceValue);
             Assert.IsNotNull(serializedFullMap.FindProperty("previewPanel.distanceText").objectReferenceValue);
@@ -114,6 +139,26 @@ namespace Gley.NavigationSystem.Tests
                 Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(DevUiInstaller.TextureFolder + "/" + names[i] + ".png");
                 Assert.IsNotNull(sprite, names[i]);
             }
+        }
+
+        private int CountGleyScripts(GameObject prefab)
+        {
+            MonoBehaviour[] behaviours = prefab.GetComponentsInChildren<MonoBehaviour>(true);
+            int count = 0;
+            for (int i = 0; i < behaviours.Length; i++)
+            {
+                if (behaviours[i] == null)
+                {
+                    continue;
+                }
+
+                string typeNamespace = behaviours[i].GetType().Namespace;
+                if (typeNamespace != null && typeNamespace.StartsWith("Gley.NavigationSystem"))
+                {
+                    count++;
+                }
+            }
+            return count;
         }
     }
 }

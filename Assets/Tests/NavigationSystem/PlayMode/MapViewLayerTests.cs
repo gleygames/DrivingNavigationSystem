@@ -19,7 +19,8 @@ namespace Gley.NavigationSystem.Tests
             rootObject = new GameObject("MapViewLayerRoot", typeof(RectTransform));
             rootObject.layer = TestLayer;
             LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"));
-            mapView = rootObject.AddComponent<MapView>();
+            TestMapViewHost host = rootObject.AddComponent<TestMapViewHost>();
+            mapView = host.View;
         }
 
         [TearDown]
