@@ -191,3 +191,4 @@ Notes / questions:
 | `10_Markers.md` | S46–S48 |
 | `11_Interaction.md` | S49–S52 |
 | `12_SetupAndFinish.md` | S53–S56, S56b, S57 |
+| `13_PrefabFrontDoor.md` | S58–S63 |

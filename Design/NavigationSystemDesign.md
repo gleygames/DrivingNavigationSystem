@@ -278,7 +278,7 @@ Status: first design pass + four review passes complete (2026-09-18). Decisions 
 - **Map edge clamp**: the view never shows outside the map. When the view cannot move further, the player marker slides from its usual spot toward the edge, and returns smoothly when the car drives away. Round minimap clamps by radius (rotation-independent); rectangular heading-up minimap clamps by its rotated corners (recomputed each frame).
 - **Car outside the map area**: the player marker is pinned at the view edge (still showing the car's direction) and an "outside map" event fires. Tracking, routing and rerouting keep working normally.
 - **Zoom**: speed-based (min/max meters across mapped to speeds, smoothed). Off = fixed zoom.
-- **Shape**: rectangle → RectMask2D (no extra cost); any other shape → stencil Mask with a user sprite (round sprite included).
+- **Shape**: rectangle → RectMask2D (no extra cost); any other shape → stencil Mask with a user sprite (round sprite included). A sprite shape also says whether the sprite is round or boxy (**sprite outline**: Circle default / Rectangle). The outline is the single source for the off-screen arrow edge and the round-vs-corner edge clamp; a rectangle shape always uses Rectangle (decision 2026-10-05).
 - **Off-screen arrows** (see Markers): point straight toward the marker. Placed on the edge via an edge setting (rectangle/circle + inset). Optional distance label.
 
 ## 14. Public API and setup
@@ -292,11 +292,13 @@ Navigation Manager (scene)
  ├─► Car (Transform)
  └─► Formatter (units / text)
 
-Map View (UI) ──► Navigation Manager
- ├─ Follow Car behavior      (minimap)
- └─ Interactive behavior     (full map)
+Navigation Minimap (prefab root) ──► Navigation Manager
+ └─ runs: Follow Car → Map View → Compass       (plain classes)
+
+Navigation Full Map (prefab root) ──► Navigation Manager
+ └─ runs: Interactive → Map View                (plain classes)
        ▲
- Input adapter ──► Map View
+ Input adapter ──► Navigation Full Map
 
 Map Marker (on any object) ──► Navigation Manager
 ```
@@ -305,10 +307,24 @@ Map Marker (on any object) ──► Navigation Manager
 - Views and markers read from the Manager (active map, route, car state, events).
 - `SetMap` → Manager fires an event → views swap image and rebuild.
 - **UI loaded at runtime** (decision 2026-10-05): the minimap / full map prefabs may be instantiated after the scene loaded, not only placed on the scene canvas. A prefab can't hold a scene reference, so components with an empty Manager field find it themselves when enabled.
-  - **The Manager must exist before the UI.** A UI without a Manager has no use, so this order is required, not worked around. When a UI component is enabled and no Manager is found, it logs an error and does nothing (no retry, no waiting). Applies to Map View, Navigation Controls, Preview Panel and Navigation Events.
+  - **The Manager must exist before the UI.** A UI without a Manager has no use, so this order is required, not worked around. When a UI component is enabled and no Manager is found, it logs an error and does nothing (no retry, no waiting). Applies to the Navigation Minimap / Navigation Full Map roots, Navigation Controls, Preview Panel and Navigation Events.
   - **The UI must not outlive the Manager.** A Map View checks every frame whether its Manager was destroyed (one null check). If so: one error, route lines cleared, markers hidden, the view stops. It does not look for a new Manager; disabling and enabling the UI (or reloading it) binds again.
   - A view enabled after navigation started shows the current map, active route and preview right away (no event needed).
   - **Minimap → full map link**: the minimap tap uses its full map reference; if it's empty (the two maps are separate prefabs), the first tap searches the scene for a full map, including inactive ones, and keeps it. None found → error. No per-frame cost.
+- **Prefab front door** (decision 2026-10-05): each UI prefab root has **one MonoBehaviour** that owns all user-facing settings and runs everything else. Minimap: `NavigationMinimap` (shape, zoom, rotation, tap action + full map reference, off-screen arrows). Full map: `NavigationFullMap`. Every setting has exactly one source.
+  - **Inner parts are plain C# classes**, not components: Map View, Follow Car, Minimap Shape, Tap To Open (minimap); Map View, Interactive (full map). They store no copy of the settings; they read them from the root.
+  - **One update loop**: the root's single `LateUpdate` runs the parts in a fixed order (minimap: Follow Car → Map View → Compass). No reliance on Unity script order (`DefaultExecutionOrder` goes away).
+  - **Taps**: the root implements `IPointerClickHandler` (uGUI clicks bubble up from the map to the root; the compass Button keeps its own clicks).
+  - **Shape**: the root's `OnValidate` / `OnEnable` applies the mask (RectMask2D or Image + Mask) on the `Viewport` child. The `Viewport` belongs to the root: switching to Rectangle removes its Image and Mask. `Viewport` keeps only Unity's Image + Mask (a mask clips its own children; the frame and compass must not be clipped).
+  - **Compass is a plain class too**: the root has a Compass slot (Button + icon). It listens to the click (toggles rotation mode) and rotates the icon in the root's update loop. Empty slot = no compass. No Gley script on child objects; one Gley script per prefab.
+  - **Full map panels are plain classes too**: Preview Panel and Navigation Controls are run by `NavigationFullMap`, which has grouped slots: **Preview panel** (panel object, distance text, ETA text, Confirm, Cancel) and **Buttons** (Stop, Center on car, Close). Empty slot = that part unused. Custom UI leaves the slots empty and calls the API from its own buttons (Manager: `ConfirmPreview()`, `CancelPreview()`, `StopNavigation()`; full map root: `CenterOnCar()`, `Open()`, `Close()`, `Toggle()`).
+  - **Pointer input is a plain class too**: `NavigationFullMap` receives the uGUI pointer events itself (drag, scroll, click bubble up to the root) and has a **Built-in pointer input** on/off setting. Off = the user's own input calls the actions. The **gamepad adapter stays a separate, optional component** on the root (its assembly compiles only with the new Input System, so the core can't reference it).
+  - **Text slots take the text itself** (TMP or legacy Text, dragged in directly; no adapter script on text objects). The slot is a `Component`; the inspector shows an error if it can't be written. Legacy `Text` is written by the core directly. Anything else goes through the root's **Text writer** reference (Advanced): a ScriptableObject `NavigationTextWriter`; the TMP assembly provides `TmpTextWriter` (asset `Graphics/Presets/TmpTextWriter.asset`, assigned in the default full map prefab). No static state; TMP still gets the `StringBuilder` directly (no allocation). The off-screen arrow's distance label uses the same writer (found once per arrow instance), so the arrow prefab has no adapter script either.
+  - **Root inspector layout (minimap)**. Visible: Manager (empty = auto-find), Shape (kind + sprite), Rotation (heading-up / north-up, car offset), Zoom (speed-based on/off, min/max meters or fixed zoom), Tap (open full map / nothing, full map reference), Off-screen arrows (on/off, show distance), Compass slot. **Advanced** (collapsed): smoothing and tuning values (rotation, turn, zoom smoothing, turn angle threshold, nose dead zone, speeds for min/max zoom), edge inset, route style, arrow prefab, `Viewport` reference, show preview, channel mask. **Root inspector layout (full map)**. Visible: Manager, Built-in pointer input, Confirm step, On-open zoom, Zoom-out limit, Crosshair mode (Auto / Always / Never), Gestures (fling on/off, double-tap zoom on/off — both default on; the switches are new, the code had none), Off-screen arrows (on/off, show distance). Slot groups: Preview panel (panel, distance text, ETA text, Confirm, Cancel), Buttons (Stop, Center on car, Close), Crosshair image. **Advanced** (collapsed): mouse wheel step, double-tap step, marker tap radius, edge inset, route style, arrow prefab, `Viewport` reference, channel mask.
+  - **No migration**: the package is not released yet, so the old components (Map View Follow Car, Minimap Shape, Minimap Tap To Open, Compass Button, Preview Panel, Navigation Controls, Pointer Input Adapter, text targets) are simply removed.
+  - **Code access** goes through the root (e.g. `minimap.View.WorldToScreen(...)`). The input adapter targets the full map root.
+  - Trade-off accepted: users can't swap a behaviour by swapping components (e.g. their own Follow Car). Settings cover v1; an extension point can be added later if asked.
+  - Fixes today's duplicates: shape (`MapView.edgeShape` vs `MinimapShape.shapeKind`) and zoom (`MapView.zoomMeters` is overwritten by Follow Car).
 
 - **Setup window** (Gley settings-window style), step by step, each step showing done / missing / warnings:
   1. Map area (creates the rectangle object)
@@ -403,8 +419,9 @@ Properties: following car, current zoom (meters). A full map view that gets disa
 - **Time**: logic (tracking, speed, rerouting, ETA) uses scaled game time and skips the frame when deltaTime is 0. UI motion (damped rotation, smooth zoom, marker return from edge, pan/pinch) uses unscaled real time, so the full map stays responsive while paused.
 
 - **Default art**: player arrow, destination pin (filled), preview pin (hollow), off-screen arrow, round minimap mask, frame, compass (N), crosshair, buttons (Confirm, Cancel, Stop, Center on car, Close), info panel background (9-slice). Style: flat, minimal, white shapes with dark outline (readable on any map). Placeholder sprites during development; final art before release with the same file names (no prefab changes). No third-party icon packs (licensing).
+- **One set of default assets** (decision 2026-10-05): prefabs, sprites and presets live only in `Graphics/` (`Graphics/Prefabs`, `Graphics/Textures`, `Graphics/Presets`), the folders the setup window uses. The old duplicate `Prefabs/` + `Art/` folders are removed; the dev `DefaultPrefabBuilder` writes into `Graphics/`.
 - **Safe area**: not handled by the package. Notches and rounded corners belong to the game's own HUD layout, not to a navigation widget. The default prefab roots stretch to fill their parent, so users place them inside their own safe-area container.
-- **Text**: components write text through a small **text adapter**; the core runtime has **no TextMeshPro reference** (projects without TMP still compile). A TextMeshPro adapter lives in `Gley.NavigationSystem.TMP`, compiled only when TMP exists (`com.unity.textmeshpro` in 2022.3, or `com.unity.ugui` 2.0+ in Unity 6). The core includes a legacy Text adapter. Default prefabs use TextMeshPro; if it's missing, the setup window says so. All text goes through the formatter.
+- **Text**: components write text through a small **text writer** (see Prefab front door in section 14); the core runtime has **no TextMeshPro reference** (projects without TMP still compile). The TMP writer (`TmpTextWriter` asset) lives in `Gley.NavigationSystem.TMP`, compiled only when TMP exists (`com.unity.textmeshpro` in 2022.3, or `com.unity.ugui` 2.0+ in Unity 6). The core includes the legacy Text writer. Default prefabs use TextMeshPro; if it's missing, the setup window says so. All text goes through the formatter.
 - **Units**: the API always uses meters and seconds. All UI text goes through a **replaceable formatter**: a ScriptableObject base class assigned in the Manager's Inspector; a shipped **Default Formatter** asset has a metric/imperial setting; users subclass it for localization/custom formats; `SetFormatter` swaps it at runtime. Editor speeds are entered in the chosen unit (km/h or mph) and stored in m/s.
 - **Multiple maps**: one active map at a time, switchable at runtime with `SetMap(map)`. Streamed worlds: put the map and manager in the persistent scene, with one rectangle over the whole world. No routing across maps. **Memory**: every map object in a loaded scene loads its image, so use one map object per scene; for multiple maps put each map object in its own small additive scene (load → `SetMap`, unload frees the image).
 - **Mobile performance** is checked in every area.

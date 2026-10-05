@@ -86,6 +86,14 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S56b Performance fixes from S56 measurements (2026-09-23)
 - [x] S57 UI loaded at runtime (2026-10-05)
 
+## Phase 13 — Prefab front door
+- [ ] S58 One set of default assets in Graphics/
+- [ ] S59 [HARD] Minimap root: NavigationMinimap
+- [ ] S60 [HARD] Full map root: NavigationFullMap
+- [ ] S61 [HARD] Map View becomes a plain class
+- [ ] S62 Text writer instead of text adapter scripts
+- [ ] S63 Root inspectors
+
 ## Implementation notes
 
 Added by the implementing agent when a step passes: anything later steps need to know that differs from the plan or isn't obvious from the code. Format: `Sxx: <note>`.
