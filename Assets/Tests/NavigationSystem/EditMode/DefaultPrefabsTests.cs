@@ -7,8 +7,6 @@ namespace Gley.NavigationSystem.Tests
 {
     public class DefaultPrefabsTests
     {
-        private const string PrefabFolder = "Assets/Gley/DrivingNavigationSystem/Prefabs";
-        private const string ArtFolder = "Assets/Gley/DrivingNavigationSystem/Art";
         private const string LineShaderName = "Gley/NavigationSystem/RouteLine";
 
         [OneTimeSetUp]
@@ -21,7 +19,7 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void MinimapPrefab_HasRequiredComponents()
         {
-            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/NavigationMinimap.prefab");
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationMinimap.prefab");
             Assert.IsNotNull(prefab);
             Assert.IsNotNull(prefab.GetComponentInChildren<MapView>(true));
             Assert.IsNotNull(prefab.GetComponentInChildren<MapViewFollowCar>(true));
@@ -33,7 +31,7 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void FullMapPrefab_HasRequiredComponents_AndIsInactive()
         {
-            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/NavigationFullMap.prefab");
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationFullMap.prefab");
             Assert.IsNotNull(prefab);
 
             MapView view = prefab.GetComponentInChildren<MapView>(true);
@@ -49,12 +47,12 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void MarkerPrefabs_Exist()
         {
-            Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/PlayerMarker.prefab"));
-            Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/DestinationMarker.prefab"));
-            Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/PreviewPin.prefab"));
-            Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/DefaultMarker.prefab"));
+            Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/PlayerMarker.prefab"));
+            Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/DestinationMarker.prefab"));
+            Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/PreviewPin.prefab"));
+            Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/DefaultMarker.prefab"));
 
-            GameObject arrow = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/OffScreenArrow.prefab");
+            GameObject arrow = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/OffScreenArrow.prefab");
             Assert.IsNotNull(arrow);
             Assert.IsNotNull(arrow.GetComponentInChildren<NavigationTextTarget>(true));
         }
@@ -62,8 +60,8 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void RouteStyles_WidthsMatchDesign()
         {
-            RouteStyle minimapStyle = AssetDatabase.LoadAssetAtPath<RouteStyle>(PrefabFolder + "/MinimapRouteStyle.asset");
-            RouteStyle fullMapStyle = AssetDatabase.LoadAssetAtPath<RouteStyle>(PrefabFolder + "/FullMapRouteStyle.asset");
+            RouteStyle minimapStyle = AssetDatabase.LoadAssetAtPath<RouteStyle>(DevUiInstaller.PresetFolder + "/MinimapRouteStyle.asset");
+            RouteStyle fullMapStyle = AssetDatabase.LoadAssetAtPath<RouteStyle>(DevUiInstaller.PresetFolder + "/FullMapRouteStyle.asset");
             Assert.IsNotNull(minimapStyle);
             Assert.IsNotNull(fullMapStyle);
             Assert.AreEqual(6f, minimapStyle.HalfWidth * 2f, 0.001f);
@@ -73,11 +71,17 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void RouteStyles_ReferenceRouteLineShader()
         {
-            RouteStyle minimapStyle = AssetDatabase.LoadAssetAtPath<RouteStyle>(PrefabFolder + "/MinimapRouteStyle.asset");
-            RouteStyle fullMapStyle = AssetDatabase.LoadAssetAtPath<RouteStyle>(PrefabFolder + "/FullMapRouteStyle.asset");
+            RouteStyle minimapStyle = AssetDatabase.LoadAssetAtPath<RouteStyle>(DevUiInstaller.PresetFolder + "/MinimapRouteStyle.asset");
+            RouteStyle fullMapStyle = AssetDatabase.LoadAssetAtPath<RouteStyle>(DevUiInstaller.PresetFolder + "/FullMapRouteStyle.asset");
             Shader expected = Shader.Find(LineShaderName);
             Assert.AreEqual(expected, minimapStyle.LineShader);
             Assert.AreEqual(expected, fullMapStyle.LineShader);
+        }
+
+        [Test]
+        public void DefaultFormatter_ExistsInPresets()
+        {
+            Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<DefaultNavigationFormatter>(DevUiInstaller.PresetFolder + "/DefaultFormatter.asset"));
         }
 
         [Test]
@@ -91,7 +95,7 @@ namespace Gley.NavigationSystem.Tests
 
             for (int i = 0; i < names.Length; i++)
             {
-                Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(ArtFolder + "/" + names[i] + ".png");
+                Sprite sprite = AssetDatabase.LoadAssetAtPath<Sprite>(DevUiInstaller.TextureFolder + "/" + names[i] + ".png");
                 Assert.IsNotNull(sprite, names[i]);
             }
         }

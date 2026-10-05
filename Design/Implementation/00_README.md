@@ -75,8 +75,10 @@ Assets/Gley/DrivingNavigationSystem/
     Setup/         setup window, build check, migrations
   Editor.URP/      URP-specific capture adapter assembly
   Editor.HDRP/     HDRP-specific capture adapter assembly
-  Prefabs/
-  Art/             placeholder sprites
+  Graphics/
+    Prefabs/       default UI and marker prefabs (built by DefaultPrefabBuilder)
+    Textures/      default sprites (placeholder until final art, same file names)
+    Presets/       route styles, default formatter, text writer
 ```
 
 Test and dev layout (outer repo, **never shipped**):

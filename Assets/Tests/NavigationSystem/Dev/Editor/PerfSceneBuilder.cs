@@ -12,7 +12,6 @@ namespace Gley.NavigationSystem.Dev
     public class PerfSceneBuilder
     {
         public const string ScenePath = "Assets/Tests/NavigationSystem/Dev/Scenes/PerfScene.unity";
-        public const string PrefabFolder = "Assets/Gley/DrivingNavigationSystem/Prefabs";
         public const int StaticMarkerCount = 100;
         public const int MovingMarkerCount = 20;
         public const int MarkerSeed = 1;
@@ -53,16 +52,17 @@ namespace Gley.NavigationSystem.Dev
             Transform car = CreateCar(startTrue * unitsPerMeter);
             Transform destination = CreateDestination(destinationTrue * unitsPerMeter);
 
-            NavigationManager manager = CreateManager(settings, car, map);
+            DevUiInstaller installer = new DevUiInstaller();
+            NavigationManager manager = CreateManager(settings, car, map, installer);
             DevAutoDriver driver = car.gameObject.AddComponent<DevAutoDriver>();
             driver.Configure(manager, destination);
 
             GameObject minimapRoot;
-            MapViewInteractive fullMap = CreateUi(out minimapRoot);
+            MapViewInteractive fullMap = CreateUi(installer, out minimapRoot);
             GameObject markersRoot = new GameObject("PerfMarkers");
             GameObject staticMarkers = CreateChild(markersRoot, "StaticMarkers");
             GameObject movingMarkers = CreateChild(markersRoot, "MovingMarkers");
-            CreateMarkers(manager, startTrue, unitsPerMeter, staticMarkers.transform, movingMarkers.transform);
+            CreateMarkers(installer, manager, startTrue, unitsPerMeter, staticMarkers.transform, movingMarkers.transform);
 
             GameObject perfTools = new GameObject("PerfTools");
             DevPerfPhaseCycler cycler = perfTools.AddComponent<DevPerfPhaseCycler>();
@@ -131,7 +131,7 @@ namespace Gley.NavigationSystem.Dev
             return destination.transform;
         }
 
-        private NavigationManager CreateManager(NavigationSettings settings, Transform car, NavigationMap map)
+        private NavigationManager CreateManager(NavigationSettings settings, Transform car, NavigationMap map, DevUiInstaller installer)
         {
             GameObject managerObject = new GameObject("NavigationManager");
             NavigationManager manager = managerObject.AddComponent<NavigationManager>();
@@ -140,20 +140,12 @@ namespace Gley.NavigationSystem.Dev
             serializedManager.FindProperty("settings").objectReferenceValue = settings;
             serializedManager.FindProperty("car").objectReferenceValue = car;
             serializedManager.FindProperty("explicitMap").objectReferenceValue = map;
-            serializedManager.FindProperty("formatter").objectReferenceValue = AssetDatabase.LoadAssetAtPath<DefaultNavigationFormatter>(PrefabFolder + "/DefaultFormatter.asset");
-            serializedManager.FindProperty("playerMarkerPrefab").objectReferenceValue = LoadPrefab("PlayerMarker");
-            serializedManager.FindProperty("destinationMarkerPrefab").objectReferenceValue = LoadPrefab("DestinationMarker");
-            serializedManager.FindProperty("previewPinPrefab").objectReferenceValue = LoadPrefab("PreviewPin");
             serializedManager.ApplyModifiedPropertiesWithoutUndo();
+            installer.AssignDefaultManagerAssets(manager);
             return manager;
         }
 
-        private GameObject LoadPrefab(string prefabName)
-        {
-            return AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "/" + prefabName + ".prefab");
-        }
-
-        private MapViewInteractive CreateUi(out GameObject minimapRoot)
+        private MapViewInteractive CreateUi(DevUiInstaller installer, out GameObject minimapRoot)
         {
             minimapRoot = null;
             GameObject canvasObject = new GameObject("Canvas", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
@@ -165,25 +157,14 @@ namespace Gley.NavigationSystem.Dev
 
             new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
 
-            GameObject minimapPrefab = LoadPrefab("NavigationMinimap");
-            GameObject fullMapPrefab = LoadPrefab("NavigationFullMap");
-            if (minimapPrefab == null || fullMapPrefab == null)
+            installer.InstallDefaultUi(canvasObject.transform);
+            minimapRoot = installer.Minimap;
+            if (installer.FullMap == null)
             {
-                CustomLogger.LogError("PerfSceneBuilder: default prefabs are missing. Run Tools > Gley > Navigation Dev > Build Default Prefabs.");
                 return null;
             }
 
-            GameObject minimapInstance = (GameObject)PrefabUtility.InstantiatePrefab(minimapPrefab, canvasObject.transform);
-            minimapRoot = minimapInstance;
-            GameObject fullMapInstance = (GameObject)PrefabUtility.InstantiatePrefab(fullMapPrefab, canvasObject.transform);
-
-            MinimapTapToOpen tapToOpen = minimapInstance.GetComponentInChildren<MinimapTapToOpen>(true);
-            MapViewInteractive interactive = fullMapInstance.GetComponentInChildren<MapViewInteractive>(true);
-            if (tapToOpen != null && interactive != null)
-            {
-                tapToOpen.SetFullMap(interactive);
-            }
-            return interactive;
+            return installer.FullMap.GetComponentInChildren<MapViewInteractive>(true);
         }
 
         private GameObject CreateChild(GameObject parent, string childName)
@@ -193,9 +174,9 @@ namespace Gley.NavigationSystem.Dev
             return child;
         }
 
-        private void CreateMarkers(NavigationManager manager, Vector3 centerTrue, float unitsPerMeter, Transform staticParent, Transform movingParent)
+        private void CreateMarkers(DevUiInstaller installer, NavigationManager manager, Vector3 centerTrue, float unitsPerMeter, Transform staticParent, Transform movingParent)
         {
-            GameObject markerPrefab = LoadPrefab("DefaultMarker");
+            GameObject markerPrefab = installer.LoadPrefab("DefaultMarker");
             System.Random random = new System.Random(MarkerSeed);
 
             for (int i = 0; i < StaticMarkerCount; i++)

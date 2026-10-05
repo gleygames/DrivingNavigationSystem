@@ -8,8 +8,6 @@ namespace Gley.NavigationSystem.Dev
 {
     public class DefaultPrefabBuilder
     {
-        public const string PrefabFolder = "Assets/Gley/DrivingNavigationSystem/Prefabs";
-        public const string ArtFolder = "Assets/Gley/DrivingNavigationSystem/Art";
 
         private const int MinimapChannelBit = 1 << 0;
         private const int FullMapChannelBit = 1 << 1;
@@ -29,7 +27,8 @@ namespace Gley.NavigationSystem.Dev
 
         public void BuildDefaultPrefabs()
         {
-            EnsureFolderExists(PrefabFolder);
+            EnsureFolderExists(DevUiInstaller.PrefabFolder);
+            EnsureFolderExists(DevUiInstaller.PresetFolder);
 
             Shader lineShader = Shader.Find(LineShaderName);
             RouteStyle minimapStyle = CreateRouteStyle("MinimapRouteStyle", 3f, lineShader);
@@ -71,7 +70,7 @@ namespace Gley.NavigationSystem.Dev
 
         private RouteStyle CreateRouteStyle(string name, float halfWidth, Shader lineShader)
         {
-            string path = PrefabFolder + "/" + name + ".asset";
+            string path = DevUiInstaller.PresetFolder + "/" + name + ".asset";
             RouteStyle existing = AssetDatabase.LoadAssetAtPath<RouteStyle>(path);
             RouteStyle style;
             if (existing != null)
@@ -102,7 +101,7 @@ namespace Gley.NavigationSystem.Dev
 
         private void CreateDefaultFormatter()
         {
-            string path = PrefabFolder + "/DefaultFormatter.asset";
+            string path = DevUiInstaller.PresetFolder + "/DefaultFormatter.asset";
             DefaultNavigationFormatter existing = AssetDatabase.LoadAssetAtPath<DefaultNavigationFormatter>(path);
             if (existing != null)
             {
@@ -126,7 +125,7 @@ namespace Gley.NavigationSystem.Dev
             image.sprite = LoadSprite(spriteName);
             image.raycastTarget = false;
 
-            string path = PrefabFolder + "/" + prefabName + ".prefab";
+            string path = DevUiInstaller.PrefabFolder + "/" + prefabName + ".prefab";
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset(instance, path);
             UnityEngine.Object.DestroyImmediate(instance);
             return prefab;
@@ -134,7 +133,7 @@ namespace Gley.NavigationSystem.Dev
 
         private Sprite LoadSprite(string name)
         {
-            return AssetDatabase.LoadAssetAtPath<Sprite>(ArtFolder + "/" + name + ".png");
+            return AssetDatabase.LoadAssetAtPath<Sprite>(DevUiInstaller.TextureFolder + "/" + name + ".png");
         }
 
         private GameObject CreateOffScreenArrowPrefab()
@@ -152,7 +151,7 @@ namespace Gley.NavigationSystem.Dev
 
             CreateTmpTextTarget(instance.transform, "DistanceLabel", new Vector2(0.5f, 0f), new Vector2(0f, -14f), new Vector2(80f, 24f), 14f, Color.white);
 
-            string path = PrefabFolder + "/OffScreenArrow.prefab";
+            string path = DevUiInstaller.PrefabFolder + "/OffScreenArrow.prefab";
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset(instance, path);
             UnityEngine.Object.DestroyImmediate(instance);
             return prefab;
@@ -221,7 +220,7 @@ namespace Gley.NavigationSystem.Dev
             CreateMinimapFrame(root.transform);
             CreateCompassButton(root.transform, view, followCar);
 
-            string path = PrefabFolder + "/NavigationMinimap.prefab";
+            string path = DevUiInstaller.PrefabFolder + "/NavigationMinimap.prefab";
             PrefabUtility.SaveAsPrefabAsset(root, path);
             UnityEngine.Object.DestroyImmediate(root);
         }
@@ -332,7 +331,7 @@ namespace Gley.NavigationSystem.Dev
 
             viewport.SetActive(false);
 
-            string path = PrefabFolder + "/NavigationFullMap.prefab";
+            string path = DevUiInstaller.PrefabFolder + "/NavigationFullMap.prefab";
             PrefabUtility.SaveAsPrefabAsset(root, path);
             UnityEngine.Object.DestroyImmediate(root);
         }

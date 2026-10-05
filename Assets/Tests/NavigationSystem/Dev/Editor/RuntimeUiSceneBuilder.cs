@@ -9,7 +9,6 @@ namespace Gley.NavigationSystem.Dev
     public class RuntimeUiSceneBuilder
     {
         public const string ScenePath = "Assets/Tests/NavigationSystem/Dev/Scenes/RuntimeUiTest.unity";
-        private const string PrefabFolder = "Assets/Gley/DrivingNavigationSystem/Prefabs/";
 
         [MenuItem("Tools/Gley/Navigation Dev/Create Runtime UI Test Scene", false, 1)]
         private static void CreateRuntimeUiSceneMenuItem()
@@ -36,7 +35,8 @@ namespace Gley.NavigationSystem.Dev
             sandboxBuilder.CaptureMapImage(authoring.MapAsset, settings.UnitsPerMeter, car.gameObject);
 
             NavigationManager manager = sandboxBuilder.CreateManager(settings, car, map);
-            AssignMarkerPrefabs(manager);
+            DevUiInstaller installer = new DevUiInstaller();
+            installer.AssignDefaultManagerAssets(manager);
             DevNavigationTester tester = manager.gameObject.AddComponent<DevNavigationTester>();
             tester.Configure(manager, null);
             sandboxBuilder.CreateCanvasWithEventSystem();
@@ -44,17 +44,8 @@ namespace Gley.NavigationSystem.Dev
             Scene scene = SceneManager.GetActiveScene();
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene, ScenePath);
-            Selection.activeObject = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "NavigationMinimap.prefab");
+            Selection.activeObject = installer.LoadPrefab("NavigationMinimap");
             EditorGUIUtility.PingObject(Selection.activeObject);
-        }
-
-        private void AssignMarkerPrefabs(NavigationManager manager)
-        {
-            SerializedObject serializedManager = new SerializedObject(manager);
-            serializedManager.FindProperty("playerMarkerPrefab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "PlayerMarker.prefab");
-            serializedManager.FindProperty("destinationMarkerPrefab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "DestinationMarker.prefab");
-            serializedManager.FindProperty("previewPinPrefab").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GameObject>(PrefabFolder + "PreviewPin.prefab");
-            serializedManager.ApplyModifiedPropertiesWithoutUndo();
         }
     }
 }

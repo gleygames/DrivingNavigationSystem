@@ -6,8 +6,6 @@ namespace Gley.NavigationSystem.Dev
 {
     public class PlaceholderArtGenerator
     {
-        public const string ArtFolder = "Assets/Gley/DrivingNavigationSystem/Art";
-
         private readonly Color fillColor = Color.white;
         private readonly Color outlineColor = new Color(0.12f, 0.12f, 0.12f, 1f);
 
@@ -21,7 +19,7 @@ namespace Gley.NavigationSystem.Dev
 
         public void GeneratePlaceholderArt()
         {
-            EnsureFolderExists(ArtFolder);
+            EnsureFolderExists(DevUiInstaller.TextureFolder);
 
             GenerateSprite("PlayerArrow", 64, ArrowShapeTest, 0.8f, false, Vector4.zero);
             GenerateSprite("DestinationPin", 64, PinShapeTest, 0.8f, false, Vector4.zero);
@@ -61,6 +59,12 @@ namespace Gley.NavigationSystem.Dev
 
         private void GenerateSprite(string name, int size, ShapeTest test, float innerScale, bool hollow, Vector4 border)
         {
+            string path = DevUiInstaller.TextureFolder + "/" + name + ".png";
+            if (File.Exists(path))
+            {
+                return;
+            }
+
             Texture2D texture = new Texture2D(size, size, TextureFormat.RGBA32, false);
             Color[] pixels = new Color[size * size];
             float half = size * 0.5f;
@@ -94,7 +98,6 @@ namespace Gley.NavigationSystem.Dev
             texture.SetPixels(pixels);
             texture.Apply();
 
-            string path = ArtFolder + "/" + name + ".png";
             byte[] png = texture.EncodeToPNG();
             File.WriteAllBytes(path, png);
             UnityEngine.Object.DestroyImmediate(texture);
