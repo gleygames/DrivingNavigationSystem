@@ -1,5 +1,7 @@
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 using UnityEngine.UI;
 
 namespace Gley.NavigationSystem.Tests
@@ -14,6 +16,7 @@ namespace Gley.NavigationSystem.Tests
         public void SetUp()
         {
             viewObject = new GameObject("Minimap", typeof(RectTransform));
+            LogAssert.Expect(LogType.Error, new Regex("no NavigationManager found"));
             viewObject.AddComponent<MapView>();
             followCar = viewObject.AddComponent<MapViewFollowCar>();
 

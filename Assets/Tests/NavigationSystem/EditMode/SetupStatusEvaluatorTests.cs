@@ -122,15 +122,29 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void EvaluateCar_Assigned_ReturnsDone()
         {
-            SetupStatus status = evaluator.EvaluateCar(true);
+            SetupStatus status = evaluator.EvaluateCar(true, false);
             Assert.AreEqual(SetupStatus.Done, status);
         }
 
         [Test]
         public void EvaluateCar_NotAssigned_ReturnsMissing()
         {
-            SetupStatus status = evaluator.EvaluateCar(false);
+            SetupStatus status = evaluator.EvaluateCar(false, false);
             Assert.AreEqual(SetupStatus.Missing, status);
+        }
+
+        [Test]
+        public void EvaluateCar_NotAssignedSpawnedAtRuntime_ReturnsDone()
+        {
+            SetupStatus status = evaluator.EvaluateCar(false, true);
+            Assert.AreEqual(SetupStatus.Done, status);
+        }
+
+        [Test]
+        public void EvaluateCar_AssignedSpawnedAtRuntime_ReturnsDone()
+        {
+            SetupStatus status = evaluator.EvaluateCar(true, true);
+            Assert.AreEqual(SetupStatus.Done, status);
         }
 
         [Test]

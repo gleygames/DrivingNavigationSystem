@@ -48,7 +48,7 @@ namespace Gley.NavigationSystem.Dev
             Selection.activeGameObject = manager.gameObject;
         }
 
-        private NavigationMap CreateOrReuseMap(TestMapBuilder mapBuilder)
+        internal NavigationMap CreateOrReuseMap(TestMapBuilder mapBuilder)
         {
             string mapPath = TestMapBuilder.DefaultFolder + "/" + TestMapBuilder.DefaultName + "_Map.asset";
             MapData existing = AssetDatabase.LoadAssetAtPath<MapData>(mapPath);
@@ -60,7 +60,7 @@ namespace Gley.NavigationSystem.Dev
             return mapBuilder.CreateMapObject(existing);
         }
 
-        private void CaptureMapImage(MapData data, float unitsPerMeter, GameObject car)
+        internal void CaptureMapImage(MapData data, float unitsPerMeter, GameObject car)
         {
             car.SetActive(false);
             try
@@ -73,7 +73,7 @@ namespace Gley.NavigationSystem.Dev
             }
         }
 
-        private NavigationManager CreateManager(NavigationSettings settings, Transform car, NavigationMap map)
+        internal NavigationManager CreateManager(NavigationSettings settings, Transform car, NavigationMap map)
         {
             GameObject managerObject = new GameObject("NavigationManager");
             NavigationManager manager = managerObject.AddComponent<NavigationManager>();
@@ -86,7 +86,7 @@ namespace Gley.NavigationSystem.Dev
             return manager;
         }
 
-        private MapViewFollowCar CreateUi(NavigationManager manager)
+        internal GameObject CreateCanvasWithEventSystem()
         {
             GameObject canvasObject = new GameObject("DevCanvas", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
             canvasObject.GetComponent<Canvas>().renderMode = RenderMode.ScreenSpaceOverlay;
@@ -96,6 +96,12 @@ namespace Gley.NavigationSystem.Dev
             scaler.matchWidthOrHeight = 0.5f;
 
             new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
+            return canvasObject;
+        }
+
+        private MapViewFollowCar CreateUi(NavigationManager manager)
+        {
+            GameObject canvasObject = CreateCanvasWithEventSystem();
 
             GameObject minimapObject = new GameObject("Minimap", typeof(RectTransform));
             minimapObject.transform.SetParent(canvasObject.transform, false);
