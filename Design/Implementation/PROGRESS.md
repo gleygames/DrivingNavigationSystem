@@ -95,6 +95,9 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S63 Root inspectors (2026-10-05)
 - [x] S64 Manager front door: project-wide values in Navigation Settings (2026-10-05)
 
+## Phase 14 — Additions
+- [ ] S65 Full map tap target: markers only
+
 ## Implementation notes
 
 Added by the implementing agent when a step passes: anything later steps need to know that differs from the plan or isn't obvious from the code. Format: `Sxx: <note>`.
