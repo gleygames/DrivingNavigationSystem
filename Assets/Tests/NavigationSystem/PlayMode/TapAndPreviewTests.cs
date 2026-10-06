@@ -25,10 +25,19 @@ namespace Gley.NavigationSystem.Tests
         private MapViewInteractive interactive;
         private MapData mapData;
         private Texture2D mapTexture;
+        private MapMarker reportedMarker;
+        private bool previewReadyRaised;
+        private bool previewFailedRaised;
+        private bool navigationStartedRaised;
 
         [UnitySetUp]
         public IEnumerator SetUp()
         {
+            reportedMarker = null;
+            previewReadyRaised = false;
+            previewFailedRaised = false;
+            navigationStartedRaised = false;
+
             canvasObject = new GameObject("TestCanvas", typeof(RectTransform));
             Canvas canvas = canvasObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
@@ -289,6 +298,124 @@ namespace Gley.NavigationSystem.Tests
             yield return null;
 
             Assert.IsFalse(centerObject.activeSelf);
+        }
+
+        [UnityTest]
+        public IEnumerator MarkersOnly_TapOnEmptyMap_NothingHappens()
+        {
+            rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MarkersOnly);
+            manager.PreviewReady += HandlePreviewReady;
+            manager.PreviewFailed += HandlePreviewFailed;
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
+            yield return null;
+
+            Assert.IsFalse(previewReadyRaised);
+            Assert.IsFalse(previewFailedRaised);
+            Assert.IsFalse(manager.HasPreview);
+            Assert.IsFalse(manager.HasActiveRoute);
+        }
+
+        [UnityTest]
+        public IEnumerator MarkersOnly_TapNearDestinationMarker_PreviewsMarker()
+        {
+            rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MarkersOnly);
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), true);
+            yield return WaitFrames(3);
+            manager.PreviewReady += HandlePreviewReady;
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
+            yield return null;
+
+            Assert.AreSame(marker, reportedMarker);
+            Assert.IsTrue(manager.HasPreview);
+        }
+
+        [UnityTest]
+        public IEnumerator MarkersOnly_TapNearNonDestinationMarker_NothingHappens()
+        {
+            rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MarkersOnly);
+            CreateMarker(new Vector3(60f, 0f, 0f), false);
+            yield return WaitFrames(3);
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
+            yield return null;
+
+            Assert.IsFalse(manager.HasPreview);
+        }
+
+        [UnityTest]
+        public IEnumerator MarkersOnly_TapOnEmptyMap_KeepsExistingPreview()
+        {
+            rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MarkersOnly);
+            CreateMarker(new Vector3(60f, 0f, 0f), true);
+            yield return WaitFrames(3);
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
+            yield return null;
+
+            Assert.IsTrue(manager.HasPreview);
+            Vector3 previewPosition = manager.Markers.GetEntry(manager.PreviewMarkerIndex).TruePosition;
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(100f, 0f, 0f)));
+            yield return null;
+
+            Assert.IsTrue(manager.HasPreview);
+            Vector3 newPreviewPosition = manager.Markers.GetEntry(manager.PreviewMarkerIndex).TruePosition;
+            Assert.Less(Vector3.Distance(previewPosition, newPreviewPosition), 0.01f);
+        }
+
+        [UnityTest]
+        public IEnumerator MarkersOnly_ConfirmStepOff_TapOnEmptyMap_NoNavigation()
+        {
+            rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MarkersOnly);
+            rig.FullMap.InteractionSettings.SetConfirmStep(false);
+            manager.NavigationStarted += HandleNavigationStarted;
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
+            yield return null;
+
+            Assert.IsFalse(navigationStartedRaised);
+            Assert.IsFalse(manager.HasActiveRoute);
+        }
+
+        [UnityTest]
+        public IEnumerator MarkersOnly_ConfirmAtCrosshair_NoMarker_NothingHappens()
+        {
+            rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MarkersOnly);
+            interactive.SetCrosshairMode(true);
+
+            interactive.ConfirmAtCrosshair();
+            yield return null;
+
+            Assert.IsFalse(manager.HasPreview);
+        }
+
+        [UnityTest]
+        public IEnumerator MapAndMarkers_TapOnEmptyMap_StillPreviews()
+        {
+            rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MapAndMarkers);
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
+            yield return null;
+
+            Assert.IsTrue(manager.HasPreview);
+        }
+
+        private void HandlePreviewReady(Route route, MapMarker marker)
+        {
+            previewReadyRaised = true;
+            reportedMarker = marker;
+        }
+
+        private void HandlePreviewFailed(FailureReason reason)
+        {
+            previewFailedRaised = true;
+        }
+
+        private void HandleNavigationStarted(Route route)
+        {
+            navigationStartedRaised = true;
         }
 
         private Vector2 ComputeViewportPoint(Vector3 truePosition)
