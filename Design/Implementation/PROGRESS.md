@@ -97,6 +97,14 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 
 ## Phase 14 — Additions
 - [x] S65 Full map tap target: markers only (2026-10-06)
+- [ ] S66 Default marker prefab reaches the marker layer
+- [ ] S67 Marker tap action and selection
+- [ ] S68 Destination marker link: Cancel and Confirm deselect
+- [ ] S69 Marker visual binding: IMapMarkerVisual
+- [ ] S70 Selected marker look: IMapMarkerSelectable
+- [ ] S71 Display name and visual refresh
+- [ ] S72 Marker labels
+- [ ] S73 Default info panel
 
 ## Implementation notes
 
