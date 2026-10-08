@@ -7,10 +7,13 @@ namespace Gley.NavigationSystem.Dev
     {
         private const float MaxClickDistance = 5000f;
 
-        private readonly Rect helpRect = new Rect(10f, 10f, 420f, 170f);
+        private readonly Rect helpRect = new Rect(10f, 10f, 420f, 210f);
 
         [SerializeField] private NavigationManager manager;
         [SerializeField] private NavigationMinimap minimap;
+
+        private NavigationManager subscribedManager;
+        private string lastSelectionEvent = "-";
 
         public void Configure(NavigationManager managerValue, NavigationMinimap minimapValue)
         {
@@ -18,9 +21,58 @@ namespace Gley.NavigationSystem.Dev
             minimap = minimapValue;
         }
 
+        private void OnEnable()
+        {
+            SubscribeSelectionEvents();
+        }
+
         private void Update()
         {
             UpdateDevNavigationInput();
+            if (subscribedManager != manager)
+            {
+                SubscribeSelectionEvents();
+            }
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeSelectionEvents();
+        }
+
+        private void SubscribeSelectionEvents()
+        {
+            UnsubscribeSelectionEvents();
+            if (manager == null)
+            {
+                return;
+            }
+
+            subscribedManager = manager;
+            subscribedManager.MarkerSelected += HandleMarkerSelected;
+            subscribedManager.MarkerDeselected += HandleMarkerDeselected;
+        }
+
+        private void UnsubscribeSelectionEvents()
+        {
+            if (subscribedManager == null)
+            {
+                return;
+            }
+
+            subscribedManager.MarkerSelected -= HandleMarkerSelected;
+            subscribedManager.MarkerDeselected -= HandleMarkerDeselected;
+            subscribedManager = null;
+        }
+
+        private void HandleMarkerSelected(MapMarker marker)
+        {
+            lastSelectionEvent = "Selected " + marker.name + " (frame " + Time.frameCount + ")";
+        }
+
+        private void HandleMarkerDeselected(MapMarker marker)
+        {
+            lastSelectionEvent = "Deselected " + marker.name + " (frame " + Time.frameCount + ")";
         }
 
         private void UpdateDevNavigationInput()
@@ -89,13 +141,21 @@ namespace Gley.NavigationSystem.Dev
                 rotation = minimap.RotationMode.ToString();
             }
 
+            string selected = "none";
+            if (manager.SelectedMarker != null)
+            {
+                selected = manager.SelectedMarker.name;
+            }
+
             string text = "W/S drive, A/D steer, Space stop, R teleport 300 m\n"
                 + "Left click world = navigate there, X = stop, T = minimap rotation\n\n"
                 + "Active route: " + manager.HasActiveRoute + "\n"
                 + "Remaining: " + manager.RemainingDistance.ToString("0") + " m\n"
                 + "Speed: " + (manager.Speed * 3.6f).ToString("0") + " km/h\n"
                 + "Off road: " + manager.IsOffRoad + "   Outside map: " + manager.IsOutsideMap + "\n"
-                + "Minimap: " + rotation;
+                + "Minimap: " + rotation + "\n"
+                + "Selected marker: " + selected + "\n"
+                + "Last selection event: " + lastSelectionEvent;
             GUI.Box(helpRect, text);
         }
     }

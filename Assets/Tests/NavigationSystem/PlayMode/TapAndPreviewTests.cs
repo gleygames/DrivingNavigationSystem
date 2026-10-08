@@ -569,11 +569,128 @@ namespace Gley.NavigationSystem.Tests
             Assert.IsNull(manager.SelectedMarker);
         }
 
+        [UnityTest]
+        public IEnumerator DestinationMarker_Cancel_Deselects()
+        {
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Destination);
+            yield return WaitFrames(3);
+            SubscribeSelectionEvents();
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
+            yield return null;
+            manager.CancelPreview();
+            yield return null;
+
+            Assert.AreEqual(4, events.Count);
+            Assert.AreEqual("Selected:" + marker.name, events[0]);
+            Assert.AreEqual("PreviewReady", events[1]);
+            Assert.AreEqual("PreviewCanceled", events[2]);
+            Assert.AreEqual("Deselected:" + marker.name, events[3]);
+            Assert.IsNull(manager.SelectedMarker);
+        }
+
+        [UnityTest]
+        public IEnumerator DestinationMarker_Confirm_Deselects()
+        {
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Destination);
+            yield return WaitFrames(3);
+            SubscribeSelectionEvents();
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
+            yield return null;
+            manager.ConfirmPreview();
+            yield return null;
+
+            Assert.AreEqual(4, events.Count);
+            Assert.AreEqual("Selected:" + marker.name, events[0]);
+            Assert.AreEqual("PreviewReady", events[1]);
+            Assert.AreEqual("NavigationStarted", events[2]);
+            Assert.AreEqual("Deselected:" + marker.name, events[3]);
+            Assert.IsNull(manager.SelectedMarker);
+            Assert.IsTrue(manager.HasActiveRoute);
+        }
+
+        [UnityTest]
+        public IEnumerator DestinationMarker_ConfirmStepOff_SelectStartDeselect()
+        {
+            rig.FullMap.InteractionSettings.SetConfirmStep(false);
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Destination);
+            yield return WaitFrames(3);
+            SubscribeSelectionEvents();
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
+            yield return null;
+
+            Assert.AreEqual(3, events.Count);
+            Assert.AreEqual("Selected:" + marker.name, events[0]);
+            Assert.AreEqual("NavigationStarted", events[1]);
+            Assert.AreEqual("Deselected:" + marker.name, events[2]);
+            Assert.IsNull(manager.SelectedMarker);
+            Assert.IsTrue(manager.HasActiveRoute);
+        }
+
+        [UnityTest]
+        public IEnumerator SelectMarker_CodePreview_CancelKeepsSelection()
+        {
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Select);
+            yield return WaitFrames(3);
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
+            yield return null;
+            Assert.AreSame(marker, manager.SelectedMarker);
+
+            manager.PreviewDestination(new Vector3(100f, 0f, 0f));
+            yield return null;
+            Assert.IsTrue(manager.HasPreview);
+            Assert.AreSame(marker, manager.SelectedMarker);
+
+            manager.CancelPreview();
+            yield return null;
+
+            Assert.IsFalse(manager.HasPreview);
+            Assert.AreSame(marker, manager.SelectedMarker);
+        }
+
+        [UnityTest]
+        public IEnumerator DestinationMarker_PreviewFails_KeepsSelection()
+        {
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 80f), MarkerTapAction.Destination);
+            yield return WaitFrames(3);
+            SubscribeSelectionEvents();
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 80f)));
+            yield return null;
+
+            Assert.AreEqual(2, events.Count);
+            Assert.AreEqual("Selected:" + marker.name, events[0]);
+            Assert.AreEqual("PreviewFailed", events[1]);
+            Assert.IsFalse(manager.HasPreview);
+            Assert.AreSame(marker, manager.SelectedMarker);
+        }
+
         private void SubscribeSelectionEvents()
         {
             manager.MarkerSelected += HandleMarkerSelected;
             manager.MarkerDeselected += HandleMarkerDeselected;
             manager.PreviewReady += HandlePreviewReadyLogged;
+            manager.PreviewCanceled += HandlePreviewCanceledLogged;
+            manager.PreviewFailed += HandlePreviewFailedLogged;
+            manager.NavigationStarted += HandleNavigationStartedLogged;
+        }
+
+        private void HandlePreviewCanceledLogged()
+        {
+            events.Add("PreviewCanceled");
+        }
+
+        private void HandlePreviewFailedLogged(FailureReason reason)
+        {
+            events.Add("PreviewFailed");
+        }
+
+        private void HandleNavigationStartedLogged(Route route)
+        {
+            events.Add("NavigationStarted");
         }
 
         private void HandleMarkerSelected(MapMarker marker)
