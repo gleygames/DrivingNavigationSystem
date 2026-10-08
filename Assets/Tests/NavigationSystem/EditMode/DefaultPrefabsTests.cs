@@ -99,6 +99,17 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [Test]
+        public void DefaultMarker_HasSelectionScale()
+        {
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/DefaultMarker.prefab");
+            Assert.IsNotNull(prefab);
+            Assert.IsNotNull(prefab.GetComponent<MarkerSelectionScale>());
+
+            GameObject playerPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/PlayerMarker.prefab");
+            Assert.IsNull(playerPrefab.GetComponent<MarkerSelectionScale>());
+        }
+
+        [Test]
         public void FullMapPrefab_HasOneGleyScript()
         {
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationFullMap.prefab");

@@ -36,7 +36,7 @@ namespace Gley.NavigationSystem.Dev
             CreateMarkerPrefab("PlayerMarker", "PlayerArrow");
             CreateMarkerPrefab("DestinationMarker", "DestinationPin");
             CreateMarkerPrefab("PreviewPin", "PreviewPin");
-            CreateMarkerPrefab("DefaultMarker", "DefaultMarker");
+            CreateDefaultMarkerPrefab();
             GameObject offScreenArrow = CreateOffScreenArrowPrefab();
 
             CreateMinimapPrefab(minimapStyle, offScreenArrow, textWriter);
@@ -126,6 +126,12 @@ namespace Gley.NavigationSystem.Dev
 
         private GameObject CreateMarkerPrefab(string prefabName, string spriteName)
         {
+            GameObject instance = CreateMarkerObject(prefabName, spriteName);
+            return SaveMarkerPrefab(instance, prefabName);
+        }
+
+        private GameObject CreateMarkerObject(string prefabName, string spriteName)
+        {
             GameObject instance = new GameObject(prefabName, typeof(RectTransform));
             RectTransform rect = instance.GetComponent<RectTransform>();
             rect.sizeDelta = new Vector2(MarkerSize, MarkerSize);
@@ -137,10 +143,22 @@ namespace Gley.NavigationSystem.Dev
             image.sprite = LoadSprite(spriteName);
             image.raycastTarget = false;
 
+            return instance;
+        }
+
+        private GameObject SaveMarkerPrefab(GameObject instance, string prefabName)
+        {
             string path = DevUiInstaller.PrefabFolder + "/" + prefabName + ".prefab";
             GameObject prefab = PrefabUtility.SaveAsPrefabAsset(instance, path);
             UnityEngine.Object.DestroyImmediate(instance);
             return prefab;
+        }
+
+        private GameObject CreateDefaultMarkerPrefab()
+        {
+            GameObject instance = CreateMarkerObject("DefaultMarker", "DefaultMarker");
+            instance.AddComponent<MarkerSelectionScale>();
+            return SaveMarkerPrefab(instance, "DefaultMarker");
         }
 
         private Sprite LoadSprite(string name)

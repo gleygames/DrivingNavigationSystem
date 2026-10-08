@@ -2,13 +2,15 @@ using UnityEngine;
 
 namespace Gley.NavigationSystem.Tests
 {
-    public class FakeMarkerVisual : MonoBehaviour, IMapMarkerVisual
+    public class FakeMarkerVisual : MonoBehaviour, IMapMarkerVisual, IMapMarkerSelectable
     {
         public int BindCount { get; private set; }
         public int UnbindCount { get; private set; }
+        public int SetSelectedCount { get; private set; }
         public MapMarker BoundMarker { get; private set; }
         public MapView BoundView { get; private set; }
         public bool IsBound { get; private set; }
+        public bool IsSelected { get; private set; }
 
         public void Bind(MapMarker marker, MapView view)
         {
@@ -24,6 +26,12 @@ namespace Gley.NavigationSystem.Tests
             BoundMarker = null;
             BoundView = null;
             IsBound = false;
+        }
+
+        public void SetSelected(bool selected)
+        {
+            SetSelectedCount++;
+            IsSelected = selected;
         }
     }
 }

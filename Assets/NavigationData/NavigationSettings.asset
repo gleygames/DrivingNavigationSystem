@@ -50,6 +50,8 @@ MonoBehaviour:
       type: 3}
     previewPinPrefab: {fileID: 9089465496509332512, guid: 764939b22b903a949ac1c4cef2cc1088,
       type: 3}
+    defaultMarkerPrefab: {fileID: 1521411626635722411, guid: 79c0f0281eaa1054b870abb867d0aad2,
+      type: 3}
     avoidMultiplier: 5
     preferMultiplier: 0.7
     startSnapDistance: 200

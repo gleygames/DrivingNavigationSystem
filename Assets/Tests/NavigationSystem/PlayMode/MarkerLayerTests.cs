@@ -259,6 +259,123 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [UnityTest]
+        public IEnumerator SelectMarker_VisualSelected()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker marker = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            FakeMarkerVisual visual = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(marker)).GetComponent<FakeMarkerVisual>();
+            Assert.IsFalse(visual.IsSelected);
+
+            manager.SelectMarker(marker);
+            yield return WaitFrames(1);
+
+            Assert.IsTrue(visual.IsSelected);
+        }
+
+        [UnityTest]
+        public IEnumerator ClearSelection_VisualUnselected()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker marker = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            FakeMarkerVisual visual = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(marker)).GetComponent<FakeMarkerVisual>();
+            manager.SelectMarker(marker);
+            yield return WaitFrames(2);
+            Assert.IsTrue(visual.IsSelected);
+
+            manager.ClearSelection();
+            yield return WaitFrames(2);
+
+            Assert.IsFalse(visual.IsSelected);
+        }
+
+        [UnityTest]
+        public IEnumerator SelectOther_OldUnselectedNewSelected()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker markerA = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            MapMarker markerB = CreateObjectMarker(new Vector3(70f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            FakeMarkerVisual visualA = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(markerA)).GetComponent<FakeMarkerVisual>();
+            FakeMarkerVisual visualB = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(markerB)).GetComponent<FakeMarkerVisual>();
+
+            manager.SelectMarker(markerA);
+            yield return WaitFrames(2);
+            Assert.IsTrue(visualA.IsSelected);
+            Assert.IsFalse(visualB.IsSelected);
+
+            manager.SelectMarker(markerB);
+            yield return WaitFrames(2);
+
+            Assert.IsFalse(visualA.IsSelected);
+            Assert.IsTrue(visualB.IsSelected);
+        }
+
+        [UnityTest]
+        public IEnumerator SelectedMarker_IsLastSibling()
+        {
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker markerA = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            MapMarker markerB = CreateObjectMarker(new Vector3(60f, 0f, 0f));
+            MapMarker markerC = CreateObjectMarker(new Vector3(70f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            GameObject instanceA = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(markerA));
+            GameObject instanceB = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(markerB));
+            GameObject instanceC = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(markerC));
+
+            manager.SelectMarker(markerA);
+            yield return WaitFrames(3);
+
+            int siblingA = instanceA.transform.GetSiblingIndex();
+            Assert.Greater(siblingA, instanceB.transform.GetSiblingIndex());
+            Assert.Greater(siblingA, instanceC.transform.GetSiblingIndex());
+        }
+
+        [UnityTest]
+        public IEnumerator ReusedInstance_StartsUnselected()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker markerA = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            GameObject instance = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(markerA));
+            FakeMarkerVisual visual = instance.GetComponent<FakeMarkerVisual>();
+
+            manager.SelectMarker(markerA);
+            yield return WaitFrames(2);
+            Assert.IsTrue(visual.IsSelected);
+
+            markerA.transform.position = new Vector3(5000f, 0f, 0f);
+            yield return WaitFrames(3);
+
+            MapMarker markerB = CreateObjectMarker(new Vector3(60f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            GameObject instanceB = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(markerB));
+            Assert.AreSame(instance, instanceB);
+            Assert.IsFalse(visual.IsSelected);
+        }
+
+        [UnityTest]
         public IEnumerator MarkerOutOfView_Hidden()
         {
             view.SetCenter(new Vector2(500f, 500f));
