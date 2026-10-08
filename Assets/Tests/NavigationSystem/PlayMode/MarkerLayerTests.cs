@@ -138,6 +138,127 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [UnityTest]
+        public IEnumerator MarkerEntersView_BoundToMarkerAndView()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker marker = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            GameObject instance = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(marker));
+            FakeMarkerVisual visual = instance.GetComponent<FakeMarkerVisual>();
+
+            Assert.AreEqual(1, visual.BindCount);
+            Assert.AreSame(marker, visual.BoundMarker);
+            Assert.AreSame(view, visual.BoundView);
+        }
+
+        [UnityTest]
+        public IEnumerator MarkerLeavesView_Unbound()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker marker = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            GameObject instance = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(marker));
+            FakeMarkerVisual visual = instance.GetComponent<FakeMarkerVisual>();
+
+            marker.transform.position = new Vector3(5000f, 0f, 0f);
+            yield return WaitFrames(3);
+
+            Assert.AreEqual(1, visual.UnbindCount);
+            Assert.IsFalse(visual.IsBound);
+        }
+
+        [UnityTest]
+        public IEnumerator PooledInstanceReused_RebindsToNewMarker()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker markerA = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            GameObject instance = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(markerA));
+            FakeMarkerVisual visual = instance.GetComponent<FakeMarkerVisual>();
+
+            markerA.transform.position = new Vector3(5000f, 0f, 0f);
+            yield return WaitFrames(3);
+
+            MapMarker markerB = CreateObjectMarker(new Vector3(60f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            GameObject instanceB = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(markerB));
+            Assert.AreSame(instance, instanceB);
+            Assert.AreEqual(2, visual.BindCount);
+            Assert.AreSame(markerB, visual.BoundMarker);
+        }
+
+        [UnityTest]
+        public IEnumerator IndexReusedSameFrame_NewInstanceForNewMarker()
+        {
+            GameObject templateB = new GameObject("MarkerTemplateB", typeof(RectTransform));
+            createdObjects.Add(templateB);
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            templateB.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker markerA = CreateObjectMarkerWithPrefab(new Vector3(50f, 0f, 0f), markerTemplate);
+            yield return WaitFrames(3);
+
+            int indexA = FindMarkerIndex(markerA);
+            GameObject instanceA = view.MarkerLayer.GetActiveInstance(indexA);
+            FakeMarkerVisual visualA = instanceA.GetComponent<FakeMarkerVisual>();
+
+            markerA.gameObject.SetActive(false);
+            MapMarker markerB = CreateObjectMarkerWithPrefab(new Vector3(50f, 0f, 0f), templateB);
+            int indexB = FindMarkerIndex(markerB);
+            Assert.AreEqual(indexA, indexB);
+
+            yield return WaitFrames(3);
+
+            GameObject instanceB = view.MarkerLayer.GetActiveInstance(indexB);
+            Assert.IsNotNull(instanceB);
+            Assert.AreNotSame(instanceA, instanceB);
+            Assert.AreSame(markerB, instanceB.GetComponent<FakeMarkerVisual>().BoundMarker);
+            Assert.AreEqual(1, visualA.UnbindCount);
+        }
+
+        [UnityTest]
+        public IEnumerator PointMarker_BoundWithNullMarker()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            settings.Runtime.SetDestinationMarkerPrefab(markerTemplate);
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+            yield return WaitFrames(2);
+
+            car.position = new Vector3(10f, 0f, 0f);
+            yield return WaitFrames(2);
+
+            manager.StartNavigation(new Vector3(60f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            int index = manager.DestinationMarkerIndex;
+            Assert.GreaterOrEqual(index, 0);
+
+            GameObject instance = view.MarkerLayer.GetActiveInstance(index);
+            Assert.IsNotNull(instance);
+
+            FakeMarkerVisual visual = instance.GetComponent<FakeMarkerVisual>();
+            Assert.AreEqual(1, visual.BindCount);
+            Assert.IsNull(visual.BoundMarker);
+            Assert.IsTrue(visual.IsBound);
+        }
+
+        [UnityTest]
         public IEnumerator MarkerOutOfView_Hidden()
         {
             view.SetCenter(new Vector2(500f, 500f));
@@ -332,6 +453,20 @@ namespace Gley.NavigationSystem.Tests
             marker.SetPrefab(markerTemplate);
             marker.SetRotationMode(rotationMode);
             marker.SetChannelMask(channelMask);
+            createdObjects.Add(markerObject);
+            markerObject.SetActive(true);
+            return marker;
+        }
+
+        private MapMarker CreateObjectMarkerWithPrefab(Vector3 position, GameObject prefab)
+        {
+            GameObject markerObject = new GameObject("Marker");
+            markerObject.SetActive(false);
+            markerObject.transform.position = position;
+            MapMarker marker = markerObject.AddComponent<MapMarker>();
+            marker.SetPrefab(prefab);
+            marker.SetRotationMode(MarkerRotationMode.Upright);
+            marker.SetChannelMask(MinimapBit | FullMapBit);
             createdObjects.Add(markerObject);
             markerObject.SetActive(true);
             return marker;

@@ -100,7 +100,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S66 Default marker prefab reaches the marker layer (2026-10-08)
 - [x] S67 Marker tap action and selection (2026-10-08)
 - [x] S68 Destination marker link: Cancel and Confirm deselect (2026-10-08)
-- [ ] S69 Marker visual binding: IMapMarkerVisual
+- [x] S69 Marker visual binding: IMapMarkerVisual (2026-10-08)
 - [ ] S70 Selected marker look: IMapMarkerSelectable
 - [ ] S71 Display name and visual refresh
 - [ ] S72 Marker labels
@@ -211,3 +211,4 @@ Decisions the user makes during implementation (decision points S04, S29, S56, o
 - S66: The default marker prefab is now `NavigationSettings.Runtime.DefaultMarkerPrefab` (internal `SetDefaultMarkerPrefab`); `MarkerLayer` has no prefab field of its own and reads it from `view.Manager.RuntimeSettings`. Existing settings assets keep an empty slot until the Setup window or `DevUiInstaller.AssignDefaultSettingsAssets` fills it.
 - S67: Selection lives in the Manager (`SelectedMarker`, `MarkerSelected`/`MarkerDeselected`, `ClearSelection()`; internal `SelectMarker`), both calls go through `RunOrQueue`. `MapViewInteractive.TapAt` selects on a marker hit and clears on a miss (before the `MarkersOnly` return); `Disable()` clears before `CancelPreview()`. `MapMarker.TapAction` replaces `CanBeDestination`; `Sandbox.unity` was migrated by hand (`tapAction: 2`), `PerfScene.unity` keeps stale `canBeDestination: 0` lines that Unity drops on save. In tests the second marker sits at x=100 (not 200) because the 200 m zoom only shows about -80..120 around the car. The package `README.md` MapMarker/Manager/events tables were updated.
 - S68: `ClearSelectionIfPreviewMarker()` in the Manager runs after the route event in cancel, confirm and `DeactivateMap`; `previewMarker` is now reset to null there (it used to stay stale). `ExecuteStartNavigation` clears the selection after a successful start. The failing-preview test uses a marker at (60, 0, 80), because the plan's (150, 0, 150) is outside the 200 m view. `DevNavigationTester` shows the selected marker and last selection event in its on-screen box.
+- S69: `MarkerEntry.Generation` is incremented in `MarkerRegistry.AcquireIndex` (reused and new entries). `MarkerLayer` keeps `visualsOf` (visuals cached once per pooled instance) and `activeGenerations`; `BindVisuals` runs when an instance joins `activeInstances`, `UnbindVisuals` in `ReleaseInstance`. S70/S71 should add their selectable and re-bind code next to these two methods. Tests use `FakeMarkerVisual` added to `markerTemplate` before markers are created.
