@@ -104,7 +104,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S70 Selected marker look: IMapMarkerSelectable (2026-10-08)
 - [x] S71 Display name and visual refresh (2026-10-08)
 - [x] S72 Marker labels (2026-10-08)
-- [ ] S73 Default info panel
+- [x] S73 Default info panel (2026-10-08)
 
 ## Implementation notes
 
@@ -216,3 +216,5 @@ Decisions the user makes during implementation (decision points S04, S29, S56, o
 - S71: `MapMarker.DisplayName` / `RefreshVisuals()` call `NavigationManager.RefreshMarkerVisuals` (not queued), which bumps `MarkerEntry.VisualVersion` via `MarkerRegistry.MarkVisualsChanged` and raises the internal `MarkerVisualsChanged(MapMarker)` event (S73 InfoPanel subscribes to it). `MarkerLayer` stores `activeVisualVersions` per active index; on a mismatch it calls `UnbindVisuals` then the shared `BindInstance` (Bind + SetSelected), which S72 reuses for the `ShowMarkerLabels` toggle re-bind. `MapMarker.OnValidate` refreshes only in Play mode.
 
 - S72: `MarkerLabel` sits on the marker root and writes `DisplayName` through `NavigationTextOutput`; it hides its text with `Behaviour.enabled`, and its own `enabled` means "visible label on a rotating marker" (LateUpdate keeps the text upright against `transform.parent`, so it must stay a direct child of the layer). `MarkerLayer` re-binds all active instances when `view.ShowMarkerLabels` changes (`RebindActiveInstances`). `MapViewSettings` constructor is now `(channelMask, showPreview, showMarkerLabels)`. `FullSandboxBuilder.CreateLabelTestMarkers` adds SelectMarkerA ("Acme"), SelectMarkerB and a Follow Heading "Mover"; `DevMarkerMover` got an optional face-movement flag. S73 InfoPanel can reuse `MarkerVisualsChanged` as planned.
+
+- S73: `InfoPanel` (plain class) subscribes to `MarkerSelected`, `MarkerDeselected` and the internal `MarkerVisualsChanged`; `Disable()` also hides the panel root. The panel shows only when the selected marker has a non-empty Display name. `FullSandboxBuilder.CreateLabelTestMarkers` now also creates `DestinationMarkerFuel` ("Fuel", Destination, 200/0/100) and `DestinationMarkerUnnamed` (-200/0/-100); `CreateTestMarker` takes the tap action. `InfoPanelTests` select markers with `manager.SelectMarker` rather than taps.

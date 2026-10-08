@@ -61,12 +61,17 @@ namespace Gley.NavigationSystem.Dev
         {
             GameObject parent = new GameObject("TestMarkers");
 
-            MapMarker named = CreateTestMarker(parent.transform, "SelectMarkerA", new Vector3(40f, 0f, 0f) * unitsPerMeter, manager);
+            MapMarker named = CreateTestMarker(parent.transform, "SelectMarkerA", new Vector3(40f, 0f, 0f) * unitsPerMeter, manager, MarkerTapAction.Select);
             named.DisplayName = "Acme";
 
-            CreateTestMarker(parent.transform, "SelectMarkerB", new Vector3(55f, 0f, 0f) * unitsPerMeter, manager);
+            CreateTestMarker(parent.transform, "SelectMarkerB", new Vector3(55f, 0f, 0f) * unitsPerMeter, manager, MarkerTapAction.Select);
 
-            MapMarker moving = CreateTestMarker(parent.transform, "MovingLabeledMarker", new Vector3(0f, 0f, 60f) * unitsPerMeter, manager);
+            MapMarker fuel = CreateTestMarker(parent.transform, "DestinationMarkerFuel", new Vector3(200f, 0f, 100f) * unitsPerMeter, manager, MarkerTapAction.Destination);
+            fuel.DisplayName = "Fuel";
+
+            CreateTestMarker(parent.transform, "DestinationMarkerUnnamed", new Vector3(-200f, 0f, -100f) * unitsPerMeter, manager, MarkerTapAction.Destination);
+
+            MapMarker moving = CreateTestMarker(parent.transform, "MovingLabeledMarker", new Vector3(0f, 0f, 60f) * unitsPerMeter, manager, MarkerTapAction.Select);
             moving.DisplayName = "Mover";
             moving.SetRotationMode(MarkerRotationMode.FollowHeading);
             DevMarkerMover mover = moving.gameObject.AddComponent<DevMarkerMover>();
@@ -74,7 +79,7 @@ namespace Gley.NavigationSystem.Dev
             mover.SetFaceMovement(true);
         }
 
-        private MapMarker CreateTestMarker(Transform parent, string markerName, Vector3 worldPosition, NavigationManager manager)
+        private MapMarker CreateTestMarker(Transform parent, string markerName, Vector3 worldPosition, NavigationManager manager, MarkerTapAction tapAction)
         {
             GameObject markerObject = new GameObject(markerName);
             markerObject.transform.SetParent(parent, false);
@@ -82,7 +87,7 @@ namespace Gley.NavigationSystem.Dev
 
             MapMarker marker = markerObject.AddComponent<MapMarker>();
             marker.SetManager(manager);
-            marker.SetTapAction(MarkerTapAction.Select);
+            marker.SetTapAction(tapAction);
             return marker;
         }
 

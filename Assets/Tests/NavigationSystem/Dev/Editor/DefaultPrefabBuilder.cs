@@ -345,6 +345,7 @@ namespace Gley.NavigationSystem.Dev
             fullMap.SetCrosshairImage(crosshairImage);
 
             CreatePreviewPanel(viewport, fullMap);
+            CreateInfoPanel(viewport, fullMap);
             CreateNavigationControls(viewport, fullMap);
 
             root.SetActive(false);
@@ -402,6 +403,42 @@ namespace Gley.NavigationSystem.Dev
             fullMap.PreviewPanelSlots.SetEtaText(etaTmp);
             fullMap.PreviewPanelSlots.SetConfirmButton(confirmButton);
             fullMap.PreviewPanelSlots.SetCancelButton(cancelButton);
+
+            panelObject.SetActive(false);
+        }
+
+        private void CreateInfoPanel(GameObject viewport, NavigationFullMap fullMap)
+        {
+            Sprite panelSprite = LoadSprite("PanelBackground");
+            Sprite buttonSprite = LoadSprite("ButtonBackground");
+
+            GameObject panelObject = new GameObject("InfoPanel", typeof(RectTransform));
+            panelObject.transform.SetParent(viewport.transform, false);
+            RectTransform panelRect = panelObject.GetComponent<RectTransform>();
+            panelRect.anchorMin = new Vector2(0.5f, 1f);
+            panelRect.anchorMax = new Vector2(0.5f, 1f);
+            panelRect.pivot = new Vector2(0.5f, 1f);
+            panelRect.anchoredPosition = new Vector2(0f, -20f);
+            panelRect.sizeDelta = new Vector2(360f, 56f);
+
+            Image panelImage = panelObject.AddComponent<Image>();
+            panelImage.sprite = panelSprite;
+            panelImage.type = Image.Type.Sliced;
+            panelImage.color = new Color(0f, 0f, 0f, 0.75f);
+
+            TextMeshProUGUI titleTmp = CreateTmpText(panelObject.transform, "TitleText", new Vector2(0f, 0.5f), new Vector2(12f, 0f), new Vector2(290f, 40f), 20f, Color.white);
+            titleTmp.alignment = TextAlignmentOptions.Left;
+
+            Button closeButton = CreateButton(panelObject.transform, "CloseButton", "X", buttonSprite, Vector2.zero, new Vector2(44f, 40f));
+            RectTransform closeRect = closeButton.GetComponent<RectTransform>();
+            closeRect.anchorMin = new Vector2(1f, 0.5f);
+            closeRect.anchorMax = new Vector2(1f, 0.5f);
+            closeRect.pivot = new Vector2(1f, 0.5f);
+            closeRect.anchoredPosition = new Vector2(-8f, 0f);
+
+            fullMap.InfoPanelSlots.SetPanelRoot(panelObject);
+            fullMap.InfoPanelSlots.SetTitleText(titleTmp);
+            fullMap.InfoPanelSlots.SetCloseButton(closeButton);
 
             panelObject.SetActive(false);
         }

@@ -86,6 +86,20 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [Test]
+        public void FullMapPrefab_InfoPanelSlotsAssigned()
+        {
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationFullMap.prefab");
+            Assert.IsNotNull(prefab);
+
+            SerializedObject serializedFullMap = new SerializedObject(prefab.GetComponent<NavigationFullMap>());
+            GameObject panelRoot = serializedFullMap.FindProperty("infoPanel.panelRoot").objectReferenceValue as GameObject;
+            Assert.IsNotNull(panelRoot);
+            Assert.IsNotNull(serializedFullMap.FindProperty("infoPanel.titleText").objectReferenceValue);
+            Assert.IsNotNull(serializedFullMap.FindProperty("infoPanel.closeButton").objectReferenceValue);
+            Assert.IsFalse(panelRoot.activeSelf);
+        }
+
+        [Test]
         public void MarkerPrefabs_Exist()
         {
             Assert.IsNotNull(AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/PlayerMarker.prefab"));
