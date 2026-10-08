@@ -170,6 +170,14 @@ namespace Gley.NavigationSystem.Tests
             Assert.IsFalse(Mathf.Approximately(car.forward.x, entry.TrueHeading.x));
         }
 
+        [Test]
+        public void DisplayName_DefaultEmpty()
+        {
+            MapMarker marker = CreateMarker(Vector3.zero);
+
+            Assert.AreEqual("", marker.DisplayName);
+        }
+
         private bool HasMarker(MapMarker marker)
         {
             for (int i = 0; i < manager.Markers.EntryCount; i++)

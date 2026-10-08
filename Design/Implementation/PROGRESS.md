@@ -102,7 +102,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S68 Destination marker link: Cancel and Confirm deselect (2026-10-08)
 - [x] S69 Marker visual binding: IMapMarkerVisual (2026-10-08)
 - [x] S70 Selected marker look: IMapMarkerSelectable (2026-10-08)
-- [ ] S71 Display name and visual refresh
+- [x] S71 Display name and visual refresh (2026-10-08)
 - [ ] S72 Marker labels
 - [ ] S73 Default info panel
 
@@ -213,3 +213,4 @@ Decisions the user makes during implementation (decision points S04, S29, S56, o
 - S68: `ClearSelectionIfPreviewMarker()` in the Manager runs after the route event in cancel, confirm and `DeactivateMap`; `previewMarker` is now reset to null there (it used to stay stale). `ExecuteStartNavigation` clears the selection after a successful start. The failing-preview test uses a marker at (60, 0, 80), because the plan's (150, 0, 150) is outside the 200 m view. `DevNavigationTester` shows the selected marker and last selection event in its on-screen box.
 - S69: `MarkerEntry.Generation` is incremented in `MarkerRegistry.AcquireIndex` (reused and new entries). `MarkerLayer` keeps `visualsOf` (visuals cached once per pooled instance) and `activeGenerations`; `BindVisuals` runs when an instance joins `activeInstances`, `UnbindVisuals` in `ReleaseInstance`. S70/S71 should add their selectable and re-bind code next to these two methods. Tests use `FakeMarkerVisual` added to `markerTemplate` before markers are created.
 - S70: `MarkerLayer` keeps `selectablesOf` (filled with `visualsOf`) and `shownSelection`. The selection change is applied before the placement loop, via `ApplySelectionChange`; new and reused instances get `SetInstanceSelected` right after `BindVisuals`, and the selected instance is moved to the last sibling after the loop. S71's re-bind must call `SetInstanceSelected` after `BindVisuals`. Only `DefaultMarker.prefab` has `MarkerSelectionScale` (`DefaultPrefabBuilder.CreateDefaultMarkerPrefab`). `NavigationSettings.asset` got its `defaultMarkerPrefab` slot filled and `Sandbox.unity` got two Select markers (`SelectMarkerA/B` at x=40/55) by hand.
+- S71: `MapMarker.DisplayName` / `RefreshVisuals()` call `NavigationManager.RefreshMarkerVisuals` (not queued), which bumps `MarkerEntry.VisualVersion` via `MarkerRegistry.MarkVisualsChanged` and raises the internal `MarkerVisualsChanged(MapMarker)` event (S73 InfoPanel subscribes to it). `MarkerLayer` stores `activeVisualVersions` per active index; on a mismatch it calls `UnbindVisuals` then the shared `BindInstance` (Bind + SetSelected), which S72 reuses for the `ShowMarkerLabels` toggle re-bind. `MapMarker.OnValidate` refreshes only in Play mode.

@@ -376,6 +376,90 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [UnityTest]
+        public IEnumerator RefreshVisuals_RebindsSameInstance()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker marker = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            int index = FindMarkerIndex(marker);
+            GameObject instance = view.MarkerLayer.GetActiveInstance(index);
+            FakeMarkerVisual visual = instance.GetComponent<FakeMarkerVisual>();
+            Assert.AreEqual(1, visual.BindCount);
+
+            marker.RefreshVisuals();
+            yield return WaitFrames(2);
+
+            Assert.AreSame(instance, view.MarkerLayer.GetActiveInstance(index));
+            Assert.AreEqual(2, visual.BindCount);
+            Assert.AreEqual(1, visual.UnbindCount);
+            Assert.AreSame(marker, visual.BoundMarker);
+            Assert.IsTrue(visual.IsBound);
+        }
+
+        [UnityTest]
+        public IEnumerator DisplayNameSet_Rebinds()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker marker = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            FakeMarkerVisual visual = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(marker)).GetComponent<FakeMarkerVisual>();
+
+            marker.DisplayName = "Acme";
+            yield return WaitFrames(2);
+
+            Assert.AreEqual("Acme", marker.DisplayName);
+            Assert.AreEqual(2, visual.BindCount);
+        }
+
+        [UnityTest]
+        public IEnumerator ThreeChangesOneFrame_OneRebind()
+        {
+            markerTemplate.AddComponent<FakeMarkerVisual>();
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker marker = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            FakeMarkerVisual visual = view.MarkerLayer.GetActiveInstance(FindMarkerIndex(marker)).GetComponent<FakeMarkerVisual>();
+
+            marker.DisplayName = "A";
+            marker.DisplayName = "B";
+            marker.DisplayName = "C";
+            yield return WaitFrames(2);
+
+            Assert.AreEqual(2, visual.BindCount);
+        }
+
+        [UnityTest]
+        public IEnumerator RefreshVisuals_DisabledMarker_NoError()
+        {
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker marker = CreateObjectMarker(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            marker.gameObject.SetActive(false);
+            yield return WaitFrames(2);
+
+            marker.RefreshVisuals();
+            marker.DisplayName = "Gone";
+            yield return WaitFrames(2);
+
+            Assert.AreEqual("Gone", marker.DisplayName);
+            Assert.AreEqual(-1, FindMarkerIndex(marker));
+        }
+
+        [UnityTest]
         public IEnumerator MarkerOutOfView_Hidden()
         {
             view.SetCenter(new Vector2(500f, 500f));
