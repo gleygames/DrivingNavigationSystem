@@ -124,7 +124,7 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator ConfirmAtCrosshair_NearDestinationMarker_SnapsToMarker()
         {
-            MapMarker marker = CreateMarker(new Vector3(22f, 0f, 0f), true);
+            MapMarker marker = CreateMarker(new Vector3(22f, 0f, 0f), MarkerTapAction.Destination);
             yield return WaitFrames(3);
 
             MapMarker reportedMarker = null;
@@ -151,13 +151,13 @@ namespace Gley.NavigationSystem.Tests
             yield return null;
         }
 
-        private MapMarker CreateMarker(Vector3 position, bool canBeDestination)
+        private MapMarker CreateMarker(Vector3 position, MarkerTapAction tapAction)
         {
             GameObject markerObject = new GameObject("Marker");
             markerObject.SetActive(false);
             markerObject.transform.position = position;
             MapMarker marker = markerObject.AddComponent<MapMarker>();
-            marker.SetCanBeDestination(canBeDestination);
+            marker.SetTapAction(tapAction);
             createdObjects.Add(markerObject);
             markerObject.SetActive(true);
             return marker;

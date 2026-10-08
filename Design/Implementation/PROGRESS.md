@@ -98,7 +98,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 ## Phase 14 — Additions
 - [x] S65 Full map tap target: markers only (2026-10-06)
 - [x] S66 Default marker prefab reaches the marker layer (2026-10-08)
-- [ ] S67 Marker tap action and selection
+- [x] S67 Marker tap action and selection (2026-10-08)
 - [ ] S68 Destination marker link: Cancel and Confirm deselect
 - [ ] S69 Marker visual binding: IMapMarkerVisual
 - [ ] S70 Selected marker look: IMapMarkerSelectable
@@ -209,3 +209,4 @@ Decisions the user makes during implementation (decision points S04, S29, S56, o
 - S63: Root inspectors live in `Editor/Inspectors/` (`RootInspectorDrawer`, `NavigationMinimapEditor`, `NavigationFullMapEditor`). Each editor keeps its property paths in `VisiblePaths` / `AdvancedPaths`; `RootInspectorTests` checks that every path exists and that every serialized setting of the root appears in exactly one list, so a new serialized field on a root or its settings classes must be added to one of the lists or that test fails. The full map editor shows a red box under a text slot whose component `NavigationTextOutput.CanWrite` rejects. The manual checks were not reported on by the user. The package `README.md` is still stale (see S60-S62).
 - S65: Tap Target lives in `FullMapInteractionSettings` (`TapTarget` / internal `SetTapTarget`); with `MarkersOnly`, `MapViewInteractive.TapAt` returns right after a failed destination-marker lookup, so pointer taps, crosshair confirm and direct `TapAt` calls all share it. The PlayMode tests use handler methods with fields reset in `SetUp` instead of lambdas.
 - S66: The default marker prefab is now `NavigationSettings.Runtime.DefaultMarkerPrefab` (internal `SetDefaultMarkerPrefab`); `MarkerLayer` has no prefab field of its own and reads it from `view.Manager.RuntimeSettings`. Existing settings assets keep an empty slot until the Setup window or `DevUiInstaller.AssignDefaultSettingsAssets` fills it.
+- S67: Selection lives in the Manager (`SelectedMarker`, `MarkerSelected`/`MarkerDeselected`, `ClearSelection()`; internal `SelectMarker`), both calls go through `RunOrQueue`. `MapViewInteractive.TapAt` selects on a marker hit and clears on a miss (before the `MarkersOnly` return); `Disable()` clears before `CancelPreview()`. `MapMarker.TapAction` replaces `CanBeDestination`; `Sandbox.unity` was migrated by hand (`tapAction: 2`), `PerfScene.unity` keeps stale `canBeDestination: 0` lines that Unity drops on save. In tests the second marker sits at x=100 (not 200) because the 200 m zoom only shows about -80..120 around the car. The package `README.md` MapMarker/Manager/events tables were updated.

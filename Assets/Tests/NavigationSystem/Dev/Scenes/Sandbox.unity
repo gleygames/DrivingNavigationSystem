@@ -4343,6 +4343,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1416870481}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1429310760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 493149486495479929, guid: e3849e57da0e87d4ab62cf788fbe5e53,
+    type: 3}
+  m_PrefabInstance: {fileID: 83850032}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1495408764
 GameObject:
   m_ObjectHideFlags: 0
@@ -5966,6 +5972,7 @@ GameObject:
   - component: {fileID: 1956057951}
   - component: {fileID: 1956057950}
   - component: {fileID: 1956057949}
+  - component: {fileID: 1956057952}
   m_Layer: 0
   m_Name: Building0_5
   m_TagString: Untagged
@@ -6059,6 +6066,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1956057947}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1956057952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1956057947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a647a475feefed40a4739cdad7c337a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 924544309}
+  prefab: {fileID: 1429310760}
+  rotationMode: 0
+  channelMask: 3
+  isStatic: 0
+  tapAction: 2
+  showOffScreenArrow: 0
 --- !u!1 &2010035511
 GameObject:
   m_ObjectHideFlags: 0
@@ -6855,7 +6881,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0

@@ -19,10 +19,14 @@ namespace Gley.NavigationSystem.Tests
         private int arrivedCount;
         private int routeFailedCount;
         private FailureReason lastRouteFailure;
+        private MapMarker selectedMarkerReported;
+        private MapMarker deselectedMarkerReported;
 
         [SetUp]
         public void SetUp()
         {
+            selectedMarkerReported = null;
+            deselectedMarkerReported = null;
             Time.timeScale = 1f;
             arrivedCount = 0;
             routeFailedCount = 0;
@@ -130,6 +134,27 @@ namespace Gley.NavigationSystem.Tests
             Assert.AreEqual(0, arrivedCount);
         }
 
+        [UnityTest]
+        public IEnumerator MarkerSelection_ForwardsMarker()
+        {
+            CreateMap("Map");
+            CreateManagerWithEvents();
+            yield return WaitFrames(2);
+
+            GameObject markerObject = new GameObject("Marker");
+            createdObjects.Add(markerObject);
+            MapMarker marker = markerObject.AddComponent<MapMarker>();
+            marker.SetTapAction(MarkerTapAction.Select);
+            yield return WaitFrames(2);
+
+            manager.SelectMarker(marker);
+            Assert.AreSame(marker, selectedMarkerReported);
+            Assert.IsNull(deselectedMarkerReported);
+
+            manager.ClearSelection();
+            Assert.AreSame(marker, deselectedMarkerReported);
+        }
+
         private void CreateManagerWithEvents()
         {
             GameObject managerObject = new GameObject("NavigationManager");
@@ -140,6 +165,18 @@ namespace Gley.NavigationSystem.Tests
             events = managerObject.AddComponent<NavigationEvents>();
             events.Arrived.AddListener(OnArrived);
             events.RouteFailed.AddListener(OnRouteFailed);
+            events.MarkerSelected.AddListener(OnMarkerSelected);
+            events.MarkerDeselected.AddListener(OnMarkerDeselected);
+        }
+
+        private void OnMarkerSelected(MapMarker marker)
+        {
+            selectedMarkerReported = marker;
+        }
+
+        private void OnMarkerDeselected(MapMarker marker)
+        {
+            deselectedMarkerReported = marker;
         }
 
         private void OnArrived()

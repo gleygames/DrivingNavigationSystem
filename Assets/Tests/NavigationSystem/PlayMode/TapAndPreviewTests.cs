@@ -12,6 +12,7 @@ namespace Gley.NavigationSystem.Tests
         private const float Tolerance = 1f;
 
         private readonly List<GameObject> createdObjects = new List<GameObject>();
+        private readonly List<string> events = new List<string>();
 
         private GameObject canvasObject;
         private FullMapTestRig rig;
@@ -33,6 +34,7 @@ namespace Gley.NavigationSystem.Tests
         [UnitySetUp]
         public IEnumerator SetUp()
         {
+            events.Clear();
             reportedMarker = null;
             previewReadyRaised = false;
             previewFailedRaised = false;
@@ -140,7 +142,7 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator TapNearDestinationMarker_UsesMarkerPosition_ReportsMarker()
         {
-            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), true);
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Destination);
             yield return WaitFrames(3);
 
             MapMarker reportedMarker = null;
@@ -157,7 +159,7 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator TapNearNonDestinationMarker_UsesMapPoint()
         {
-            CreateMarker(new Vector3(60f, 0f, 0f), false);
+            CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.None);
             yield return WaitFrames(3);
 
             MapMarker reportedMarker = null;
@@ -178,8 +180,8 @@ namespace Gley.NavigationSystem.Tests
         [UnityTest]
         public IEnumerator TwoMarkersInRadius_ClosestWins()
         {
-            MapMarker closeMarker = CreateMarker(new Vector3(60f, 0f, 0f), true);
-            MapMarker farMarker = CreateMarker(new Vector3(65f, 0f, 0f), true);
+            MapMarker closeMarker = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Destination);
+            MapMarker farMarker = CreateMarker(new Vector3(65f, 0f, 0f), MarkerTapAction.Destination);
             yield return WaitFrames(3);
 
             MapMarker reportedMarker = null;
@@ -320,7 +322,7 @@ namespace Gley.NavigationSystem.Tests
         public IEnumerator MarkersOnly_TapNearDestinationMarker_PreviewsMarker()
         {
             rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MarkersOnly);
-            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), true);
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Destination);
             yield return WaitFrames(3);
             manager.PreviewReady += HandlePreviewReady;
 
@@ -335,7 +337,7 @@ namespace Gley.NavigationSystem.Tests
         public IEnumerator MarkersOnly_TapNearNonDestinationMarker_NothingHappens()
         {
             rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MarkersOnly);
-            CreateMarker(new Vector3(60f, 0f, 0f), false);
+            CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.None);
             yield return WaitFrames(3);
 
             interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
@@ -348,7 +350,7 @@ namespace Gley.NavigationSystem.Tests
         public IEnumerator MarkersOnly_TapOnEmptyMap_KeepsExistingPreview()
         {
             rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MarkersOnly);
-            CreateMarker(new Vector3(60f, 0f, 0f), true);
+            CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Destination);
             yield return WaitFrames(3);
 
             interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
@@ -402,6 +404,198 @@ namespace Gley.NavigationSystem.Tests
             Assert.IsTrue(manager.HasPreview);
         }
 
+        [UnityTest]
+        public IEnumerator TapSelectMarker_SelectsWithoutPreview()
+        {
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Select);
+            yield return WaitFrames(3);
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
+            yield return null;
+
+            Assert.AreSame(marker, manager.SelectedMarker);
+            Assert.IsFalse(manager.HasPreview);
+        }
+
+        [UnityTest]
+        public IEnumerator TapDestinationMarker_SelectsThenPreviews()
+        {
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Destination);
+            yield return WaitFrames(3);
+            SubscribeSelectionEvents();
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
+            yield return null;
+
+            Assert.AreEqual(2, events.Count);
+            Assert.AreEqual("Selected:" + marker.name, events[0]);
+            Assert.AreEqual("PreviewReady", events[1]);
+            Assert.IsTrue(manager.HasPreview);
+        }
+
+        [UnityTest]
+        public IEnumerator TapOtherMarker_DeselectsThenSelects()
+        {
+            MapMarker markerA = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Select);
+            markerA.name = "A";
+            MapMarker markerB = CreateMarker(new Vector3(100f, 0f, 0f), MarkerTapAction.Select);
+            markerB.name = "B";
+            yield return WaitFrames(3);
+            SubscribeSelectionEvents();
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
+            yield return null;
+            interactive.TapAt(ComputeViewportPoint(new Vector3(100f, 0f, 0f)));
+            yield return null;
+
+            Assert.AreEqual(3, events.Count);
+            Assert.AreEqual("Selected:A", events[0]);
+            Assert.AreEqual("Deselected:A", events[1]);
+            Assert.AreEqual("Selected:B", events[2]);
+            Assert.AreSame(markerB, manager.SelectedMarker);
+        }
+
+        [UnityTest]
+        public IEnumerator TapSameMarkerTwice_OneSelectedEvent()
+        {
+            CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Select);
+            yield return WaitFrames(3);
+            SubscribeSelectionEvents();
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
+            yield return null;
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
+            yield return null;
+
+            Assert.AreEqual(1, events.Count);
+        }
+
+        [UnityTest]
+        public IEnumerator TapEmptyMap_ClearsSelectionAndPreviews()
+        {
+            rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MapAndMarkers);
+            CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Select);
+            yield return WaitFrames(3);
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
+            yield return null;
+            Assert.IsNotNull(manager.SelectedMarker);
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(100f, 0f, 0f)));
+            yield return null;
+
+            Assert.IsNull(manager.SelectedMarker);
+            Assert.IsTrue(manager.HasPreview);
+        }
+
+        [UnityTest]
+        public IEnumerator MarkersOnly_TapEmptyMap_ClearsSelectionKeepsPreview()
+        {
+            rig.FullMap.InteractionSettings.SetTapTarget(FullMapTapTarget.MarkersOnly);
+            CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Destination);
+            yield return WaitFrames(3);
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
+            yield return null;
+            Assert.IsNotNull(manager.SelectedMarker);
+            Assert.IsTrue(manager.HasPreview);
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(100f, 0f, 0f)));
+            yield return null;
+
+            Assert.IsNull(manager.SelectedMarker);
+            Assert.IsTrue(manager.HasPreview);
+        }
+
+        [UnityTest]
+        public IEnumerator DisableSelectedMarker_Deselects()
+        {
+            MapMarker marker = CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Select);
+            yield return WaitFrames(3);
+            SubscribeSelectionEvents();
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
+            yield return null;
+
+            marker.gameObject.SetActive(false);
+            yield return null;
+
+            Assert.IsNull(manager.SelectedMarker);
+            Assert.AreEqual("Deselected:" + marker.name, events[events.Count - 1]);
+        }
+
+        [UnityTest]
+        public IEnumerator CloseFullMap_ClearsSelection()
+        {
+            CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Select);
+            yield return WaitFrames(3);
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(60f, 0f, 0f)));
+            yield return null;
+            Assert.IsNotNull(manager.SelectedMarker);
+
+            rig.Root.SetActive(false);
+            yield return null;
+
+            Assert.IsNull(manager.SelectedMarker);
+        }
+
+        [UnityTest]
+        public IEnumerator ClearSelection_NothingSelected_NoEvent()
+        {
+            SubscribeSelectionEvents();
+
+            manager.ClearSelection();
+            yield return null;
+
+            Assert.AreEqual(0, events.Count);
+        }
+
+        [UnityTest]
+        public IEnumerator ClearSelectionInsideHandler_IsQueued()
+        {
+            CreateMarker(new Vector3(60f, 0f, 0f), MarkerTapAction.Destination);
+            yield return WaitFrames(3);
+            SubscribeSelectionEvents();
+            manager.PreviewReady += HandlePreviewReadyClearSelection;
+
+            interactive.TapAt(ComputeViewportPoint(new Vector3(62f, 0f, 0f)));
+            yield return null;
+
+            Assert.AreEqual(3, events.Count);
+            Assert.IsTrue(events[0].StartsWith("Selected:"));
+            Assert.AreEqual("PreviewReady", events[1]);
+            Assert.IsTrue(events[2].StartsWith("Deselected:"));
+            Assert.IsNull(manager.SelectedMarker);
+        }
+
+        private void SubscribeSelectionEvents()
+        {
+            manager.MarkerSelected += HandleMarkerSelected;
+            manager.MarkerDeselected += HandleMarkerDeselected;
+            manager.PreviewReady += HandlePreviewReadyLogged;
+        }
+
+        private void HandleMarkerSelected(MapMarker marker)
+        {
+            events.Add("Selected:" + marker.name);
+        }
+
+        private void HandleMarkerDeselected(MapMarker marker)
+        {
+            events.Add("Deselected:" + marker.name);
+        }
+
+        private void HandlePreviewReadyLogged(Route route, MapMarker marker)
+        {
+            events.Add("PreviewReady");
+        }
+
+        private void HandlePreviewReadyClearSelection(Route route, MapMarker marker)
+        {
+            manager.ClearSelection();
+        }
+
         private void HandlePreviewReady(Route route, MapMarker marker)
         {
             previewReadyRaised = true;
@@ -425,13 +619,13 @@ namespace Gley.NavigationSystem.Tests
             return delta * view.CanvasUnitsPerMeter;
         }
 
-        private MapMarker CreateMarker(Vector3 position, bool canBeDestination)
+        private MapMarker CreateMarker(Vector3 position, MarkerTapAction tapAction)
         {
             GameObject markerObject = new GameObject("Marker");
             markerObject.SetActive(false);
             markerObject.transform.position = position;
             MapMarker marker = markerObject.AddComponent<MapMarker>();
-            marker.SetCanBeDestination(canBeDestination);
+            marker.SetTapAction(tapAction);
             createdObjects.Add(markerObject);
             markerObject.SetActive(true);
             return marker;
