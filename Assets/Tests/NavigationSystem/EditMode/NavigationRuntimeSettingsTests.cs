@@ -19,6 +19,7 @@ namespace Gley.NavigationSystem.Tests
             Assert.IsNull(runtime.PlayerMarkerPrefab);
             Assert.IsNull(runtime.DestinationMarkerPrefab);
             Assert.IsNull(runtime.PreviewPinPrefab);
+            Assert.IsNull(runtime.DefaultMarkerPrefab);
         }
 
         private void AssertTuningDefaults(NavigationRuntimeSettings runtime)
@@ -46,6 +47,7 @@ namespace Gley.NavigationSystem.Tests
             runtime.SetPlayerMarkerPrefab(prefab);
             runtime.SetDestinationMarkerPrefab(prefab);
             runtime.SetPreviewPinPrefab(prefab);
+            runtime.SetDefaultMarkerPrefab(prefab);
             runtime.SetAvoidMultiplier(99f);
             runtime.SetPreferMultiplier(99f);
             runtime.SetStartSnapDistance(99f);
@@ -65,6 +67,7 @@ namespace Gley.NavigationSystem.Tests
             Assert.AreSame(prefab, runtime.PlayerMarkerPrefab);
             Assert.AreSame(prefab, runtime.DestinationMarkerPrefab);
             Assert.AreSame(prefab, runtime.PreviewPinPrefab);
+            Assert.AreSame(prefab, runtime.DefaultMarkerPrefab);
         }
 
         [Test]

@@ -97,7 +97,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 
 ## Phase 14 — Additions
 - [x] S65 Full map tap target: markers only (2026-10-06)
-- [ ] S66 Default marker prefab reaches the marker layer
+- [x] S66 Default marker prefab reaches the marker layer (2026-10-08)
 - [ ] S67 Marker tap action and selection
 - [ ] S68 Destination marker link: Cancel and Confirm deselect
 - [ ] S69 Marker visual binding: IMapMarkerVisual
@@ -208,3 +208,4 @@ Decisions the user makes during implementation (decision points S04, S29, S56, o
 - S62: Text slots are plain `Component` references; `NavigationTextOutput` (internal) is the one place that knows legacy `Text` and the writer, so any new text consumer should go through it instead of casting. TMP is written by `Graphics/Presets/TmpTextWriter.asset` (`TmpTextWriter`), assigned to `ViewSettings.textWriter` on both prefab roots by the builder; a user without TMP leaves it empty and legacy `Text` still works. `MarkerLayer` still looks the arrow label up once per arrow instance (its dictionary keeps the old name `arrowTextTargets`, now `Dictionary<GameObject, Component>`). Test-only `FakeLabel` + `FakeTextWriter` live in `PlayMode/`. After S62 both prefabs have exactly one Gley script. The package `README.md` API section still mentions the deleted `*TextTarget` types.
 - S63: Root inspectors live in `Editor/Inspectors/` (`RootInspectorDrawer`, `NavigationMinimapEditor`, `NavigationFullMapEditor`). Each editor keeps its property paths in `VisiblePaths` / `AdvancedPaths`; `RootInspectorTests` checks that every path exists and that every serialized setting of the root appears in exactly one list, so a new serialized field on a root or its settings classes must be added to one of the lists or that test fails. The full map editor shows a red box under a text slot whose component `NavigationTextOutput.CanWrite` rejects. The manual checks were not reported on by the user. The package `README.md` is still stale (see S60-S62).
 - S65: Tap Target lives in `FullMapInteractionSettings` (`TapTarget` / internal `SetTapTarget`); with `MarkersOnly`, `MapViewInteractive.TapAt` returns right after a failed destination-marker lookup, so pointer taps, crosshair confirm and direct `TapAt` calls all share it. The PlayMode tests use handler methods with fields reset in `SetUp` instead of lambdas.
+- S66: The default marker prefab is now `NavigationSettings.Runtime.DefaultMarkerPrefab` (internal `SetDefaultMarkerPrefab`); `MarkerLayer` has no prefab field of its own and reads it from `view.Manager.RuntimeSettings`. Existing settings assets keep an empty slot until the Setup window or `DevUiInstaller.AssignDefaultSettingsAssets` fills it.

@@ -26,6 +26,7 @@ namespace Gley.NavigationSystem.Dev
             AssignAssetIfMissing(serializedObject, "runtime.playerMarkerPrefab", LoadPrefab("PlayerMarker"));
             AssignAssetIfMissing(serializedObject, "runtime.destinationMarkerPrefab", LoadPrefab("DestinationMarker"));
             AssignAssetIfMissing(serializedObject, "runtime.previewPinPrefab", LoadPrefab("PreviewPin"));
+            AssignAssetIfMissing(serializedObject, "runtime.defaultMarkerPrefab", LoadPrefab("DefaultMarker"));
             serializedObject.ApplyModifiedPropertiesWithoutUndo();
             EditorUtility.SetDirty(settings);
         }

@@ -111,6 +111,33 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [UnityTest]
+        public IEnumerator EmptyPrefab_UsesSettingsDefaultMarker()
+        {
+            settings.Runtime.SetDefaultMarkerPrefab(markerTemplate);
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker marker = CreateObjectMarkerWithoutPrefab(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            int index = FindMarkerIndex(marker);
+            Assert.IsNotNull(view.MarkerLayer.GetActiveInstance(index));
+        }
+
+        [UnityTest]
+        public IEnumerator EmptyPrefab_NoDefault_ShowsNothing()
+        {
+            view.SetCenter(new Vector2(500f, 500f));
+            view.SetZoomMeters(200f, 999999f);
+
+            MapMarker marker = CreateObjectMarkerWithoutPrefab(new Vector3(50f, 0f, 0f));
+            yield return WaitFrames(3);
+
+            int index = FindMarkerIndex(marker);
+            Assert.IsNull(view.MarkerLayer.GetActiveInstance(index));
+        }
+
+        [UnityTest]
         public IEnumerator MarkerOutOfView_Hidden()
         {
             view.SetCenter(new Vector2(500f, 500f));
@@ -305,6 +332,20 @@ namespace Gley.NavigationSystem.Tests
             marker.SetPrefab(markerTemplate);
             marker.SetRotationMode(rotationMode);
             marker.SetChannelMask(channelMask);
+            createdObjects.Add(markerObject);
+            markerObject.SetActive(true);
+            return marker;
+        }
+
+        private MapMarker CreateObjectMarkerWithoutPrefab(Vector3 position)
+        {
+            GameObject markerObject = new GameObject("Marker");
+            markerObject.SetActive(false);
+            markerObject.transform.position = position;
+            MapMarker marker = markerObject.AddComponent<MapMarker>();
+            marker.SetPrefab(null);
+            marker.SetRotationMode(MarkerRotationMode.Upright);
+            marker.SetChannelMask(MinimapBit | FullMapBit);
             createdObjects.Add(markerObject);
             markerObject.SetActive(true);
             return marker;
