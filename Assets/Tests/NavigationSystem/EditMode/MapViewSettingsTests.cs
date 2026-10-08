@@ -16,10 +16,11 @@ namespace Gley.NavigationSystem.Tests
         [Test]
         public void Constructor_SetsChannelAndPreview()
         {
-            MapViewSettings settings = new MapViewSettings(MapViewSettings.MinimapChannelBit, false);
+            MapViewSettings settings = new MapViewSettings(MapViewSettings.MinimapChannelBit, false, false);
 
             Assert.AreEqual(MapViewSettings.MinimapChannelBit, settings.ChannelMask);
             Assert.IsFalse(settings.ShowPreview);
+            Assert.IsFalse(settings.ShowMarkerLabels);
         }
 
         [Test]
@@ -31,6 +32,14 @@ namespace Gley.NavigationSystem.Tests
             Assert.AreEqual(8f, settings.EdgeInset, 0.001f);
             Assert.IsTrue(settings.ShowOffScreenArrows);
             Assert.IsTrue(settings.ShowArrowDistance);
+        }
+
+        [Test]
+        public void ShowMarkerLabels_DefaultTrue()
+        {
+            MapViewSettings settings = new MapViewSettings();
+
+            Assert.IsTrue(settings.ShowMarkerLabels);
         }
     }
 }

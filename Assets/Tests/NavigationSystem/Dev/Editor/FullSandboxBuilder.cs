@@ -46,6 +46,8 @@ namespace Gley.NavigationSystem.Dev
                 minimap = installer.Minimap.GetComponent<NavigationMinimap>();
             }
 
+            CreateLabelTestMarkers(manager, settings.UnitsPerMeter);
+
             DevNavigationTester tester = manager.gameObject.AddComponent<DevNavigationTester>();
             tester.Configure(manager, minimap);
 
@@ -53,6 +55,35 @@ namespace Gley.NavigationSystem.Dev
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
             Selection.activeGameObject = manager.gameObject;
+        }
+
+        internal void CreateLabelTestMarkers(NavigationManager manager, float unitsPerMeter)
+        {
+            GameObject parent = new GameObject("TestMarkers");
+
+            MapMarker named = CreateTestMarker(parent.transform, "SelectMarkerA", new Vector3(40f, 0f, 0f) * unitsPerMeter, manager);
+            named.DisplayName = "Acme";
+
+            CreateTestMarker(parent.transform, "SelectMarkerB", new Vector3(55f, 0f, 0f) * unitsPerMeter, manager);
+
+            MapMarker moving = CreateTestMarker(parent.transform, "MovingLabeledMarker", new Vector3(0f, 0f, 60f) * unitsPerMeter, manager);
+            moving.DisplayName = "Mover";
+            moving.SetRotationMode(MarkerRotationMode.FollowHeading);
+            DevMarkerMover mover = moving.gameObject.AddComponent<DevMarkerMover>();
+            mover.Configure(40f * unitsPerMeter, 20f, 0f);
+            mover.SetFaceMovement(true);
+        }
+
+        private MapMarker CreateTestMarker(Transform parent, string markerName, Vector3 worldPosition, NavigationManager manager)
+        {
+            GameObject markerObject = new GameObject(markerName);
+            markerObject.transform.SetParent(parent, false);
+            markerObject.transform.position = worldPosition;
+
+            MapMarker marker = markerObject.AddComponent<MapMarker>();
+            marker.SetManager(manager);
+            marker.SetTapAction(MarkerTapAction.Select);
+            return marker;
         }
 
         internal NavigationMap CreateOrReuseMap(TestMapBuilder mapBuilder)

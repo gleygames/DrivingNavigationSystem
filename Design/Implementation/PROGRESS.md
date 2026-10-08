@@ -103,7 +103,7 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S69 Marker visual binding: IMapMarkerVisual (2026-10-08)
 - [x] S70 Selected marker look: IMapMarkerSelectable (2026-10-08)
 - [x] S71 Display name and visual refresh (2026-10-08)
-- [ ] S72 Marker labels
+- [x] S72 Marker labels (2026-10-08)
 - [ ] S73 Default info panel
 
 ## Implementation notes
@@ -214,3 +214,5 @@ Decisions the user makes during implementation (decision points S04, S29, S56, o
 - S69: `MarkerEntry.Generation` is incremented in `MarkerRegistry.AcquireIndex` (reused and new entries). `MarkerLayer` keeps `visualsOf` (visuals cached once per pooled instance) and `activeGenerations`; `BindVisuals` runs when an instance joins `activeInstances`, `UnbindVisuals` in `ReleaseInstance`. S70/S71 should add their selectable and re-bind code next to these two methods. Tests use `FakeMarkerVisual` added to `markerTemplate` before markers are created.
 - S70: `MarkerLayer` keeps `selectablesOf` (filled with `visualsOf`) and `shownSelection`. The selection change is applied before the placement loop, via `ApplySelectionChange`; new and reused instances get `SetInstanceSelected` right after `BindVisuals`, and the selected instance is moved to the last sibling after the loop. S71's re-bind must call `SetInstanceSelected` after `BindVisuals`. Only `DefaultMarker.prefab` has `MarkerSelectionScale` (`DefaultPrefabBuilder.CreateDefaultMarkerPrefab`). `NavigationSettings.asset` got its `defaultMarkerPrefab` slot filled and `Sandbox.unity` got two Select markers (`SelectMarkerA/B` at x=40/55) by hand.
 - S71: `MapMarker.DisplayName` / `RefreshVisuals()` call `NavigationManager.RefreshMarkerVisuals` (not queued), which bumps `MarkerEntry.VisualVersion` via `MarkerRegistry.MarkVisualsChanged` and raises the internal `MarkerVisualsChanged(MapMarker)` event (S73 InfoPanel subscribes to it). `MarkerLayer` stores `activeVisualVersions` per active index; on a mismatch it calls `UnbindVisuals` then the shared `BindInstance` (Bind + SetSelected), which S72 reuses for the `ShowMarkerLabels` toggle re-bind. `MapMarker.OnValidate` refreshes only in Play mode.
+
+- S72: `MarkerLabel` sits on the marker root and writes `DisplayName` through `NavigationTextOutput`; it hides its text with `Behaviour.enabled`, and its own `enabled` means "visible label on a rotating marker" (LateUpdate keeps the text upright against `transform.parent`, so it must stay a direct child of the layer). `MarkerLayer` re-binds all active instances when `view.ShowMarkerLabels` changes (`RebindActiveInstances`). `MapViewSettings` constructor is now `(channelMask, showPreview, showMarkerLabels)`. `FullSandboxBuilder.CreateLabelTestMarkers` adds SelectMarkerA ("Acme"), SelectMarkerB and a Follow Heading "Mover"; `DevMarkerMover` got an optional face-movement flag. S73 InfoPanel can reuse `MarkerVisualsChanged` as planned.

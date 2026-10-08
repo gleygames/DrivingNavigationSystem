@@ -158,6 +158,11 @@ namespace Gley.NavigationSystem.Dev
         {
             GameObject instance = CreateMarkerObject("DefaultMarker", "DefaultMarker");
             instance.AddComponent<MarkerSelectionScale>();
+
+            TextMeshProUGUI labelText = CreateTmpText(instance.transform, "Label", new Vector2(0.5f, 0f), new Vector2(0f, -14f), new Vector2(160f, 24f), 14f, Color.white);
+            labelText.text = "";
+            MarkerLabel markerLabel = instance.AddComponent<MarkerLabel>();
+            markerLabel.SetText(labelText);
             return SaveMarkerPrefab(instance, "DefaultMarker");
         }
 

@@ -110,6 +110,18 @@ namespace Gley.NavigationSystem.Tests
         }
 
         [Test]
+        public void DefaultMarker_HasLabelWithText()
+        {
+            GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/DefaultMarker.prefab");
+            Assert.IsNotNull(prefab);
+
+            MarkerLabel label = prefab.GetComponent<MarkerLabel>();
+            Assert.IsNotNull(label);
+            Assert.IsNotNull(label.Text);
+            Assert.IsTrue(label.Text is TMPro.TMP_Text);
+        }
+
+        [Test]
         public void FullMapPrefab_HasOneGleyScript()
         {
             GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(DevUiInstaller.PrefabFolder + "/NavigationFullMap.prefab");
