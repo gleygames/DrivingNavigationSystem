@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.gley.tools": {
+      "version": "file:com.gley.tools",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.burst": {
       "version": "1.8.21",
       "depth": 1,

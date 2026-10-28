@@ -7,3 +7,7 @@
 [submodule "Assets/Gley/DrivingNavigationSystem"]
 	path = Assets/Gley/DrivingNavigationSystem
 	url = https://github.com/gleygames/DrivingNavigationSystem-Package.git
+[submodule "Packages/com.gley.tools"]
+	path = Packages/com.gley.tools
+	url = https://github.com/gleygames/GleyTools-Package.git
+	branch = main
