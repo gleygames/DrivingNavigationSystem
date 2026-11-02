@@ -5,6 +5,7 @@ This folder tells you (the implementing agent) exactly how to build the Driving 
 - The **design** is in `Design/NavigationSystemDesign.md`. It is the source of truth for *what* to build.
 - This folder is the source of truth for *how* and *in which order*.
 - Progress is tracked in `Design/Implementation/PROGRESS.md`.
+- This plan is temporary: its last step (close-out) syncs the design document with the built code and deletes this folder.
 
 ## 1. How you work (mandatory)
 
@@ -195,3 +196,4 @@ Notes / questions:
 | `12_SetupAndFinish.md` | S53–S56, S56b, S57 |
 | `13_PrefabFrontDoor.md` | S58–S64 |
 | `14_Additions.md` | S65–S73 |
+| `15_CloseOut.md` | S74 |

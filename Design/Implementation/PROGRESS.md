@@ -106,6 +106,9 @@ Mark a step `[x]` and add the date **only after the user confirms** its tests an
 - [x] S72 Marker labels (2026-10-08)
 - [x] S73 Default info panel (2026-10-08)
 
+## Close-out
+- [ ] S74 Close-out (syncs the design document, deletes this plan)
+
 ## Implementation notes
 
 Added by the implementing agent when a step passes: anything later steps need to know that differs from the plan or isn't obvious from the code. Format: `Sxx: <note>`.
